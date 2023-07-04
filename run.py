@@ -29,6 +29,7 @@ def create_db():
     cursor_obj.execute("DROP TABLE IF EXISTS Platformer")
     cursor_obj.execute("DROP TABLE IF EXISTS Racing")
     cursor_obj.execute("DROP TABLE IF EXISTS Horror")
+    cursor_obj.execute("DROP TABLE IF EXISTS RPG")
 
     # Creating User table
     table = """ CREATE TABLE User (
@@ -157,6 +158,18 @@ def create_db():
     ); """
     cursor_obj.execute(table)
 
+    # Creating RPG Table
+    table = """ CREATE TABLE RPG (
+        RPGID INTEGER PRIMARY KEY AUTOINCREMENT,
+        RPG_GameID INTEGER NOT NULL,
+        RPG_Total_Attributes INTEGER NOT NULL,
+        RPG_Classes INTEGER NOT NULL,
+        FOREIGN KEY (RPG_GameID) REFERENCES Game (GameID)
+    ); """
+    cursor_obj.execute(table)
+
+
+
     connection_obj.close()
 
     return "DB is fresh and ready"
@@ -179,7 +192,7 @@ def get_users():
 @app.route("/create-user")
 def create_user():                                                       # Creates a user
 
-    name = str(request.args.get("User_Name")).strip()
+    name = str(request.args.get("name")).strip()
     if name == '':
         return "Name cannot be empty"
 
