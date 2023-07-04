@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>List of all games</h2>
+    <br/>
+    {% for i in games %}
+        <a href="/game/{{i[0]}}">{{i[1]}}</a>
+        <hr/>
+    {% endfor %}
+</body>
+</html>

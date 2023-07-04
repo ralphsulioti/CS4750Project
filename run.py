@@ -218,7 +218,7 @@ def get_games():
 
     connection_obj.close()
 
-    return render_template("get-classes.html", classes = output)
+    return render_template("get-games.html", games = output)
 
 
 @app.route("/create-game")
