@@ -88,9 +88,11 @@ def create_db():
     table = """ CREATE TABLE Horror (
         HorrorID INTEGER PRIMARY KEY AUTOINCREMENT,
         Horror_GameID INTEGER NOT NULL,
+        Horror_UGLID INTEGER NOT NULL,
         Horror_Jump_Scare_Rating INTEGER NOT NULL,
         Horror_Suspense_Level INTEGER NOT NULL,
         FOREIGN KEY (Horror_GameID) REFERENCES Game (GameID)
+        FOREIGN KEY (Horror_UGLID) REFERENCES UserGameLibrary(UGLID)
     ); """
     cursor_obj.execute(table)
 
