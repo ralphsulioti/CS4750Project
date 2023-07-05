@@ -236,7 +236,7 @@ def create_game():
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
     
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES ('{name}', '{developer}', '{player_capacity}', '{release_date}', '{price}', '{platform}')")
+    cursor_obj.execute(f"INSERT INTO Game (Game_Name, Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES ('{name}', '{developer}', '{player_capacity}', '{release_date}', '{price}', '{platform}')")
     connection_obj.commit()
 
     connection_obj.close()
@@ -258,7 +258,7 @@ def add_UGL():
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
 
-    cursor_obj.execute(f"INSERT INTO UserGameLibrary(UGL_UserID, UGL_GameID, UGL_Difficulty, UGL_Playtime, UGL_Achievements, UGL_Rating, UGL_Date_Added VALUES ('{userID}', '{gameID}', '{difficulty}', '{playtime}', '{achievements}', '{rating}', '{dateAdded}')")
+    cursor_obj.execute("INSERT INTO UserGameLibrary(UGL_UserID, UGL_GameID, UGL_Difficulty, UGL_Playtime, UGL_Achievements, UGL_Rating, UGL_Date_Added VALUES ('{userID}', '{gameID}', '{difficulty}', '{playtime}', '{achievements}', '{rating}', '{dateAdded}')")
     connection_obj.commit()
 
     connection_obj.close()
