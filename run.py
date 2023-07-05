@@ -222,16 +222,16 @@ def get_games():
 
     return render_template("get-games.html", games = output)
 
-# THIS WORKS BUT IT DOESN'T STORE THE URL DATA (Ex: it stores "name" instead of "Valorant")
+
 @app.route("/create-game")
 def create_game():
 
     name = str(request.args.get("name")).strip()
-    developer = str(request.args.get("Game_Developer")).strip()
-    player_capacity = str(request.args.get("Game_Player_Capacity")).strip()
-    release_date = str(request.args.get("Game_Release_Date")).strip()
-    price = str(request.args.get("Game_Price")).strip()
-    platform = str(request.args.get("Game_Platform")).strip()
+    developer = str(request.args.get("developer")).strip()
+    player_capacity = str(request.args.get("capacity")).strip()
+    release_date = str(request.args.get("releaseDate")).strip()
+    price = str(request.args.get("price")).strip()
+    platform = str(request.args.get("platform")).strip()
 
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
@@ -244,9 +244,11 @@ def create_game():
     return "Created a new game"
 
 
-@app.route("/add-UGL")
-def add_UGL():
+@app.route("/create-ugl")
+def create_ugl():
 
+    #http://127.0.0.1:5000/create-ugl?userid=1&gameid=1&difficulty=5&playtime=50&achievements=None&rating=5&date=2018
+    
     userID = str(request.args.get("userid")).strip()
     gameID = str(request.args.get("gameid")).strip()
     difficulty = str(request.args.get("difficulty")).strip()
