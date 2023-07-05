@@ -309,7 +309,35 @@ def create_wlg():
     connection_obj.close()
 
 
-    return "Added to the user game library"
+    return "Added to the user wish list"
+
+@app.route("/create-review")
+def create_review():
+
+    uglid = str(request.args.get("uglid")).strip()
+    thoughts = str(request.args.get("thoughts")).strip()
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute(f"INSERT INTO Reviews (Review_UGLID, Review_Thoughts) VALUES ('{uglid}', '{thoughts}')")
+    connection_obj.commit()
+
+    connection_obj.close()
+
+
+    return "Added review to user game library"
+
+@app.route("/get-reviews")
+def get_reviews():
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute("SELECT * FROM Reviews WHERE Reviews.Review_UGLID IN (SELECT UGL_UserID FROM UserGameLibrary WHERE UGL_UserID =1)")
+    output = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return render_template("get-reviews.html", reviews=output)
 
 @app.route("/add-fighting")
     #?gameid=1&gamemodes=4&comboimportance=3

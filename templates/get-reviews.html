@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>List of all reviews</h2>
+    <br/>
+    {% for i in reviews %}
+        <a href="/get-games">{{i[2]}}</a>
+        <hr/>
+    {% endfor %}
+</body>
+</html>
