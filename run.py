@@ -249,7 +249,7 @@ def get_ugl():
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
 
-    cursor_obj.execute("SELECT * FROM Game LEFT OUTER JOIN UserGameLibrary ON Game.GameID=UserGameLibrary.UGLID ORDER BY GameID DESC")
+    cursor_obj.execute("SELECT * FROM Game WHERE Game.GameID IN (SELECT UGL_GameID FROM UserGameLibrary WHERE UGL_UserID = 1)")
     output = cursor_obj.fetchall()
 
     connection_obj.close()
