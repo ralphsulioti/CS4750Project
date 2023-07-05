@@ -222,29 +222,50 @@ def get_games():
 
     return render_template("get-games.html", games = output)
 
-
+# THIS WORKS BUT IT DOESN'T STORE THE URL DATA (Ex: it stores "name" instead of "Valorant")
 @app.route("/create-game")
 def create_game():
 
-    name = str(request.args.get("Game_Name")).strip()
-    #developer = str(request.args.get("Game_Developer")).strip()
-    #player_capacity = str(request.args.get("Game_Player_Capacity")).strip()
-    #release_date = str(request.args.get("Game_Release_Date")).strip()
-    #price = str(request.args.get("Game_Price")).strip()
-    #platform = str(request.args.get("Game_Platform")).strip()
-    #if name == '' or price == '':
-     #   return "Name and price cannot be empty"
+    name = str(request.args.get("name")).strip()
+    developer = str(request.args.get("Game_Developer")).strip()
+    player_capacity = str(request.args.get("Game_Player_Capacity")).strip()
+    release_date = str(request.args.get("Game_Release_Date")).strip()
+    price = str(request.args.get("Game_Price")).strip()
+    platform = str(request.args.get("Game_Platform")).strip()
 
-    connection_obj = sqlite3.connect('project.db')
+    connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
     
-    cursor_obj.execute("INSERT INTO Game (Game_Name) VALUES ('{name}')")
-#                       , Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES ('{name}', '{developer}', '{player_capacity}', '{release_date}', '{price}', '{platform}')")
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES ('{name}', '{developer}', '{player_capacity}', '{release_date}', '{price}', '{platform}')")
     connection_obj.commit()
 
     connection_obj.close()
 
     return "Created a new game"
+
+
+@app.route("/add-UGL")
+def add_UGL():
+
+    userID = str(request.args.get("userid")).strip()
+    gameID = str(request.args.get("gameid")).strip()
+    difficulty = str(request.args.get("difficulty")).strip()
+    playtime = str(request.args.get("playtime")).strip()
+    achievements = str(request.args.get("achievements")).strip()
+    rating = str(request.args.get("rating")).strip()
+    dateAdded = str(request.args.get("date")).strip()
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute(f"INSERT INTO UserGameLibrary(UGL_UserID, UGL_GameID, UGL_Difficulty, UGL_Playtime, UGL_Achievements, UGL_Rating, UGL_Date_Added VALUES ('{userID}', '{gameID}', '{difficulty}', '{playtime}', '{achievements}', '{rating}', '{dateAdded}')")
+    connection_obj.commit()
+
+    connection_obj.close()
+
+
+    return "Added to the user game library"
+
 
 
 @app.route("/class/<int:id>")
