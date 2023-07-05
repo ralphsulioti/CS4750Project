@@ -258,7 +258,7 @@ def add_UGL():
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
 
-    cursor_obj.execute("INSERT INTO UserGameLibrary(UGL_UserID, UGL_GameID, UGL_Difficulty, UGL_Playtime, UGL_Achievements, UGL_Rating, UGL_Date_Added VALUES ('{userID}', '{gameID}', '{difficulty}', '{playtime}', '{achievements}', '{rating}', '{dateAdded}')")
+    cursor_obj.execute(f"INSERT INTO UserGameLibrary(UGL_UserID, UGL_GameID, UGL_Difficulty, UGL_Playtime, UGL_Achievements, UGL_Rating, UGL_Date_Added VALUES ('{userID}', '{gameID}', '{difficulty}', '{playtime}', '{achievements}', '{rating}', '{dateAdded}')")
     connection_obj.commit()
 
     connection_obj.close()
@@ -266,7 +266,23 @@ def add_UGL():
 
     return "Added to the user game library"
 
+@app.route("/add-fighting")
+    #?gameid=1&gamemodes=4&comboimportance=3
+def add_fighting():
+    gameid = str(request.args.get("gameid")).strip()
+    gamemodes = str(request.args.get("gamemodes")).strip()
+    comboimportance = str(request.args.get("comboimportance")).strip()
 
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute(f"INSERT INTO Fighting(Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES('{gameid}','{gamemodes}','{comboimportance}')")
+    connection_obj.commit()
+    output = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return "added fighting game"
 
 @app.route("/class/<int:id>")
 def class_(id):
