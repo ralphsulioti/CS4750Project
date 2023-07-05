@@ -247,20 +247,20 @@ def create_game():
 @app.route("/create-ugl")
 def create_ugl():
 
-    #http://127.0.0.1:5000/create-ugl?userid=1&gameid=1&difficulty=5&playtime=50&achievements=None&rating=5&date=2018
-    
-    userID = str(request.args.get("userid")).strip()
-    gameID = str(request.args.get("gameid")).strip()
+#/create-ugl?userid=1&gameid=1&difficulty=5&playtime=50&achievements=None&rating=5&date=2018
+
+    userid = str(request.args.get("userid")).strip()
+    gameid = str(request.args.get("gameid")).strip()
     difficulty = str(request.args.get("difficulty")).strip()
     playtime = str(request.args.get("playtime")).strip()
     achievements = str(request.args.get("achievements")).strip()
     rating = str(request.args.get("rating")).strip()
-    dateAdded = str(request.args.get("date")).strip()
+    date = str(request.args.get("date")).strip()
 
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
 
-    cursor_obj.execute(f"INSERT INTO UserGameLibrary(UGL_UserID, UGL_GameID, UGL_Difficulty, UGL_Playtime, UGL_Achievements, UGL_Rating, UGL_Date_Added VALUES ('{userID}', '{gameID}', '{difficulty}', '{playtime}', '{achievements}', '{rating}', '{dateAdded}')")
+    cursor_obj.execute(f"INSERT INTO UserGameLibrary (UGL_UserID, UGL_GameID, UGL_Difficulty, UGL_Playtime, UGL_Achievements, UGL_Rating, UGL_Date_Added) VALUES ('{userid}', '{gameid}', '{difficulty}', '{playtime}', '{achievements}', '{rating}', '{date}')")
     connection_obj.commit()
 
     connection_obj.close()
