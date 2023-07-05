@@ -244,6 +244,19 @@ def create_game():
     return "Created a new game"
 
 
+@app.route("/get-ugl")
+def get_ugl():
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute("SELECT * FROM Game LEFT OUTER JOIN UserGameLibrary ON Game.GameID=UserGameLibrary.UGLID ORDER BY GameID DESC")
+    output = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return render_template("get-ugl.html", ugl=output)
+
+
 @app.route("/create-ugl")
 def create_ugl():
 
@@ -261,6 +274,24 @@ def create_ugl():
     cursor_obj = connection_obj.cursor()
 
     cursor_obj.execute(f"INSERT INTO UserGameLibrary (UGL_UserID, UGL_GameID, UGL_Difficulty, UGL_Playtime, UGL_Achievements, UGL_Rating, UGL_Date_Added) VALUES ('{userid}', '{gameid}', '{difficulty}', '{playtime}', '{achievements}', '{rating}', '{date}')")
+    connection_obj.commit()
+
+    connection_obj.close()
+
+
+    return "Added to the user game library"
+
+@app.route("/create-wlg")
+def create_wlg():
+
+#?gameid=1&userid=1
+
+    gameid = str(request.args.get("gameid")).strip()
+    userid = str(request.args.get("userid")).strip()
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute(f"INSERT INTO WishListGame (WLG_GameID, WLG_UserID) VALUES ('{gameid}', '{userid}')")
     connection_obj.commit()
 
     connection_obj.close()
