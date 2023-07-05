@@ -281,6 +281,18 @@ def create_ugl():
 
     return "Added to the user game library"
 
+@app.route("/get-wlg")
+def get_wlg():
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute("SELECT * FROM Game WHERE Game.GameID IN (SELECT WLG_GameID FROM WishListGame WHERE WLG_UserID = 1)")
+    output = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return render_template("get-wlg.html", wlg=output)
+
 @app.route("/create-wlg")
 def create_wlg():
 
