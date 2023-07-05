@@ -2,20 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Navbar</title>
+    <title>Welcome to Game Library App</title>
     <link rel="stylesheet" type="text/css" href="static/style.css">
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+        .navbar-item {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar">
-    <a href="/" class="navbar-item">Home</a>
+    {% if not request.path == '/' %}
+        <a href="/" class="navbar-item">Home</a>
+    {% endif %}
+    {% if g.user %}
+        {% if g.user[2] == 'admin' %}
+            <a href="/admin-dashboard" class="navbar-item">Admin Dashboard</a>
+        {% else %}
+            <a href="/user-dashboard" class="navbar-item">User Dashboard</a>
+        {% endif %}
+        <a href="/logout" class="navbar-item">Logout</a>
+    {% else %}
+        <a href="/login" class="navbar-item">Login</a>
+        <a href="/register-user" class="navbar-item">Create Account</a>
+    {% endif %}
     <a href="/create-db" class="navbar-item">Create Database</a>
     <a href="/get-users" class="navbar-item">Get Users</a>
-    <a href="/create-user" class="navbar-item">Create User</a>
     <a href="/get-games" class="navbar-item">Get Games</a>
-    <a href="/contact" class="navbar-item">Contact</a>
-    <a href="/support" class="navbar-item">Support</a>
 </nav>
 
+<div class="container">
+    <h1>Welcome to "Game Library App"</h1>
+    <div class="button-container">
+        <a href="/login"><button>Login</button></a>
+        <a href="/register-user"><button>Create Account</button></a>
+    </div>
+</div>
 
 </body>
 </html>

@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, g
+from flask import Flask, render_template, request, g, session, redirect, url_for
 import sqlite3
+
 
 app = Flask(__name__)
 
@@ -7,12 +8,31 @@ app = Flask(__name__)
 @app.before_request
 def before_request():
     g.db = sqlite3.connect('CS4750Project.db')
+    g.user = None  # Global variable to store the current user
+
+    # Check if user is logged in and retrieve user details
+    if 'user_id' in session:
+        cursor_obj = g.db.cursor()
+        cursor_obj.execute("SELECT * FROM User WHERE UserID = ?", (session['user_id'],))
+        g.user = cursor_obj.fetchone()
+
+@app.route("/admin-dashboard")
+def admin_dashboard():
+    if g.user and g.user[2] == 'admin':
+        # Render admin dashboard
+        return render_template("admin-dashboard.html")
+    else:
+        return "Access denied."
+
+@app.route("/user-dashboard")
+def user_dashboard():
+    if g.user:
+        # Render user dashboard
+        return render_template("user-dashboard.html")
+    else:
+        return "Access denied."
 
 
-@app.teardown_request
-def teardown_request(exception):
-    if hasattr(g, 'db'):
-        g.db.close()
 
 
 @app.route("/")
@@ -20,6 +40,31 @@ def index_page():
     return render_template("index.html")
 
 
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        name = request.form['user_name'].strip()
+
+        connection_obj = sqlite3.connect('CS4750Project.db')
+        cursor_obj = connection_obj.cursor()
+
+        cursor_obj.execute("SELECT * FROM User WHERE User_Name = ?", (name,))
+        user = cursor_obj.fetchone()
+
+        connection_obj.close()
+
+        if user:
+            session['user_id'] = user[0]
+            return redirect(url_for('index_page'))
+
+        return "Invalid username."
+
+    return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('index_page'))
 
 @app.route("/create-db")
 def create_db():
@@ -42,9 +87,13 @@ def create_db():
     cursor_obj.execute("DROP TABLE IF EXISTS RPG")
 
     # Creating User table
+    # Inside the create_db function
+
+    # Add User_Type column
     table = """ CREATE TABLE User (
         UserID INTEGER PRIMARY KEY AUTOINCREMENT,
-        User_Name TEXT NOT NULL
+        User_Name TEXT NOT NULL,
+        User_Type TEXT NOT NULL
     ); """
     cursor_obj.execute(table)
 
@@ -184,6 +233,27 @@ def create_db():
 
     return "DB is fresh and ready"
 
+@app.route("/register-user", methods=['GET', 'POST'])
+def register_user():
+    if request.method == 'POST':
+        name = request.form['user_name'].strip()
+        user_type = request.form['user_type']
+
+        if name == '':
+            return "Name cannot be empty."
+
+        connection_obj = sqlite3.connect('CS4750Project.db')
+        cursor_obj = connection_obj.cursor()
+
+        cursor_obj.execute(f"INSERT INTO User (User_Name, User_Type) VALUES (?, ?)", (name, user_type))
+        connection_obj.commit()
+
+        connection_obj.close()
+
+        return "User registered successfully."
+
+    return render_template("register-user.html")
+
 
 @app.route("/get-users")
 def get_users():
@@ -237,29 +307,37 @@ def get_games():
     return render_template("get-games.html", games=output)
 
 
-@app.route("/create-game")
+@app.route("/create-game", methods=['GET', 'POST'])
 def create_game():
-    name = str(request.args.get("Game_Name")).strip()
-    developer = str(request.args.get("Game_Developer")).strip()
-    player_capacity = int(request.args.get("Game_Player_Capacity"))
-    release_date = str(request.args.get("Game_Release_Date")).strip()
-    price = float(request.args.get("Game_Price"))
-    platform = str(request.args.get("Game_Platform")).strip()
+    if request.method == 'POST':
+        name = request.form['Game_Name'].strip()
+        developer = request.form['Game_Developer'].strip()
+        player_capacity = int(request.form['Game_Player_Capacity'])
+        release_date = request.form['Game_Release_Date'].strip()
+        price = float(request.form['Game_Price'])
+        platform = request.form['Game_Platform'].strip()
 
-    if name == '' or price == '':
-        return "Name and price cannot be empty"
+        if name == '' or price == '':
+            return "Name and price cannot be empty"
 
-    connection_obj = sqlite3.connect('CS4750Project.db')
-    cursor_obj = connection_obj.cursor()
+        connection_obj = sqlite3.connect('CS4750Project.db')
+        cursor_obj = connection_obj.cursor()
 
-    cursor_obj.execute(
-        "INSERT INTO Game (Game_Name, Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES (?, ?, ?, ?, ?, ?)",
-        (name, developer, player_capacity, release_date, price, platform))
-    connection_obj.commit()
+        cursor_obj.execute(
+            "INSERT INTO Game (Game_Name, Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES (?, ?, ?, ?, ?, ?)",
+            (name, developer, player_capacity, release_date, price, platform))
+        connection_obj.commit()
 
-    connection_obj.close()
+        connection_obj.close()
 
-    return "Created a new game"
+        return "Created a new game"
+
+    return render_template("create-game.html")
+
+@app.route('/create-account')
+def create_account():
+    # Add your code to render the create account page
+    return render_template('create-account.html')
 
 
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Class Details</title>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .class-info {
+            margin-bottom: 20px;
+        }
+        .class-info p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Class Details</h1>
+        <div class="class-info">
+            <p><strong>Class Name:</strong> {{ className }}</p>
+            <p><strong>Instructor:</strong> {{ instructor }}</p>
+            <p><strong>Location:</strong> {{ location }}</p>
+            <p><strong>Date:</strong> {{ date }}</p>
+            <p><strong>Time:</strong> {{ time }}</p>
+        </div>
+        <a href="/create-user">Create User</a>
+    </div>
+</body>
+</html>
