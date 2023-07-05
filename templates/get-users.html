@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Navbar</title>
+    <title>List of Users</title>
     <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 <body>
-    {% include 'navbar.html' %}
+
 
     <h2>List of all users</h2>
     <br/>
@@ -13,5 +13,7 @@
         <a href="/user/{{i[0]}}">{{i[1]}}</a>
         <hr/>
     {% endfor %}
+
+    <a href="/create-user">Add User</a> <!-- Add this line for creating a new user -->
 </body>
 </html>

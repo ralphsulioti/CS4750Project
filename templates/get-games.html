@@ -1,34 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Navbar</title>
+    <title>List of Games</title>
     <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 <body>
-    {% include 'navbar.html' %}
 
-    <h2>List of all games</h2>
+    <h2>List of All Games</h2>
     <br/>
-    {% for i in games %}
-        <a href="/game/{{i[0]}}">{{i[1]}}</a>
-        <hr/>
-    {% endfor %}
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Navbar</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css">
-</head>
-<body>
-    {% include 'navbar.html' %}
+    <div class="game-list">
+        {% for game in games %}
+            <div class="game-item">
+                <a href="/game/{{ game[0] }}">{{ game[1] }}</a>
+                <hr/>
+            </div>
+        {% endfor %}
+    </div>
 
-    <h2>List of all games</h2>
-    <br/>
-    {% for i in games %}
-        <a href="/game/{{i[0]}}">{{i[1]}}</a>
-        <hr/>
-    {% endfor %}
+    <a href="/create-game" class="create-game-button">Create Game</a>
 </body>
 </html>

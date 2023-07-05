@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Details</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+<body>
+
+    <h2>User Details</h2>
+    <br/>
+    <p>User ID: {{ usr_info[0] }}</p>
+    <p>Username: {{ usr_info[1] }}</p>
+    <hr/>
+
+    <h3>Classes:</h3>
+    {% for cls in classes %}
+        <p>{{ cls[1] }}</p>
+    {% endfor %}
+</body>
+</html>

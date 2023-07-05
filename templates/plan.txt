@@ -1,0 +1,7 @@
+
+# Creating two kind of user : admin and user with login credentials
+# for the user list all the users name will appears for the admin only
+# user can choose games from game library and add to their own library from the admin library
+# edit game from admin library can only edit delete or add by
+#  admin and user can use these features only for their library
+# Everyrthing should be stored on the sqlite database and we should have expected results for all queries
