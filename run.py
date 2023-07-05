@@ -7,7 +7,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def index_page():
-    return "index page: under construction"
+    return render_template("index.html")
+
 
 
 @app.route("/create-db")
@@ -196,7 +197,7 @@ def create_user():                                                       # Creat
 
     name = str(request.args.get("name")).strip()
     if name == '':
-        return "Name cannot be empty"
+        return "Name cannot be empty."
 
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()

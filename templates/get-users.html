@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Navbar</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
 <body>
+    {% include 'navbar.html' %}
+
     <h2>List of all users</h2>
     <br/>
     {% for i in users %}

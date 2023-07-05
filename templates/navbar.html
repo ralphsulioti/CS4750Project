@@ -15,20 +15,3 @@
     {% endfor %}
 </body>
 </html>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Navbar</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css">
-</head>
-<body>
-    {% include 'navbar.html' %}
-
-    <h2>List of all games</h2>
-    <br/>
-    {% for i in games %}
-        <a href="/game/{{i[0]}}">{{i[1]}}</a>
-        <hr/>
-    {% endfor %}
-</body>
-</html>
