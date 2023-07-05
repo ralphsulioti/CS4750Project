@@ -4,7 +4,6 @@ import sqlite3
 app = Flask(__name__)
 
 
-
 @app.route("/")
 def index_page():
     return "index page: under construction"
@@ -12,7 +11,6 @@ def index_page():
 
 @app.route("/create-db")
 def create_db():
-
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
 
@@ -170,29 +168,162 @@ def create_db():
     ); """
     cursor_obj.execute(table)
 
-
-
     connection_obj.close()
 
     return "DB is fresh and ready"
 
 
-@app.route("/get-users")
-def get_users():
+@app.route("/add-fighting")
+# ?gameid=1&gamemodes=4&comboimportance=3
+def add_fighting():
+    gameid = str(request.args.get("gameid")).strip()
+    gamemodes = str(request.args.get("gamemodes")).strip()
+    comboimportance = str(request.args.get("comboimportance")).strip()
 
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
-    
+
+    cursor_obj.execute(
+        "INSERT INTO Fighting(Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES('{gameid}','{gamemodes}','{comboimportance}')")
+    output = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return "added fighting game"
+
+
+@app.route("/add-horror")
+# ?gameid=1&jumpscarerating=4&suspenselevel=3
+def add_horror():
+    gameid = str(request.args.get("gameid")).strip()
+    jumpscarerating = str(request.args.get("jumpscarerating")).strip()
+    suspenselevel = str(request.args.get("suspenselevel")).strip()
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute(
+        "INSERT INTO Horror(Horror_GameID, Jump_Scare_Rating, Suspense_Level) VALUES('{gameid}','{jumpscarerating}','{suspenselevel}')")
+    output = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return "added horror game"
+
+
+@app.route("/add-racing")
+# ?gameid=1&realistic=4&numofvehicles=3&numoftracks=10
+def add_racing():
+    gameid = str(request.args.get("gameid")).strip()
+    realistic = str(request.args.get("realistic")).strip()
+    numofvehicles = str(request.args.get("numofvehicles")).strip()
+    numoftracks = str(request.args.get("numoftracks")).strip()
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute(
+        "INSERT INTO Racing(Racing_GameID, Realistic, Num_of_Vehicles, Num_of_Tracks) VALUES('{gameid}','{realistic}','{numofvehicles}'),'{numoftracks}'")
+    output = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return "added racing game"
+
+
+@app.route("/add-platformer")
+# ?gameid=1&momentumbased=4&totallevels=3&totalenvironments=10
+def add_platformer():
+    gameid = str(request.args.get("gameid")).strip()
+    momentumbased = str(request.args.get("momentumbased")).strip()
+    totallevels = str(request.args.get("totallevels")).strip()
+    totalenvironments = str(request.args.get("totalenvironments")).strip()
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute(
+        "INSERT INTO Platformer(Platformer_GameID, Momentum_Based, Total_Levels, Total_Environment) VALUES('{gameid}','{momentumbased}','{totallevels}'),'{totalenvironments}'")
+    output = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return "added platformer game"
+
+
+@app.route("/add-shooter")
+# ?gameid=1&perspective=4&realistic=3&ranked=10&gamemode=4
+def add_shooter():
+    gameid = str(request.args.get("gameid")).strip()
+    perspective = str(request.args.get("perspective")).strip()
+    realistic = str(request.args.get("realistic")).strip()
+    ranked = str(request.args.get("ranked")).strip()
+    gamemode = str(request.args.get("gamemode")).strip()
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute(
+        "INSERT INTO Shooter(Shooter_GameID, Perspective, Realistic, Ranked, Game_Mode) VALUES('{gameid}','{perspective}','{realistic}'),'{ranked}','{gamemode}'")
+    output = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return "added shooter game"
+
+
+@app.route("/add-mmorpg")
+# ?gameid=1&paytowin=4&mmorpgclass=3
+def add_mmorpg():
+    gameid = str(request.args.get("gameid")).strip()
+    paytowin = str(request.args.get("paytowin")).strip()
+    mmorpgclass = str(request.args.get("mmorpgclass")).strip()
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute(
+        "INSERT INTO MMORPG(MMORPG_GameID, Pay_to_Win, MMORPG_Class) VALUES('{gameid}','{paytowin}','{mmorpgclass}')")
+    output = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return "added mmorpg game"
+
+
+@app.route("/add-sports")
+# ?gameid=1&type=4&realistic=3
+def add_sports():
+    gameid = str(request.args.get("gameid")).strip()
+    type = str(request.args.get("type")).strip()
+    realistic = str(request.args.get("realistic")).strip()
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute("INSERT INTO Sports(Sports_GameID, Type, Realistic) VALUES('{gameid}','{type}','{realistic}')")
+    output = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return "added sports game"
+
+
+@app.route("/get-users")
+def get_users():
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
     cursor_obj.execute("SELECT * FROM User ORDER BY UserID DESC")
     output = cursor_obj.fetchall()
 
     connection_obj.close()
 
-    return render_template("get-users.html", users = output)
+    return render_template("get-users.html", users=output)
 
 
 @app.route("/create-user")
-def create_user():                                                       # Creates a user
+def create_user():  # Creates a user
 
     name = str(request.args.get("name")).strip()
     if name == '':
@@ -200,7 +331,7 @@ def create_user():                                                       # Creat
 
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
-    
+
     cursor_obj.execute(f"INSERT INTO User (User_Name) VALUES ('{name}')")
     connection_obj.commit()
 
@@ -211,32 +342,33 @@ def create_user():                                                       # Creat
 
 @app.route("/get-games")
 def get_games():
-
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
-    
+
     cursor_obj.execute("SELECT * FROM Game ORDER BY GameID DESC")
     output = cursor_obj.fetchall()
 
     connection_obj.close()
 
-    return render_template("get-games.html", games = output)
+    return render_template("get-games.html", games=output)
 
-# THIS WORKS BUT IT DOESN'T STORE THE URL DATA (Ex: it stores "name" instead of "Valorant")
+
 @app.route("/create-game")
 def create_game():
+    name = str(request.args.get("Game_Name")).strip()
+    # developer = str(request.args.get("Game_Developer")).strip()
+    # player_capacity = str(request.args.get("Game_Player_Capacity")).strip()
+    # release_date = str(request.args.get("Game_Release_Date")).strip()
+    # price = str(request.args.get("Game_Price")).strip()
+    # platform = str(request.args.get("Game_Platform")).strip()
+    # if name == '' or price == '':
+    #   return "Name and price cannot be empty"
 
-    name = str(request.args.get("name")).strip()
-    developer = str(request.args.get("Game_Developer")).strip()
-    player_capacity = str(request.args.get("Game_Player_Capacity")).strip()
-    release_date = str(request.args.get("Game_Release_Date")).strip()
-    price = str(request.args.get("Game_Price")).strip()
-    platform = str(request.args.get("Game_Platform")).strip()
-
-    connection_obj = sqlite3.connect('CS4750Project.db')
+    connection_obj = sqlite3.connect('project.db')
     cursor_obj = connection_obj.cursor()
-    
-    cursor_obj.execute(f"INSERT INTO Game (Game_Name, Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES ('{name}', '{developer}', '{player_capacity}', '{release_date}', '{price}', '{platform}')")
+
+    cursor_obj.execute("INSERT INTO Game (Game_Name) VALUES ('{name}')")
+    #                       , Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES ('{name}', '{developer}', '{player_capacity}', '{release_date}', '{price}', '{platform}')")
     connection_obj.commit()
 
     connection_obj.close()
@@ -244,89 +376,48 @@ def create_game():
     return "Created a new game"
 
 
-@app.route("/add-UGL")
-def add_UGL():
-
-    userID = str(request.args.get("userid")).strip()
-    gameID = str(request.args.get("gameid")).strip()
-    difficulty = str(request.args.get("difficulty")).strip()
-    playtime = str(request.args.get("playtime")).strip()
-    achievements = str(request.args.get("achievements")).strip()
-    rating = str(request.args.get("rating")).strip()
-    dateAdded = str(request.args.get("date")).strip()
-
-    connection_obj = sqlite3.connect('CS4750Project.db')
-    cursor_obj = connection_obj.cursor()
-
-    cursor_obj.execute(f"INSERT INTO UserGameLibrary(UGL_UserID, UGL_GameID, UGL_Difficulty, UGL_Playtime, UGL_Achievements, UGL_Rating, UGL_Date_Added VALUES ('{userID}', '{gameID}', '{difficulty}', '{playtime}', '{achievements}', '{rating}', '{dateAdded}')")
-    connection_obj.commit()
-
-    connection_obj.close()
-
-
-    return "Added to the user game library"
-
-@app.route("/add-fighting")
-    #?gameid=1&gamemodes=4&comboimportance=3
-def add_fighting():
-    gameid = str(request.args.get("gameid")).strip()
-    gamemodes = str(request.args.get("gamemodes")).strip()
-    comboimportance = str(request.args.get("comboimportance")).strip()
-
-    connection_obj = sqlite3.connect('CS4750Project.db')
-    cursor_obj = connection_obj.cursor()
-
-    cursor_obj.execute(f"INSERT INTO Fighting(Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES('{gameid}','{gamemodes}','{comboimportance}')")
-    connection_obj.commit()
-    output = cursor_obj.fetchall()
-
-    connection_obj.close()
-
-    return "added fighting game"
-
 @app.route("/class/<int:id>")
 def class_(id):
-
     connection_obj = sqlite3.connect('project.db')
     cursor_obj = connection_obj.cursor()
-    
+
     cursor_obj.execute(f"SELECT * FROM classes WHERE id = {id} LIMIT 1")
     cls_info = cursor_obj.fetchone()
 
     if cls_info is None:
         return "No class found"
 
-    cursor_obj.execute(f"SELECT * FROM users WHERE id IN ( SELECT user_id FROM user_class_reln WHERE class_id = {cls_info[0]} )")
+    cursor_obj.execute(
+        f"SELECT * FROM users WHERE id IN ( SELECT user_id FROM user_class_reln WHERE class_id = {cls_info[0]} )")
     users = cursor_obj.fetchall()
 
     connection_obj.close()
 
-    return render_template("class.html", cls_info = cls_info, users = users)
+    return render_template("class.html", cls_info=cls_info, users=users)
 
 
 @app.route("/user/<int:id>")
 def user(id):
-
     connection_obj = sqlite3.connect('project.db')
     cursor_obj = connection_obj.cursor()
-    
+
     cursor_obj.execute(f"SELECT * FROM users WHERE id = {id} LIMIT 1")
     usr_info = cursor_obj.fetchone()
 
     if usr_info is None:
         return "No user found"
 
-    cursor_obj.execute(f"SELECT * FROM classes WHERE id IN ( SELECT class_id FROM user_class_reln WHERE user_id = {usr_info[0]} )")
+    cursor_obj.execute(
+        f"SELECT * FROM classes WHERE id IN ( SELECT class_id FROM user_class_reln WHERE user_id = {usr_info[0]} )")
     classes = cursor_obj.fetchall()
 
     connection_obj.close()
 
-    return render_template("user.html", usr_info = usr_info, classes = classes)
+    return render_template("user.html", usr_info=usr_info, classes=classes)
 
 
 @app.route("/connect")
 def connect():
-
     class_id = int(request.args.get("class_id"))
     user_id = int(request.args.get("user_id"))
 
@@ -344,9 +435,11 @@ def connect():
         connection_obj.commit()
     except:
         return "Either user_id or class_id doens't exist"
-    
+
     return "Done!"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
