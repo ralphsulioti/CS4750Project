@@ -1,22 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>List of Games</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <title>Game List</title>
 </head>
+
+<style>
+        /* Styling for the user library table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+
+        /* Styling for the main content */
+        h1 {
+            margin-top: 20px;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        #add-game-form {
+            display: none;
+        }
+    </style>
+
 <body>
 
-    <h2>List of All Games</h2>
-    <br/>
-    <div class="game-list">
-        {% for game in games %}
-            <div class="game-item">
-                <a href="/game/{{ game[0] }}">{{ game[1] }}</a>
-                <hr/>
-            </div>
-        {% endfor %}
-    </div>
+   {% include 'navbar.html' %}
 
-    <a href="/create-game" class="create-game-button">Create Game</a>
+    <h1>Game List</h1>
+    <table>
+        <tr>
+            <th>Game ID</th>
+            <th>Name</th>
+            <th>Genre</th>
+            <th>Platform</th>
+            <th>Release Date</th>
+            <th>Price</th>
+        </tr>
+        {% for game in games %}
+        <tr>
+            <td>{{ game[0] }}</td>
+            <td>{{ game[1] }}</td>
+            <td>{{ game[2] }}</td>
+            <td>{{ game[3] }}</td>
+            <td>{{ game[4] }}</td>
+            <td>{{ game[5] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>

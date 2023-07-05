@@ -1,0 +1,37 @@
+<!-- import-game.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Import Games</title>
+</head>
+<body>
+    <h1>Import Games</h1>
+    <form action="/import-games" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <button type="submit">Import Games</button>
+    </form>
+
+    <h2>Games in CSV</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Developer</th>
+            <th>Player Capacity</th>
+            <th>Release Date</th>
+            <th>Price</th>
+            <th>Platform</th>
+        </tr>
+        {% for game in games %}
+        <tr>
+            <td>{{ game.name }}</td>
+            <td>{{ game.developer }}</td>
+            <td>{{ game.player_capacity }}</td>
+            <td>{{ game.release_date }}</td>
+            <td>{{ game.price }}</td>
+            <td>{{ game.platform }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

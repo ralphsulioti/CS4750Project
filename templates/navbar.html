@@ -1,18 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Navbar</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css">
-</head>
-<body>
-    {% include 'navbar.html' %}
+<!-- navbar.html -->
+<style>
+    /* Styling for the navbar */
+    nav {
+        background-color: #f2f2f2;
+        padding: 10px;
+    }
 
-    <h2>List of all games</h2>
-    <br/>
-    {% for i in games %}
-        <a href="/game/{{i[0]}}">{{i[1]}}</a>
-        <hr/>
-    {% endfor %}
-</body>
-</html>
+    nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: flex-start;
+    }
 
+    nav ul li {
+        margin-right: 10px;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: #333;
+        padding: 5px;
+    }
+</style>
+
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/get-games">Get Games</a></li>
+        <li><a href="/view-library">View Library</a></li>
+        <li><a href="/get-users">View Users</a></li>
+        <li><a href="/create-game">Add Game</a></li>
+    </ul>
+</nav>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Library</title>
+</head>
+<body>
+ {% include 'navbar.html' %}
+
+
+    <h1>Game Library</h1>
+    <table>
+        <tr>
+            <th>Game ID</th>
+            <th>Game Name</th>
+            <th>Developer</th>
+            <th>Player Capacity</th>
+            <th>Release Date</th>
+            <th>Price</th>
+            <th>Platform</th>
+        </tr>
+        {% for game in games %}
+        <tr>
+            <td>{{ game[0] }}</td>
+            <td>{{ game[1] }}</td>
+            <td>{{ game[2] }}</td>
+            <td>{{ game[3] }}</td>
+            <td>{{ game[4] }}</td>
+            <td>{{ game[5] }}</td>
+            <td>{{ game[6] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

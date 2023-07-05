@@ -1,73 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Welcome to Game Library App</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <title>Index</title>
     <style>
-        /* Add your custom CSS styles here */
-        body {
-            font-family: Arial, sans-serif;
+        /* Styling for the user library table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
         }
-        .navbar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
             background-color: #f2f2f2;
-            padding: 10px;
         }
-        .navbar-item {
-            margin: 0 10px;
-            text-decoration: none;
-            color: #333;
-        }
-        .container {
-            text-align: center;
-            margin-top: 50px;
-        }
+
+
+        /* Styling for the main content */
         h1 {
-            margin-bottom: 20px;
-        }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             margin-top: 20px;
         }
-        button {
-            padding: 10px 20px;
-            margin: 0 10px;
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        #add-game-form {
+            display: none;
         }
     </style>
 </head>
 <body>
-<nav class="navbar">
-    {% if not request.path == '/' %}
-        <a href="/" class="navbar-item">Home</a>
-    {% endif %}
-    {% if g.user %}
-        {% if g.user[2] == 'admin' %}
-            <a href="/admin-dashboard" class="navbar-item">Admin Dashboard</a>
-        {% else %}
-            <a href="/user-dashboard" class="navbar-item">User Dashboard</a>
-        {% endif %}
-        <a href="/logout" class="navbar-item">Logout</a>
-    {% else %}
-        <a href="/login" class="navbar-item">Login</a>
-        <a href="/register-user" class="navbar-item">Create Account</a>
-    {% endif %}
-    <a href="/create-db" class="navbar-item">Create Database</a>
-    <a href="/get-users" class="navbar-item">Get Users</a>
-    <a href="/get-games" class="navbar-item">Get Games</a>
-</nav>
 
-<div class="container">
-    <h1>Welcome to "Game Library App"</h1>
-    <div class="button-container">
-        <a href="/login"><button>Login</button></a>
-        <a href="/register-user"><button>Create Account</button></a>
-    </div>
-</div>
+{% include 'navbar.html' %}
 
+<h1>Welcome to the CS4750 Project</h1>
+
+<h2>User Library</h2>
+<table>
+    <tr>
+        <th>Game Title</th>
+        <th>Genre</th>
+        <th>Platform</th>
+        <th>Release Date</th>
+        <th>Price</th>
+        <th>Add to User Library</th>
+    </tr>
+    <!-- Repeated rows can be dynamically generated based on the user's library -->
+    {% for game in user_library %}
+        <tr>
+            <td><a href="/game/{{ game.id }}">{{ game.title }}</a></td>
+            <td>{{ game.genre }}</td>
+            <td>{{ game.platform }}</td>
+            <td>{{ game.release_date }}</td>
+            <td>{{ game.price }}</td>
+            <td><button class="add-to-library-btn" data-game-id="{{ game.id }}">Add to Library</button></td>
+        </tr>
+    {% endfor %}
+</table>
+
+<!-- Add Game Form -->
+<h2>Add New Game</h2>
+<form id="add-game-form">
+    <label for="name">Game Title:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="Game_Genre">Genre:</label>
+    <input type="text" id="Game_Genre" name="Game_Genre" required>
+
+    <label for="Game_Platform">Platform:</label>
+    <input type="text" id="Game_Platform" name="Game_Platform" required>
+
+    <label for="Game_Release_Date">Release Date:</label>
+    <input type="text" id="Game_Release_Date" name="Game_Release_Date" required>
+
+    <label for="Game_Price">Price:</label>
+    <input type="text" id="Game_Price" name="Game_Price" required>
+
+    <input type="submit" value="Add Game">
+</form>
+
+<!-- Add Game Button -->
+<button id="add-game-btn">Add Game</button>
+
+<script>
+    // Function to handle the add game button click
+    document.getElementById("add-game-btn").addEventListener("click", function() {
+        var addGameForm = document.getElementById("add-game-form");
+        addGameForm.style.display = "block";
+    });
+
+    // Function to handle the form submission
+    document.getElementById("add-game-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        // Get the form values
+        var name = document.getElementById("name").value;
+        var genre = document.getElementById("Game_Genre").value;
+        var platform = document.getElementById("Game_Platform").value;
+        var releaseDate = document.getElementById("Game_Release_Date").value;
+        var price = document.getElementById("Game_Price").value;
+
+        // Create a new game object
+        var game = {
+            name: name,
+            genre: genre,
+            platform: platform,
+            releaseDate: releaseDate,
+            price: price
+        };
+
+        // Make an AJAX request to add the game
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/add-game", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                // Display the success message
+                var successMessage = document.createElement("div");
+                successMessage.textContent = "Game added successfully!";
+                document.body.appendChild(successMessage);
+
+                // Clear the form values
+                document.getElementById("name").value = "";
+                document.getElementById("Game_Genre").value = "";
+                document.getElementById("Game_Platform").value = "";
+                document.getElementById("Game_Release_Date").value= "";
+                document.getElementById("Game_Price").value = "";
+
+                // Hide the add game form
+                var addGameForm = document.getElementById("add-game-form");
+                addGameForm.style.display = "none";
+
+                // Reload the user library
+                loadUserLibrary();
+            }
+        };
+        xhr.send(JSON.stringify(game));
+    });
+
+    // Function to handle the add to library button click
+    document.addEventListener("click", function(event) {
+        if (event.target.classList.contains("add-to-library-btn")) {
+            var gameId = event.target.getAttribute("data-game-id");
+
+            // Make an AJAX request to add the game to user library
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/add-to-library", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    // Display the success message
+                    var successMessage = document.createElement("div");
+                    successMessage.textContent = "Game added to library!";
+                    document.body.appendChild(successMessage);
+
+                    // Reload the user library
+                    loadUserLibrary();
+                }
+            };
+            xhr.send(JSON.stringify({ gameId: gameId }));
+        }
+    });
+
+    // Function to load the user library dynamically
+    function loadUserLibrary() {
+        // Make an AJAX request to get the user library data
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/get-user-library", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                // Update the user library table with the new data
+                var userLibraryTable = document.querySelector("table");
+                var newTbody = document.createElement("tbody");
+                newTbody.innerHTML = xhr.responseText;
+                userLibraryTable.replaceChild(newTbody, userLibraryTable.tBodies[0]);
+            }
+        };
+        xhr.send();
+    }
+
+    // Load the user library on page load
+    loadUserLibrary();
+</script>
 </body>
 </html>

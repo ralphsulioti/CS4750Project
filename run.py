@@ -1,38 +1,8 @@
-from flask import Flask, render_template, request, g, session, redirect, url_for
+from flask import Flask, render_template, request
 import sqlite3
+import csv
 
-
-app = Flask(__name__)
-
-
-@app.before_request
-def before_request():
-    g.db = sqlite3.connect('CS4750Project.db')
-    g.user = None  # Global variable to store the current user
-
-    # Check if user is logged in and retrieve user details
-    if 'user_id' in session:
-        cursor_obj = g.db.cursor()
-        cursor_obj.execute("SELECT * FROM User WHERE UserID = ?", (session['user_id'],))
-        g.user = cursor_obj.fetchone()
-
-@app.route("/admin-dashboard")
-def admin_dashboard():
-    if g.user and g.user[2] == 'admin':
-        # Render admin dashboard
-        return render_template("admin-dashboard.html")
-    else:
-        return "Access denied."
-
-@app.route("/user-dashboard")
-def user_dashboard():
-    if g.user:
-        # Render user dashboard
-        return render_template("user-dashboard.html")
-    else:
-        return "Access denied."
-
-
+app = Flask(__name__,template_folder='templates')
 
 
 @app.route("/")
@@ -40,35 +10,9 @@ def index_page():
     return render_template("index.html")
 
 
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        name = request.form['user_name'].strip()
-
-        connection_obj = sqlite3.connect('CS4750Project.db')
-        cursor_obj = connection_obj.cursor()
-
-        cursor_obj.execute("SELECT * FROM User WHERE User_Name = ?", (name,))
-        user = cursor_obj.fetchone()
-
-        connection_obj.close()
-
-        if user:
-            session['user_id'] = user[0]
-            return redirect(url_for('index_page'))
-
-        return "Invalid username."
-
-    return render_template("login.html")
-
-@app.route("/logout")
-def logout():
-    session.pop('user_id', None)
-    return redirect(url_for('index_page'))
-
 @app.route("/create-db")
 def create_db():
-    connection_obj = sqlite3.connect('CS4750Project.db')
+    connection_obj = sqlite3.connect('path/to/CS4750Project.db')
     cursor_obj = connection_obj.cursor()
 
     # Dropping all old tables
@@ -87,13 +31,9 @@ def create_db():
     cursor_obj.execute("DROP TABLE IF EXISTS RPG")
 
     # Creating User table
-    # Inside the create_db function
-
-    # Add User_Type column
     table = """ CREATE TABLE User (
         UserID INTEGER PRIMARY KEY AUTOINCREMENT,
-        User_Name TEXT NOT NULL,
-        User_Type TEXT NOT NULL
+        User_Name TEXT NOT NULL
     ); """
     cursor_obj.execute(table)
 
@@ -233,27 +173,6 @@ def create_db():
 
     return "DB is fresh and ready"
 
-@app.route("/register-user", methods=['GET', 'POST'])
-def register_user():
-    if request.method == 'POST':
-        name = request.form['user_name'].strip()
-        user_type = request.form['user_type']
-
-        if name == '':
-            return "Name cannot be empty."
-
-        connection_obj = sqlite3.connect('CS4750Project.db')
-        cursor_obj = connection_obj.cursor()
-
-        cursor_obj.execute(f"INSERT INTO User (User_Name, User_Type) VALUES (?, ?)", (name, user_type))
-        connection_obj.commit()
-
-        connection_obj.close()
-
-        return "User registered successfully."
-
-    return render_template("register-user.html")
-
 
 @app.route("/get-users")
 def get_users():
@@ -261,84 +180,158 @@ def get_users():
     cursor_obj = connection_obj.cursor()
 
     cursor_obj.execute("SELECT * FROM User ORDER BY UserID DESC")
-    output = cursor_obj.fetchall()
+    users = cursor_obj.fetchall()
+
+    # Get the game library description and game list URL
+    game_library_description = "This is your game library description."
+    game_list_url = "/get-games"  # Replace with the appropriate URL for the game list page
 
     connection_obj.close()
 
-    return render_template("get-users.html", users=output)
+    return render_template("user-list.html", users=users, game_library_description=game_library_description, game_list_url=game_list_url)
 
 
-@app.route("/create-user", methods=['GET', 'POST'])
+
+@app.route("/create-user", methods=["POST"])
 def create_user():
-    global user_counter  # Access the global counter
+    data = request.get_json()
+    name = data.get("name").strip()
 
-    if request.method == 'POST':
-        name = request.form['user_name'].strip()
+    if name == '':
+        return "Name cannot be empty"
 
-        if name == '':
-            return "Name cannot be empty."
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
 
-        connection_obj = sqlite3.connect('CS4750Project.db')
-        cursor_obj = connection_obj.cursor()
+    cursor_obj.execute("INSERT INTO User (User_Name) VALUES (?)", (name,))
+    connection_obj.commit()
 
-        cursor_obj.execute(f"INSERT INTO User (User_Name) VALUES ('{name}')")
-        connection_obj.commit()
+    connection_obj.close()
 
-        user_id = user_counter  # Assign the current user number
-        user_counter += 1  # Increment the counter for the next user
+    return "User created successfully"
 
-        connection_obj.close()
 
-        return f"Created a new user. User ID: {user_id}"
 
-    return render_template("create-user.html")
+@app.route("/delete-user", methods=["POST"])
+def delete_user():
+    data = request.get_json()
+    user_id = data.get("userId")
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute(f"DELETE FROM User WHERE User_ID = ?", (user_id,))
+    connection_obj.commit()
+
+    connection_obj.close()
+
+    return "User deleted successfully"
 
 
 @app.route("/get-games")
 def get_games():
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
-
     cursor_obj.execute("SELECT * FROM Game ORDER BY GameID DESC")
+    games = cursor_obj.fetchall()
+    connection_obj.close()
+
+    return render_template("get-games.html", games=games)
+
+
+
+# THIS WORKS BUT IT DOESN'T STORE THE URL DATA (Ex: it stores "name" instead of "Valorant")
+@app.route("/create-game", methods=["GET", "POST"])
+def create_game():
+    if request.method == "POST":
+        # Retrieve the game details from the request
+        name = request.form.get("name")
+        developer = request.form.get("Game_Developer")
+        player_capacity = request.form.get("Game_Player_Capacity")
+        release_date = request.form.get("Game_Release_Date")
+        price = request.form.get("Game_Price")
+        platform = request.form.get("Game_Platform")
+
+        # Insert the game into the database (replace with your database logic)
+        connection_obj = sqlite3.connect('CS4750Project.db')
+        cursor_obj = connection_obj.cursor()
+        cursor_obj.execute(
+            cursor_obj.execute(
+                "INSERT INTO Game (Game_Name, Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES (?, ?, ?, ?, ?, ?)",
+                (name, developer, player_capacity, release_date, price, platform)
+            )
+
+        )
+        connection_obj.commit()
+        connection_obj.close()
+
+    return render_template("create-game.html")
+
+
+
+
+@app.route("/add-UGL")
+def add_UGL():
+    userID = str(request.args.get("userid")).strip()
+    gameID = str(request.args.get("gameid")).strip()
+    difficulty = str(request.args.get("difficulty")).strip()
+    playtime = str(request.args.get("playtime")).strip()
+    achievements = str(request.args.get("achievements")).strip()
+    rating = str(request.args.get("rating")).strip()
+    dateAdded = str(request.args.get("date")).strip()
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute(
+        f"INSERT INTO UserGameLibrary (UGL_UserID, UGL_GameID, UGL_Difficulty, UGL_Playtime, UGL_Achievements, UGL_Rating, UGL_Date_Added) VALUES ('{userID}', '{gameID}', '{difficulty}', '{playtime}', '{achievements}', '{rating}', '{dateAdded}')")
+    connection_obj.commit()
+
+    connection_obj.close()
+
+    return "Added to the user game library"
+
+@app.route("/add-game", methods=["POST"])
+def add_game():
+    data = request.get_json()
+    name = data.get("name").strip()
+    genre = data.get("genre").strip()
+    platform = data.get("platform").strip()
+    release_date = data.get("releaseDate").strip()
+    price = data.get("price").strip()
+
+    if name == '' or genre == '' or platform == '' or release_date == '' or price == '':
+        return "All fields are required"
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Platform, Game_Release_Date, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                       (name, genre, platform, release_date, price))
+    connection_obj.commit()
+    connection_obj.close()
+
+    return "Game added successfully"
+
+
+@app.route("/add-fighting")
+# ?gameid=1&gamemodes=4&comboimportance=3
+def add_fighting():
+    gameid = str(request.args.get("gameid")).strip()
+    gamemodes = str(request.args.get("gamemodes")).strip()
+    comboimportance = str(request.args.get("comboimportance")).strip()
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute(
+        f"INSERT INTO Fighting(Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES('{gameid}','{gamemodes}','{comboimportance}')")
+    connection_obj.commit()
     output = cursor_obj.fetchall()
 
     connection_obj.close()
 
-    return render_template("get-games.html", games=output)
-
-
-@app.route("/create-game", methods=['GET', 'POST'])
-def create_game():
-    if request.method == 'POST':
-        name = request.form['Game_Name'].strip()
-        developer = request.form['Game_Developer'].strip()
-        player_capacity = int(request.form['Game_Player_Capacity'])
-        release_date = request.form['Game_Release_Date'].strip()
-        price = float(request.form['Game_Price'])
-        platform = request.form['Game_Platform'].strip()
-
-        if name == '' or price == '':
-            return "Name and price cannot be empty"
-
-        connection_obj = sqlite3.connect('CS4750Project.db')
-        cursor_obj = connection_obj.cursor()
-
-        cursor_obj.execute(
-            "INSERT INTO Game (Game_Name, Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES (?, ?, ?, ?, ?, ?)",
-            (name, developer, player_capacity, release_date, price, platform))
-        connection_obj.commit()
-
-        connection_obj.close()
-
-        return "Created a new game"
-
-    return render_template("create-game.html")
-
-@app.route('/create-account')
-def create_account():
-    # Add your code to render the create account page
-    return render_template('create-account.html')
-
+    return "added fighting game"
 
 
 @app.route("/class/<int:id>")
@@ -360,6 +353,23 @@ def class_(id):
 
     return render_template("class.html", cls_info=cls_info, users=users)
 
+@app.route("/view-library")
+def view_library():
+    genre = request.args.get("genre")
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    if genre:
+        cursor_obj.execute(f"SELECT * FROM Game WHERE Genre = '{genre}'")
+    else:
+        cursor_obj.execute("SELECT * FROM Game")
+
+    games = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return render_template("view-library.html", games=games)
 
 @app.route("/user/<int:id>")
 def user(id):
@@ -380,7 +390,37 @@ def user(id):
 
     return render_template("user.html", usr_info=usr_info, classes=classes)
 
+@app.route("/import-game")
+def import_game():
+    return render_template("import-game.html")
 
+@app.route("/import-games", methods=["POST"])
+def import_games():
+    file = request.files["file"]  # Assuming the CSV file is uploaded as "file" field in a form
+    if file.filename.endswith(".csv"):
+        connection_obj = sqlite3.connect('CS4750Project.db')
+        cursor_obj = connection_obj.cursor()
+
+        # Assuming the CSV file has columns: name, developer, player_capacity, release_date, price, platform
+        csv_reader = csv.DictReader(file)
+        for row in csv_reader:
+            name = row["name"].strip()
+            developer = row["developer"].strip()
+            player_capacity = row["player_capacity"].strip()
+            release_date = row["release_date"].strip()
+            price = row["price"].strip()
+            platform = row["platform"].strip()
+
+            cursor_obj.execute(
+                f"INSERT INTO Game (Game_Name, Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES (?, ?, ?, ?, ?, ?)",
+                (name, developer, player_capacity, release_date, price, platform)
+            )
+        connection_obj.commit()
+        connection_obj.close()
+
+        return "Games imported successfully"
+    else:
+        return "Invalid file format. Please upload a CSV file."
 @app.route("/connect")
 def connect():
     class_id = int(request.args.get("class_id"))
