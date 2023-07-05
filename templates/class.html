@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Students in <b>{{cls_info[1]}}</b></h2>
+    <br/>
+    {% for i in users %}
+        <a href="/user/{{i[0]}}">{{i[1]}}</a>
+        <hr/>
+    {% endfor %}
+</body>
+</html>

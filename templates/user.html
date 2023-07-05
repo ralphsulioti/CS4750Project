@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Student <b>{{usr_info[1]}}</b> is taking these classes:</h2>
+    <br/>
+    {% for i in classes %}
+        <a href="/class/{{i[0]}}">{{i[1]}}</a>
+        <hr/>
+    {% endfor %}
+</body>
+</html>

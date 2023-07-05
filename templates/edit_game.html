@@ -1,0 +1,11 @@
+{% block content %}
+<h1>Edit Game</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>Difficulty: {{ form.difficulty }}</p>
+    <p>Playtime: {{ form.playtime }}</p>
+    <p>Achievements: {{ form.achievements }}</p>
+    <p>Rating: {{ form.rating }}</p>
+    <p>{{ form.submit }}</p>
+</form>
+{% endblock %}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Landing Page</title>
+    <style>
+        .new-game-button {
+            background-color: turquoise; 
+            border: none;
+            color: rgb(0, 0, 0);
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: beige;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .edit-button, .confirm-delete-button, .details-button {
+            background-color: turquoise; 
+            border: none;
+            color: rgb(0, 0, 0);
+            padding: 3px 5px;
+            text-align: center;
+            text-decoration: beige;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+
+
+</head>
+{% block content %}
+    <h1>My Game Library</h1>
+
+    <a href="{{ url_for('add_game') }}">
+        <button class="new-game-button">Add Game</button></a>
+
+    <ul>
+    {% for game in games %}
+        <li>
+            <h2>{{ game[1] }}</h2> 
+            <p>Difficulty: {{ game[2] }}</p> 
+            <p>Playtime: {{ game[3] }}hrs</p> 
+            <p>Achievements: {{ game[4] }}%</p> 
+            <p>Rating: {{ game[5] }}/10</p> 
+            <a href="{{ url_for('edit_game', game_id=game[0]) }}">
+                <button class="edit-button">Edit</button></a> 
+            <a href="{{ url_for('confirm_delete', game_id=game[0]) }}">
+                <button class="confirm-delete-button">Delete</button></a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+</html>
+

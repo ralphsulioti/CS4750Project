@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>List of all users</h2>
+    <br/>
+    {% for i in users %}
+        <a href="/user/{{i[0]}}">{{i[1]}}</a>
+        <hr/>
+    {% endfor %}
+</body>
+</html>
