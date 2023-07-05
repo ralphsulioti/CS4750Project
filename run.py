@@ -175,7 +175,22 @@ def create_db():
     connection_obj.close()
 
     return "DB is fresh and ready"
+@app.route("/add-fighting")
+    #?gameid=1&gamemodes=4&comboimportance=3
+def add_fighting():
+    gameid = str(request.args.get("gameid")).strip()
+    gamemodes = str(request.args.get("gamemodes")).strip()
+    comboimportance = str(request.args.get("comboimportance")).strip()
 
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute("INSERT INTO Fighting(Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES('{gameid}','{gamemodes}','{comboimportance}')")
+    output = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return "added fighting game"
 
 @app.route("/get-users")
 def get_users():
