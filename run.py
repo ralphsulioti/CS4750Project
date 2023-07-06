@@ -7,7 +7,13 @@ app = Flask(__name__,template_folder='templates')
 
 @app.route("/")
 def index_page():
-    return render_template("index.html")
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+    cursor_obj.execute("SELECT * FROM Game")
+    games = cursor_obj.fetchall()
+    connection_obj.close()
+
+    return render_template("game-list.html", games=games)
 
 @app.route("/game-list")
 def game_list():
@@ -19,6 +25,7 @@ def game_list():
     connection_obj.close()
 
     return render_template("game-list.html", games=games)
+
 
 
 

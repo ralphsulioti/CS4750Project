@@ -11,6 +11,36 @@
     <button onclick="redirectToGameList()">Game List</button>
     <button onclick="redirectToWishlist()">Wishlist</button>
 
+    <div id="library">
+        <h2>Your Game Library</h2>
+        <table>
+            <tr>
+                <th>Game ID</th>
+                <th>Name</th>
+                <th>Developer</th>
+                <th>Player Capacity</th>
+                <th>Release Date</th>
+                <th>Price</th>
+                <th>Platform</th>
+                <th>Genre</th>
+            </tr>
+            {% for game in games %}
+            <tr>
+                <td>{{ game[0] }}</td>
+                <td>{{ game[1] }}</td>
+                <td>{{ game[2] }}</td>
+                <td>{{ game[3] }}</td>
+                <td>{{ game[4] }}</td>
+                <td>{{ game[5] }}</td>
+                <td>{{ game[6] }}</td>
+                <td>{{ game[7] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <button onclick="showCreateGameForm()">Add New Game</button>
+
     <div id="createGameForm" style="display: none;">
         {% include 'create-game.html' %}
     </div>
@@ -22,6 +52,14 @@
 
         function redirectToWishlist() {
             window.location.href = "/wishlist";
+        }
+
+        function showCreateGameForm() {
+            var createGameForm = document.getElementById("createGameForm");
+            var library = document.getElementById("library");
+
+            createGameForm.style.display = "block";
+            library.style.display = "none";
         }
     </script>
 </body>
