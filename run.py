@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import sqlite3
 import csv
-
+from datetime import datetime
 app = Flask(__name__,template_folder='templates')
 
 
@@ -9,10 +9,22 @@ app = Flask(__name__,template_folder='templates')
 def index_page():
     return render_template("index.html")
 
+@app.route("/game-list")
+def game_list():
+    # Retrieve the game list from the database (replace with your database logic)
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+    cursor_obj.execute("SELECT * FROM Game")
+    games = cursor_obj.fetchall()
+    connection_obj.close()
+
+    return render_template("game-list.html", games=games)
+
+
 
 @app.route("/create-db")
 def create_db():
-    connection_obj = sqlite3.connect('path/to/CS4750Project.db')
+    connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
 
     # Dropping all old tables
@@ -73,15 +85,24 @@ def create_db():
     ); """
     cursor_obj.execute(table)
 
-    # Creating WishListGame table
-    table = """ CREATE TABLE WishListGame (
+    table = """
+    CREATE TABLE WishListGame (
         WLGID INTEGER PRIMARY KEY AUTOINCREMENT,
-        WLG_GameID INTEGER NOT NULL,
+        Game_Name TEXT NOT NULL, 
+        Genre TEXT NOT NULL,
+        Platform TEXT NOT NULL,
+        Price REAL NOT NULL,
         WLG_UserID INTEGER NOT NULL,
-        FOREIGN KEY (WLG_GameID) REFERENCES Game (GameID),
         FOREIGN KEY (WLG_UserID) REFERENCES User (UserID)
-    ); """
+    );
+    """
+
+    # Execute the CREATE TABLE statement
     cursor_obj.execute(table)
+
+    # Execute the ALTER TABLE statement separately
+    alter_table = "ALTER TABLE WishListGame ADD COLUMN Game_Name TEXT"
+    cursor_obj.execute(alter_table)
 
     # Creating Horror table
     table = """ CREATE TABLE Horror (
@@ -188,7 +209,7 @@ def get_users():
 
     connection_obj.close()
 
-    return render_template("user-list.html", users=users, game_library_description=game_library_description, game_list_url=game_list_url)
+    return render_template("get-users.html", users=users, game_library_description=game_library_description, game_list_url=game_list_url)
 
 
 
@@ -211,21 +232,57 @@ def create_user():
     return "User created successfully"
 
 
-
 @app.route("/delete-user", methods=["POST"])
 def delete_user():
-    data = request.get_json()
-    user_id = data.get("userId")
+    user_id = request.form.get("user_id")
 
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
 
-    cursor_obj.execute(f"DELETE FROM User WHERE User_ID = ?", (user_id,))
+    # Get the user name before deleting
+    cursor_obj.execute("SELECT User_Name FROM User WHERE UserID = ?", (user_id,))
+    user_name = cursor_obj.fetchone()[0]
+
+    cursor_obj.execute("DELETE FROM User WHERE UserID = ?", (user_id,))
     connection_obj.commit()
 
     connection_obj.close()
 
-    return "User deleted successfully"
+    return f"User {user_name} deleted successfully. <a href='/get-users'>Return to User List</a>"
+
+
+
+
+
+@app.route("/wishlist")
+def wishlist():
+    # Retrieve the wishlist from the database (replace with your database logic)
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+    cursor_obj.execute("SELECT * FROM WishListGame")
+    wishlist = cursor_obj.fetchall()
+    connection_obj.close()
+
+    return render_template("wishlist.html", wishlist=wishlist)
+
+@app.route("/add-to-wishlist", methods=["POST"])
+def add_to_wishlist():
+    game_name = request.form.get("game_name")
+    genre = request.form.get("genre")
+    platform = request.form.get("platform")
+    price = request.form.get("price")
+
+    # Insert the game into the Wishlist table (replace with your database logic)
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+    cursor_obj.execute(
+        "INSERT INTO WishListGame (Game_Name, Genre, Platform, Price) VALUES (?, ?, ?, ?)",
+        (game_name, genre, platform, price)
+    )
+    connection_obj.commit()
+    connection_obj.close()
+
+    return redirect("/wishlist")  # Redirect back to the wishlist page after adding the game
 
 
 @app.route("/get-games")
@@ -245,7 +302,7 @@ def get_games():
 def create_game():
     if request.method == "POST":
         # Retrieve the game details from the request
-        name = request.form.get("name")
+        name = request.form.get("Game_Name")
         developer = request.form.get("Game_Developer")
         player_capacity = request.form.get("Game_Player_Capacity")
         release_date = request.form.get("Game_Release_Date")
@@ -256,16 +313,16 @@ def create_game():
         connection_obj = sqlite3.connect('CS4750Project.db')
         cursor_obj = connection_obj.cursor()
         cursor_obj.execute(
-            cursor_obj.execute(
-                "INSERT INTO Game (Game_Name, Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES (?, ?, ?, ?, ?, ?)",
-                (name, developer, player_capacity, release_date, price, platform)
-            )
-
+            "INSERT INTO Game (Game_Name, Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES (?, ?, ?, ?, ?, ?)",
+            (name, developer, player_capacity, release_date, price, platform)
         )
         connection_obj.commit()
         connection_obj.close()
 
+        return redirect("/game-list")  # Redirect to the game list page after successful game creation
+
     return render_template("create-game.html")
+
 
 
 
@@ -421,6 +478,38 @@ def import_games():
         return "Games imported successfully"
     else:
         return "Invalid file format. Please upload a CSV file."
+
+@app.route("/populate-games")
+def populate_games():
+    with open('games.csv', 'r') as file:
+        csv_data = csv.reader(file)
+        next(csv_data)  # Skip the header row
+        games = []
+        for row in csv_data:
+            game = {
+                'name': row[0],
+                'developer': row[1],
+                'player_capacity': int(row[2]),
+                'release_date': row[3],
+                'price': float(row[4]),
+                'platform': row[5]
+            }
+            games.append(game)
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    for game in games:
+        cursor_obj.execute(
+            "INSERT INTO Game (Game_Name, Game_Developer, Game_Player_Capacity, Game_Release_Date, Game_Price, Game_Platform) VALUES (?, ?, ?, ?, ?, ?)",
+            (game['name'], game['developer'], game['player_capacity'], game['release_date'], game['price'], game['platform'])
+        )
+
+    connection_obj.commit()
+    connection_obj.close()
+
+    return "Games populated successfully"
+
 @app.route("/connect")
 def connect():
     class_id = int(request.args.get("class_id"))

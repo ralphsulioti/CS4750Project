@@ -1,34 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>View Library</title>
-</head>
-<body>
- {% include 'navbar.html' %}
+@app.route("/view-library")
+def view_library():
+    genre = request.args.get("genre")
 
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
 
-    <h1>Game Library</h1>
-    <table>
-        <tr>
-            <th>Game ID</th>
-            <th>Game Name</th>
-            <th>Developer</th>
-            <th>Player Capacity</th>
-            <th>Release Date</th>
-            <th>Price</th>
-            <th>Platform</th>
-        </tr>
-        {% for game in games %}
-        <tr>
-            <td>{{ game[0] }}</td>
-            <td>{{ game[1] }}</td>
-            <td>{{ game[2] }}</td>
-            <td>{{ game[3] }}</td>
-            <td>{{ game[4] }}</td>
-            <td>{{ game[5] }}</td>
-            <td>{{ game[6] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
+    if genre:
+        cursor_obj.execute(f"SELECT * FROM Game WHERE Genre = '{genre}'")
+    else:
+        cursor_obj.execute("SELECT * FROM Game")
+
+    games = cursor_obj.fetchall()
+
+    connection_obj.close()
+
+    return render_template("view-library.html", games=games)

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wishlist</title>
+</head>
+
+<style>
+    /* Styling for the user library table */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    /* Styling for the main content */
+    h1 {
+        margin-top: 20px;
+    }
+
+    h2 {
+        margin-top: 30px;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    #add-game-form {
+        display: none;
+    }
+</style>
+
+<body>
+    {% include 'navbar.html' %}
+
+    <h1>Wishlist</h1>
+    <table>
+        <tr>
+            <th>Game Name</th>
+            <th>Genre</th>
+            <th>Platform</th>
+            <th>Price</th>
+        </tr>
+        {% for item in wishlist %}
+        <tr>
+            <td>{{ item.Game_Name }}</td>
+            <td>{{ item.Genre }}</td>
+            <td>{{ item.Platform }}</td>
+            <td>{{ item.Price }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Add New Game</h2>
+    <form action="/add-to-wishlist" method="post">
+        <label for="game_name">Game Name:</label>
+        <input type="text" id="game_name" name="game_name" required><br><br>
+
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" required><br><br>
+
+        <label for="platform">Platform:</label>
+        <input type="text" id="platform" name="platform" required><br><br>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" required><br><br>
+
+        <input type="submit" value="Add to Wishlist">
+    </form>
+</body>
+</html>

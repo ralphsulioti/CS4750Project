@@ -4,44 +4,44 @@
     <title>User List</title>
 </head>
 <body>
- {% include 'navbar.html' %}
+    {% include 'navbar.html' %}
 
     <h1>User List</h1>
-    <table>
-        <tr>
-            <th>User ID</th>
-            <th>Name</th>
-            <th>Actions</th>
-        </tr>
-        {% for user in users|sort(attribute=0) if user %}
-        <tr>
-            <td>{{ user[0] }}</td>
-            <td>{{ user[1] }}</td>
-            <td>
-                <button onclick="deleteUser('{{ user[0] }}')">Delete</button>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div id="userListContainer">
+        <table>
+            <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+            {% for user in users|sort(attribute=0) if user %}
+            <tr>
+                <td>{{ user[0] }}</td>
+                <td>{{ user[1] }}</td>
+                <td>
+                    <form id="deleteForm{{ user[0] }}" action="/delete-user" method="post" style="display: inline;">
+                        <input type="hidden" name="user_id" value="{{ user[0] }}">
+                        <button onclick="deleteUser('{{ user[0] }}')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
 
-    <button onclick="createUser()">Create User</button>
+        <button onclick="createUser()">Create User</button>
+        {% if request.path == '/delete-user' %}
+            <a href="/get-users">Return to List</a>
+        {% endif %}
+    </div>
+
+    <div id="deleteMessage" style="display: none;"></div>
 
     <script>
         function deleteUser(userId) {
             var confirmation = confirm("Are you sure you want to delete this user?");
             if (confirmation) {
-                // Make an AJAX request to delete the user
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/delete-user", true);
-                xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                        // Refresh or update the user list after successful deletion
-                        console.log("User deleted:", userId);
-                        loadUserList();
-                    }
-                };
-                xhr.send(JSON.stringify({ userId: userId }));
+                // Submit the delete form
+                document.getElementById("deleteForm" + userId).submit();
             }
         }
 
@@ -69,12 +69,16 @@
         function loadUserList() {
             // Make an AJAX request to get the updated user list
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/get-user-list", true);
+            xhr.open("GET", "/get-users", true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                     // Update the user list with the new data
-                    var userListContainer = document.querySelector("table");
+                    var userListContainer = document.getElementById("userListContainer");
                     userListContainer.innerHTML = xhr.responseText;
+
+                    // Show the success message
+                    var deleteMessage = document.getElementById("deleteMessage");
+                    deleteMessage.style.display = "block";
                 }
             };
             xhr.send();

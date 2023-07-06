@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game List</title>
+</head>
+
+<style>
+    /* Styling for the user library table */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    /* Styling for the main content */
+    h1 {
+        margin-top: 20px;
+    }
+
+    h2 {
+        margin-top: 30px;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    #add-game-form {
+        display: none;
+    }
+</style>
+
+<body>
+    {% include 'navbar.html' %}
+
+    <h1>Game List</h1>
+    <table>
+        <tr>
+            <th>Game ID</th>
+            <th>Name</th>
+            <th>Developer</th>
+            <th>Player Capacity</th>
+            <th>Release Date</th>
+            <th>Price</th>
+            <th>Platform</th>
+            <th>Genre</th>
+        </tr>
+        {% for game in games %}
+        <tr>
+    <td>{{ game[0] }}</td>
+    <td>{{ game[1] }}</td>
+    <td>{{ game[2] }}</td>
+    <td>{{ game[3] }}</td>
+    <td>{{ game[4][:2] }}/{{ game[4][2:4] }}/{{ game[4][4:] }}</td>
+    <td>{{ game[5] }}</td>
+    <td>{{ game[6] }}</td>
+    <td>{{ game[7] }}</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="/create-game">Add New Game</a>
+</body>
+</html>
