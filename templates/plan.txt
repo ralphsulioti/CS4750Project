@@ -5,3 +5,13 @@
 # edit game from admin library can only edit delete or add by
 #  admin and user can use these features only for their library
 # Everyrthing should be stored on the sqlite database and we should have expected results for all queries
+
+
+#choice of platforms.
+#PC
+#IOS
+#Anroid
+#Switch
+#PlayStation
+#XBox
+#VR/AR
