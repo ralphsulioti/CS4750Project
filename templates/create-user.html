@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create User</title>
+</head>
+<body>
+ {% include 'navbar.html' %}
+    <h1>Create User</h1>
+    <form action="/create-user" method="GET">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <input type="submit" value="Create User">
+    </form>
+</body>
+</html>
+
+

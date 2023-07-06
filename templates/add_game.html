@@ -24,6 +24,7 @@
     </style>
     <body>
         {% block content %}
+        {% include 'navbar.html' %}
             <h1>Add a Game</h1>
             <form method="POST">
                 {{ form.hidden_tag() }}

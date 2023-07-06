@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import sqlite3
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FloatField, SelectField, IntegerField, FloatField, SubmitField
@@ -76,7 +76,7 @@ def create_db():
         Date_Added DATE,
         FOREIGN KEY (UG_GameID) REFERENCES Game (GameID)
     ); """
-    #       FOREIGN KEY (UG_UserID) REFERENCES User (UserID),
+    # FOREIGN KEY (UG_UserID) REFERENCES User (UserID),
     # UG_UserID INTEGER,
 
     cursor_obj.execute(table)
@@ -95,6 +95,7 @@ def create_db():
         WLGID INTEGER PRIMARY KEY AUTOINCREMENT,
         WLG_GameID INTEGER,
         WLG_UserID INTEGER,
+        WLG_Priority INTEGER,
         FOREIGN KEY (WLG_GameID) REFERENCES Game (GameID),
         FOREIGN KEY (WLG_UserID) REFERENCES User (UserID)
     ); """
@@ -179,12 +180,52 @@ def create_db():
 
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
                     ("The Witcher 3", "MMORPG", "CD Projekt Red", "PC", 29.99))
-
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
                     ("Doom", "Shooter", "id Software", "PC", 19.99))
-
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
                     ("Animal Crossing", "MMORPG", "Nintendo", "Switch", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                    ("Red Dead Redemption 2", "Action Adventure", "Rockstar Games", "PS4", 39.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Call of Duty: Modern Warfare", "First-person shooter", "Infinity Ward", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Among Us", "Party game", "InnerSloth", "PC", 4.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Grand Theft Auto V", "Action Adventure", "Rockstar Games", "PS4", 29.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Minecraft", "Sandbox", "Mojang Studios", "PC", 26.95))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("The Legend of Zelda: Breath of the Wild", "Action Adventure", "Nintendo", "Switch", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Super Smash Bros. Ultimate", "Fighting", "Nintendo", "Switch", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("God of War", "Action Adventure", "Santa Monica Studio", "PS4", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Fortnite", "Battle Royale", "Epic Games", "PC", 0.00))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("PlayerUnknown's Battlegrounds", "Battle Royale", "PUBG Corporation", "PC", 29.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                    ("Overwatch", "First-person shooter", "Blizzard Entertainment", "PC", 39.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Cyberpunk 2077", "Role-playing", "CD Projekt", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Horizon Zero Dawn", "Action role-playing", "Guerrilla Games", "PS4", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("The Last of Us Part II", "Action-adventure", "Naughty Dog", "PS4", 39.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Final Fantasy VII Remake", "Role-playing", "Square Enix", "PS4", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Super Mario Odyssey", "Platform", "Nintendo", "Switch", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Animal Crossing: New Horizons", "Social simulation", "Nintendo", "Switch", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Death Stranding", "Action", "Kojima Productions", "PS4", 39.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Apex Legends", "Battle Royale", "Respawn Entertainment", "PC", 0.00))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Fall Guys: Ultimate Knockout", "Platform", "Mediatonic", "PC", 19.99))
+
+
 
     connection_obj.commit()
 
@@ -207,24 +248,107 @@ class GameEditForm(FlaskForm):
     rating = IntegerField('Rating (0-10)', validators=[NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
     submit = SubmitField('Update Game')
 
+class WishListForm(FlaskForm):
+    game = SelectField('Game Name:', coerce=int)
+    priority = IntegerField('Priority:', validators=[DataRequired()])
+    submit = SubmitField('Add to Wishlist')
+
+
+@app.route("/get-games")
+def get_games():
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+    cursor_obj.execute("SELECT * FROM Game ORDER BY GameID DESC")
+    games = cursor_obj.fetchall()
+    connection_obj.close()
+
+    return render_template("get-games.html", games=games)
+
+@app.route("/search-games")
+def search_games():
+    search = request.args.get('q')
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute("SELECT GameID, Game_Name FROM Game WHERE Game_Name LIKE ?", ('%' + search + '%',))
+    games = cursor_obj.fetchall()
+    connection_obj.close()
+
+    # Convert to the format that Select2 expects
+    games = [{"id": game[0], "text": game[1]} for game in games]
+
+    return jsonify(games)
+
 @app.route("/get-users")
 def get_users():
-
-    connection_obj = sqlite3.connect('project.db')
+    connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
-    
-    cursor_obj.execute("SELECT * FROM users ORDER BY id DESC LIMIT 1000000")
-    output = cursor_obj.fetchall()
+
+    cursor_obj.execute("SELECT * FROM User ORDER BY UserID DESC")
+    users = cursor_obj.fetchall()
 
     connection_obj.close()
 
-    return render_template("get-users.html", users = output)
+    # Check if the request is AJAX
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template("user-table.html", users=users)
+
+    return render_template("get-users.html", users=users)
+
+@app.route("/create-user", methods=["POST"])
+def create_user():
+    data = request.get_json()
+    name = data.get("name").strip()
+
+    if name == '':
+        return "Name cannot be empty"
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    cursor_obj.execute("INSERT INTO User (User_Name) VALUES (?)", (name,))
+    connection_obj.commit()
+
+    connection_obj.close()
+
+    return "User created successfully"
+
+@app.route("/delete-user", methods=["POST"])
+def delete_user():
+    user_id = request.form.get("user_id")
+
+    connection_obj = sqlite3.connect('CS4750Project.db')
+    cursor_obj = connection_obj.cursor()
+
+    # Get the user name before deleting
+    cursor_obj.execute("SELECT User_Name FROM User WHERE UserID = ?", (user_id,))
+    user_name = cursor_obj.fetchone()[0]
+
+    cursor_obj.execute("DELETE FROM User WHERE UserID = ?", (user_id,))
+    connection_obj.commit()
+
+    connection_obj.close()
+
+    return f"User {user_name} deleted successfully. <a href='/get-users'>Return to User List</a>"
 
 @app.route('/')
 def home():
     conn = sqlite3.connect('CS4750Project.db')
     c = conn.cursor()
-    c.execute("SELECT UserGame.UGID, Game.Game_Name, UserGame.Difficulty, UserGame.Playtime, UserGame.Achievements, UserGame.Rating FROM UserGame JOIN Game ON UserGame.UG_GameID = Game.GameID ORDER BY UserGame.Date_Added DESC")
+    c.execute("""
+        SELECT 
+            UserGame.UGID, 
+            Game.Game_Name, 
+            Game.Game_Genre,
+            UserGame.Difficulty, 
+            UserGame.Playtime, 
+            UserGame.Achievements, 
+            UserGame.Rating 
+        FROM UserGame 
+        JOIN Game ON UserGame.UG_GameID = Game.GameID 
+        ORDER BY UserGame.Date_Added DESC
+    """)
     games = c.fetchall()
     conn.close()
     return render_template('landingPage.html', games=games)
@@ -317,96 +441,46 @@ def confirm_delete(game_id):
 
     # render the confirmation page
     return render_template('confirm_delete.html', game=game)
-                 
-
-@app.route("/create-user")
-def creat_user():
-
-    name = str(request.args.get("name")).strip()
-    if name == '':
-        return "Name cannot be empty"
-
-    connection_obj = sqlite3.connect('project.db')
-    cursor_obj = connection_obj.cursor()
-    
-    cursor_obj.execute(f"INSERT INTO users (name) VALUES ('{name}')")
-    connection_obj.commit()
-
-    connection_obj.close()
-
-    return "Created a new user"
 
 
-@app.route("/get-classes")
-def get_classes():
+@app.route("/wishlist", methods=['GET', 'POST'])
+def wishlist():
+    # Connect to the database
+    conn = sqlite3.connect('CS4750Project.db')
+    c = conn.cursor()
 
-    connection_obj = sqlite3.connect('project.db')
-    cursor_obj = connection_obj.cursor()
-    
-    cursor_obj.execute("SELECT * FROM classes ORDER BY id DESC LIMIT 1000000")
-    output = cursor_obj.fetchall()
+    # Retrieve all games from the Game table
+    c.execute("SELECT * FROM Game ORDER BY Game_Name ASC")
+    game_list = c.fetchall()
 
-    connection_obj.close()
+    # Create a wishlist form
+    form = WishListForm()
+    form.game.choices = [(g[0], g[1]) for g in game_list]
 
-    return render_template("get-classes.html", classes = output)
+    if form.validate_on_submit():
+        # Insert the game into the Wishlist table
+        c.execute("INSERT INTO WishListGame (WLG_GameID, WLG_Priority) VALUES (?, ?)",
+                  (form.game.data, form.priority.data))
+        conn.commit()
 
+        flash('Game added to wishlist successfully!')
+        return redirect(url_for("wishlist"))
 
-@app.route("/create-class")
-def create_class():
+    # Retrieve wishlist data
+    c.execute("""
+        SELECT WLG_Priority, Game_Name, Game_Genre, Game_Platform, Game_Price 
+        FROM WishListGame 
+        JOIN Game ON WishListGame.WLG_GameID = Game.GameID
+        ORDER BY WLG_Priority ASC
+    """)
+    wishlist = c.fetchall()
 
-    code = str(request.args.get("code")).strip()
-    if code == '':
-        return "Code cannot be empty"
+    conn.close()
 
-    connection_obj = sqlite3.connect('project.db')
-    cursor_obj = connection_obj.cursor()
-    
-    cursor_obj.execute(f"INSERT INTO classes (code) VALUES ('{code}')")
-    connection_obj.commit()
-
-    connection_obj.close()
-
-    return "Created a new class"
-
-
-@app.route("/class/<int:id>")
-def class_(id):
-
-    connection_obj = sqlite3.connect('project.db')
-    cursor_obj = connection_obj.cursor()
-    
-    cursor_obj.execute(f"SELECT * FROM classes WHERE id = {id} LIMIT 1")
-    cls_info = cursor_obj.fetchone()
-
-    if cls_info is None:
-        return "No class found"
-
-    cursor_obj.execute(f"SELECT * FROM users WHERE id IN ( SELECT user_id FROM user_class_reln WHERE class_id = {cls_info[0]} )")
-    users = cursor_obj.fetchall()
-
-    connection_obj.close()
-
-    return render_template("class.html", cls_info = cls_info, users = users)
+    # Render the form and the wishlist
+    return render_template("wishlist.html", form=form, wishlist=wishlist)
 
 
-@app.route("/user/<int:id>")
-def user(id):
-
-    connection_obj = sqlite3.connect('project.db')
-    cursor_obj = connection_obj.cursor()
-    
-    cursor_obj.execute(f"SELECT * FROM users WHERE id = {id} LIMIT 1")
-    usr_info = cursor_obj.fetchone()
-
-    if usr_info is None:
-        return "No user found"
-
-    cursor_obj.execute(f"SELECT * FROM classes WHERE id IN ( SELECT class_id FROM user_class_reln WHERE user_id = {usr_info[0]} )")
-    classes = cursor_obj.fetchall()
-
-    connection_obj.close()
-
-    return render_template("user.html", usr_info = usr_info, classes = classes)
 
 
 @app.route("/connect")

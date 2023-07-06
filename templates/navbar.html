@@ -1,0 +1,34 @@
+<style>
+    /* Styling for the navbar */
+    nav {
+        background-color: #f2f2f2;
+        padding: 10px;
+    }
+
+    nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    nav ul li {
+        margin-right: 10px;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: #333;
+        padding: 5px;
+    }
+</style>
+
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/get-users">View Users</a></li>
+        <li><a href="{{ url_for('add_game') }}">Add Game</a></li>
+        <li><a href="/wishlist">Wish List</a></li>
+    </ul>
+</nav>
