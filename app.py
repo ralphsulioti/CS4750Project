@@ -46,206 +46,352 @@ def create_db():
     connection_obj.commit()
 
     # Creating User table
-    table = """ CREATE TABLE User (
+    table = """
+    CREATE TABLE User (
         UserID INTEGER PRIMARY KEY AUTOINCREMENT,
         User_Name TEXT
-    ); """
+    )
+    """
     cursor_obj.execute(table)
 
     # Creating Game table
-    table = """ CREATE TABLE Game (
+    table = """
+    CREATE TABLE Game (
         GameID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Game_Name TEXT, 
-        Game_Genre TEXT,   
+        Game_Name TEXT,
         Game_Developer TEXT,
         Game_Release_Date TEXT,
         Game_Platform TEXT,
-        Game_Price REAL
-    ); """
-    cursor_obj.execute(table)
-
-    # Creating UserGame table
-    table = """ CREATE TABLE UserGame (
-        UGID INTEGER PRIMARY KEY AUTOINCREMENT,
-        UG_GameID INTEGER,
-        Difficulty STRING,
-        Playtime INTEGER,
-        Achievements TEXT,
-        Rating INTEGER,
-        Date_Added DATE,
-        Reviews Text,
-        FOREIGN KEY (UG_GameID) REFERENCES Game (GameID)
-    ); """
-    # FOREIGN KEY (UG_UserID) REFERENCES User (UserID),
-    # UG_UserID INTEGER,
-
-    cursor_obj.execute(table)
-
-    # Creating Review table
-    table = """ CREATE TABLE Reviews (
-        ReviewID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Review_UGID INTEGER,
-        Review_Thoughts TEXT,
-        FOREIGN KEY (Review_UGID) REFERENCES UserGame (UGID)
-    ); """
-    cursor_obj.execute(table)
-
-    # Creating WishListGame table
-    table = """ CREATE TABLE WishListGame (
-        WLGID INTEGER PRIMARY KEY AUTOINCREMENT,
-        WLG_GameID INTEGER,
-        WLG_UserID INTEGER,
-        WLG_Priority INTEGER,
-        FOREIGN KEY (WLG_GameID) REFERENCES Game (GameID),
-        FOREIGN KEY (WLG_UserID) REFERENCES User (UserID)
-    ); """
-    cursor_obj.execute(table)
-
-    # Creating Horror table
-    table = """ CREATE TABLE Horror (
-        HorrorID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Horror_GameID INTEGER,
-        Horror_Jump_Scare_Rating INTEGER,
-        Horror_Suspense_Level INTEGER,
-        FOREIGN KEY (Horror_GameID) REFERENCES Game (GameID)
-    ); """
-    cursor_obj.execute(table)
-
-    # Creating Racing table
-    table = """ CREATE TABLE Racing (
-        RacingID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Racing_GameID INTEGER,
-        Racing_Realistic INTEGER,
-        Racing_Num_Vehicles INTEGER,
-        Racing_Num_Tracks INTEGER,
-        FOREIGN KEY (Racing_GameID) REFERENCES Game (GameID)
-    ); """
-    cursor_obj.execute(table)
-
-    # Creating MMORPG table
-    table = """ CREATE TABLE MMORPG (
-        MMORPGID INTEGER PRIMARY KEY AUTOINCREMENT,
-        MMORPG_GameID INTEGER,
-        MMORPG_Pay_to_Win INTEGER,
-        MMORPG_Classes INTEGER,
-        FOREIGN KEY (MMORPG_GameID) REFERENCES Game (GameID)
-    ); """
+        Game_Player_Capacity INTEGER,
+        Game_Price REAL,
+        Game_Genre TEXT,
+        FOREIGN KEY (Game_Genre) REFERENCES Genre (Genre_Name)
+    )
+    """
     cursor_obj.execute(table)
 
     # Creating Fighting table
-    table = """ CREATE TABLE Fighting (
-        FightingID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Fighting_GameID INTEGER,
-        Fighting_Game_Modes TEXT,
-        Fighting_Combo_Importance INTEGER,
-        FOREIGN KEY (Fighting_GameID) REFERENCES Game (GameID)
-    ); """
+    table = """
+    CREATE TABLE Fighting (
+        GameID INTEGER PRIMARY KEY,
+        Game_Mode TEXT,
+        Combo_Importance INTEGER,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
     cursor_obj.execute(table)
 
-    # Creating Sports table
-    table = """ CREATE TABLE Sports (
-        SportsID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Sports_GameID INTEGER,
-        Sports_Sport TEXT,
-        Sports_Realistic INTEGER,
-        FOREIGN KEY (Sports_GameID) REFERENCES Game (GameID)
-    ); """
+    # Creating Horror table
+    table = """
+    CREATE TABLE Horror (
+        GameID INTEGER PRIMARY KEY,
+        Jump_Scare_Rating INTEGER,
+        Suspense_Level INTEGER,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
     cursor_obj.execute(table)
 
-    # Creating Shooter table
-    table = """ CREATE TABLE Shooter (
-        ShooterID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Shooter_GameID INTEGER,
-        Shooter_Perspective TEXT,
-        Shooter_Realistic INTEGER,
-        Shooter_Ranked TEXT,
-        Shooter_Game_Modes TEXT,
-        FOREIGN KEY (Shooter_GameID) REFERENCES Game (GameID)
-    ); """
+    # Creating Racing table
+    table = """
+    CREATE TABLE Racing (
+        GameID INTEGER PRIMARY KEY,
+        Realistic INTEGER,
+        Number_Of_Vehicles INTEGER,
+        Number_Of_Tracks INTEGER,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
     cursor_obj.execute(table)
 
     # Creating Platformer table
-    # cursor_obj.execute("DROP TABLE IF EXISTS Platformer")
-    # connection_obj.commit()
-    table = """ CREATE TABLE Platformer (
-        PlatformerID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Platformer_GameID INTEGER,
-        Platformer_Momentum_Based TEXT,
-        Platformer_Total_Levels INTEGER,
-        Platformer_Total_Environments INTEGER,
-        FOREIGN KEY (Platformer_GameID) REFERENCES Game (GameID)
-    ); """
+    table = """
+    CREATE TABLE Platformer (
+        GameID INTEGER PRIMARY KEY,
+        Momentum_Based TEXT,
+        Total_Levels INTEGER,
+        Total_Environments INTEGER,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
+    cursor_obj.execute(table)
+
+    # Creating Shooter table
+    table = """
+    CREATE TABLE Shooter (
+        GameID INTEGER PRIMARY KEY,
+        Perspective TEXT,
+        Realistic INTEGER,
+        Ranked TEXT,
+        Game_Mode TEXT,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
+    cursor_obj.execute(table)
+
+    # Creating MMORPG table
+    table = """
+    CREATE TABLE MMORPG (
+        GameID INTEGER PRIMARY KEY,
+        Pay_to_Win INTEGER,
+        MMORPG_Class TEXT,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
+    cursor_obj.execute(table)
+
+    # Creating Sports table
+    table = """
+    CREATE TABLE Sports (
+        GameID INTEGER PRIMARY KEY,
+        Type TEXT,
+        Realistic INTEGER,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
     cursor_obj.execute(table)
 
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("The Witcher 3", "MMORPG", "CD Projekt Red", "PC", 29.99))
+    GameID = cursor_obj.lastrowid
+    cursor_obj.execute(
+        "INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Pay_to_Win, MMORPG_Classes) VALUES (?, ?, ?)",
+        (GameID, 1, 3))
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Doom", "Shooter", "id Software", "PC", 19.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?,?,?,?,?)",
+    (GameID,3,5,6,7)
+
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Resident Evil 2", "Horror", "Capcom", "PC", 39.99))
+    game_id = cursor_obj.lastrowid
+    cursor_obj.execute(
+        "INSERT INTO Horror (Horror_GameID, Jump_Scare_Rating, Suspense_Level) VALUES (?, ?, ?)",
+        (game_id, 9, 8))
+
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("FIFA 22", "Sports", "EA Sports", "PS5", 59.99))
+    game_id = cursor_obj.lastrowid
+    cursor_obj.execute(
+        "INSERT INTO Sports (Sports_GameID, Game_Type, Realistic) VALUES (?, ?, ?)",
+        (game_id, "Football", 1))
+
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Forza Horizon 5", "Racing", "Playground Games", "Xbox Series X", 69.99))
+    game_id = cursor_obj.lastrowid
+
+    cursor_obj.execute(
+        "INSERT INTO Racing (Racing_GameID, Realistic, Number_Of_vehicles, Number_of_tracks) VALUES (?, ?, ?, ?)",
+        (game_id, 1, 500, 100))
+
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Gran Turismo 7", "Racing", "Polyphony Digital", "PS5", 69.99))
+    game_id = cursor_obj.lastrowid
+
+    cursor_obj.execute(
+        "INSERT INTO Racing (Racing_GameID, Realistic, Number_Of_vehicles, Number_of_tracks) VALUES (?, ?, ?, ?)",
+        (game_id, 1, 400, 40))
+
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Mario Kart 8 Deluxe", "Racing", "Nintendo", "Switch", 49.99))
+    game_id = cursor_obj.lastrowid
+
+    cursor_obj.execute(
+        "INSERT INTO Racing (Racing_GameID, Realistic, Number_Of_vehicles, Number_of_tracks) VALUES (?, ?, ?, ?)",
+        (game_id, 0, 40, 48))
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Animal Crossing", "MMORPG", "Nintendo", "Switch", 59.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO MMORPG(MMORPG_GameID, MMORPG_Pay_to_Win, MMORPG_Classes) VALUES (?,?,?)",
+
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Red Dead Redemption 2", "Shooter", "Rockstar Games", "PS4", 39.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?,?,?,?,?)",
+    (GameID, )
+
+
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("NBA 2K22", "Sports", "2K Sports", "Xbox Series X", 59.99))
+    game_id = cursor_obj.lastrowid
+
+    cursor_obj.execute(
+        "INSERT INTO Sports (Sports_GameID, Game_Type, Realistic) VALUES (?, ?, ?)",
+        (game_id, "Basketball", 1))
+
+
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("F1 2021", "Sports", "Codemasters", "PC", 49.99))
+    game_id = cursor_obj.lastrowid
+
+    cursor_obj.execute(
+        "INSERT INTO Sports (Sports_GameID, Game_Type, Realistic) VALUES (?, ?, ?)",
+        (game_id, "Formula 1", 1))
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Call of Duty: Modern Warfare", "Shooter", "Infinity Ward", "PC", 59.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?,?,?,?,?)",
+    (GameID, )
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Among Us", "Shooter", "InnerSloth", "PC", 4.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?,?,?,?,?)",
+    (GameID, )
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Grand Theft Auto V", "Shooter", "Rockstar Games", "PS4", 29.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?,?,?,?,?)",
+    (GameID,)
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Minecraft", "Fighting", "Mojang Studios", "PC", 26.95))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Fighting(Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?,?,?)",
+    (GameID,3,5)
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("The Legend of Zelda: Breath of the Wild", "Fighting", "Nintendo", "Switch", 59.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Fighting(Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?,?,?)",
+    (GameID, 3, 5)
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Super Smash Bros. Ultimate", "Fighting", "Nintendo", "Switch", 59.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Fighting(Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?,?,?)",
+    (GameID, 3, 5)
+
+
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Silent Hill 2", "Horror", "Konami", "PS2", 19.99))
+    game_id = cursor_obj.lastrowid
+
+    cursor_obj.execute(
+        "INSERT INTO Horror (Horror_GameID, Jump_Scare_Rating, Suspense_Level) VALUES (?, ?, ?)",
+        (game_id, 7, 9))
+
+
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Outlast", "Horror", "Red Barrels", "PC", 29.99))
+    game_id = cursor_obj.lastrowid
+
+    cursor_obj.execute(
+        "INSERT INTO Horror (Horror_GameID, Jump_Scare_Rating, Suspense_Level) VALUES (?, ?, ?)",
+        (game_id, 9, 8))
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("God of War", "Fighting", "Santa Monica Studio", "PS4", 19.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Fighting(Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?,?,?)",
+    (GameID, 3, 5)
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Fortnite", "Shooter", "Epic Games", "PC", 0.00))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?,?,?,?,?)",
+    (GameID,)
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("PlayerUnknown's Battlegrounds", "Shooter", "PUBG Corporation", "PC", 29.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?,?,?,?,?)",
+    (GameID,)
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Overwatch", "Shooter", "Blizzard Entertainment", "PC", 39.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?,?,?,?,?)",
+    (GameID,)
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Cyberpunk 2077", "MMORPG", "CD Projekt", "PC", 59.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO MMORPG(MMORPG_GameID, MMORPG_Pay_to_Win, MMORPG_Classes) VALUES (?,?,?)",
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Horizon Zero Dawn", "MMORPG", "Guerrilla Games", "PS4", 19.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO MMORPG(MMORPG_GameID, MMORPG_Pay_to_Win, MMORPG_Classes) VALUES (?,?,?)",
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("The Last of Us Part II", "Fighting", "Naughty Dog", "PS4", 39.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Fighting(Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?,?,?)",
+    (GameID, 3, 5)
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Final Fantasy VII Remake", "MMORPG", "Square Enix", "PS4", 59.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO MMORPG(MMORPG_GameID, MMORPG_Pay_to_Win, MMORPG_Classes) VALUES (?,?,?)",
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Super Mario Odyssey", "Platformer", "Nintendo", "Switch", 59.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Platformer(Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?,?,?,?)",
+    (GameID, 60,5 )
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Animal Crossing: New Horizons", "Platformer", "Nintendo", "Switch", 59.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Platformer(Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?,?,?,?)",
+    (GameID, 60, 5)
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Death Stranding", "Fighting", "Kojima Productions", "PS4", 39.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Fighting(Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?,?,?)",
+    (GameID, 3, 5)
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-        ("Apex Legends", "Shooting", "Respawn Entertainment", "PC", 0.00))
+        ("Apex Legends", "Shooter", "Respawn Entertainment", "PC", 0.00))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?,?,?,?,?)",
+    (GameID,)
+
     cursor_obj.execute(
         "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
         ("Fall Guys: Ultimate Knockout", "Platformer", "Mediatonic", "PC", 19.99))
+    GameID = cursor_obj.lastrowid
+    "INSERT INTO Platformer(Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?,?,?,?)",
+    (GameID, 60, 5)
 
     connection_obj.commit()
 
