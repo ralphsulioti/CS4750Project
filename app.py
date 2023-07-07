@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import sqlite3
 from flask_wtf import FlaskForm
@@ -27,7 +28,6 @@ def create_db():
     connection_obj.commit()
     cursor_obj.execute("DROP TABLE IF EXISTS UserGame")
     connection_obj.commit()
-    cursor_obj.execute("DROP TABLE IF EXISTS Reviews")
     connection_obj.commit()
     cursor_obj.execute("DROP TABLE IF EXISTS WishListGame")
     connection_obj.commit()
@@ -81,14 +81,6 @@ def create_db():
 
     cursor_obj.execute(table)
 
-    # Creating Review table
-    table = """ CREATE TABLE Reviews (
-        ReviewID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Review_UGID INTEGER,
-        Review_Thoughts TEXT,
-        FOREIGN KEY (Review_UGID) REFERENCES UserGame (UGID)
-    ); """
-    cursor_obj.execute(table)
 
     # Creating WishListGame table
     table = """ CREATE TABLE WishListGame (
@@ -225,6 +217,7 @@ def create_db():
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
                         ("Fall Guys: Ultimate Knockout", "Platform", "Mediatonic", "PC", 19.99))
 
+    cursor_obj.execute("INSERT INTO  ")
 
 
     connection_obj.commit()
