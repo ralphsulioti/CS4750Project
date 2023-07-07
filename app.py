@@ -1,13 +1,12 @@
-
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import sqlite3
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FloatField, SelectField, IntegerField, FloatField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
+
 
 # mydb = mysql.connector.connect(
 #   host="localhost",
@@ -18,7 +17,6 @@ app.config['SECRET_KEY'] = 'your-secret-key'
 
 @app.route("/create-db")
 def create_db():
-
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
 
@@ -28,6 +26,7 @@ def create_db():
     connection_obj.commit()
     cursor_obj.execute("DROP TABLE IF EXISTS UserGame")
     connection_obj.commit()
+    cursor_obj.execute("DROP TABLE IF EXISTS Reviews")
     connection_obj.commit()
     cursor_obj.execute("DROP TABLE IF EXISTS WishListGame")
     connection_obj.commit()
@@ -74,6 +73,7 @@ def create_db():
         Achievements TEXT,
         Rating INTEGER,
         Date_Added DATE,
+        Reviews Text,
         FOREIGN KEY (UG_GameID) REFERENCES Game (GameID)
     ); """
     # FOREIGN KEY (UG_UserID) REFERENCES User (UserID),
@@ -81,6 +81,14 @@ def create_db():
 
     cursor_obj.execute(table)
 
+    # Creating Review table
+    table = """ CREATE TABLE Reviews (
+        ReviewID INTEGER PRIMARY KEY AUTOINCREMENT,
+        Review_UGID INTEGER,
+        Review_Thoughts TEXT,
+        FOREIGN KEY (Review_UGID) REFERENCES UserGame (UGID)
+    ); """
+    cursor_obj.execute(table)
 
     # Creating WishListGame table
     table = """ CREATE TABLE WishListGame (
@@ -157,8 +165,8 @@ def create_db():
     cursor_obj.execute(table)
 
     # Creating Platformer table
-    #cursor_obj.execute("DROP TABLE IF EXISTS Platformer")
-    #connection_obj.commit()
+    # cursor_obj.execute("DROP TABLE IF EXISTS Platformer")
+    # connection_obj.commit()
     table = """ CREATE TABLE Platformer (
         PlatformerID INTEGER PRIMARY KEY AUTOINCREMENT,
         Platformer_GameID INTEGER,
@@ -169,56 +177,75 @@ def create_db():
     ); """
     cursor_obj.execute(table)
 
-
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                    ("The Witcher 3", "MMORPG", "CD Projekt Red", "PC", 29.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                    ("Doom", "Shooter", "id Software", "PC", 19.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                    ("Animal Crossing", "MMORPG", "Nintendo", "Switch", 59.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                    ("Red Dead Redemption 2", "Action Adventure", "Rockstar Games", "PS4", 39.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Call of Duty: Modern Warfare", "First-person shooter", "Infinity Ward", "PC", 59.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Among Us", "Party game", "InnerSloth", "PC", 4.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Grand Theft Auto V", "Action Adventure", "Rockstar Games", "PS4", 29.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Minecraft", "Sandbox", "Mojang Studios", "PC", 26.95))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("The Legend of Zelda: Breath of the Wild", "Action Adventure", "Nintendo", "Switch", 59.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Super Smash Bros. Ultimate", "Fighting", "Nintendo", "Switch", 59.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("God of War", "Action Adventure", "Santa Monica Studio", "PS4", 19.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Fortnite", "Battle Royale", "Epic Games", "PC", 0.00))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("PlayerUnknown's Battlegrounds", "Battle Royale", "PUBG Corporation", "PC", 29.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                    ("Overwatch", "First-person shooter", "Blizzard Entertainment", "PC", 39.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Cyberpunk 2077", "Role-playing", "CD Projekt", "PC", 59.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Horizon Zero Dawn", "Action role-playing", "Guerrilla Games", "PS4", 19.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("The Last of Us Part II", "Action-adventure", "Naughty Dog", "PS4", 39.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Final Fantasy VII Remake", "Role-playing", "Square Enix", "PS4", 59.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Super Mario Odyssey", "Platform", "Nintendo", "Switch", 59.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Animal Crossing: New Horizons", "Social simulation", "Nintendo", "Switch", 59.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Death Stranding", "Action", "Kojima Productions", "PS4", 39.99))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Apex Legends", "Battle Royale", "Respawn Entertainment", "PC", 0.00))
-    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Fall Guys: Ultimate Knockout", "Platform", "Mediatonic", "PC", 19.99))
-
-    cursor_obj.execute("INSERT INTO  ")
-
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("The Witcher 3", "MMORPG", "CD Projekt Red", "PC", 29.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Doom", "Shooter", "id Software", "PC", 19.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Animal Crossing", "MMORPG", "Nintendo", "Switch", 59.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Red Dead Redemption 2", "Shooter", "Rockstar Games", "PS4", 39.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Call of Duty: Modern Warfare", "Shooter", "Infinity Ward", "PC", 59.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Among Us", "Shooter", "InnerSloth", "PC", 4.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Grand Theft Auto V", "Shooter", "Rockstar Games", "PS4", 29.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Minecraft", "Fighting", "Mojang Studios", "PC", 26.95))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("The Legend of Zelda: Breath of the Wild", "Fighting", "Nintendo", "Switch", 59.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Super Smash Bros. Ultimate", "Fighting", "Nintendo", "Switch", 59.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("God of War", "Fighting", "Santa Monica Studio", "PS4", 19.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Fortnite", "Shooter", "Epic Games", "PC", 0.00))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("PlayerUnknown's Battlegrounds", "Shooter", "PUBG Corporation", "PC", 29.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Overwatch", "Shooter", "Blizzard Entertainment", "PC", 39.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Cyberpunk 2077", "MMORPG", "CD Projekt", "PC", 59.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Horizon Zero Dawn", "MMORPG", "Guerrilla Games", "PS4", 19.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("The Last of Us Part II", "Fighting", "Naughty Dog", "PS4", 39.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Final Fantasy VII Remake", "MMORPG", "Square Enix", "PS4", 59.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Super Mario Odyssey", "Platformer", "Nintendo", "Switch", 59.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Animal Crossing: New Horizons", "Platformer", "Nintendo", "Switch", 59.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Death Stranding", "Fighting", "Kojima Productions", "PS4", 39.99))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Apex Legends", "Shooting", "Respawn Entertainment", "PC", 0.00))
+    cursor_obj.execute(
+        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+        ("Fall Guys: Ultimate Knockout", "Platformer", "Mediatonic", "PC", 19.99))
 
     connection_obj.commit()
 
@@ -226,20 +253,29 @@ def create_db():
 
     return "DB is fresh and ready"
 
+
 class GameAddForm(FlaskForm):
     game = SelectField('Game', coerce=int, validators=[DataRequired()])
-    difficulty = SelectField('Difficulty', choices=[('Very Easy', 'Very Easy'), ('Easy', 'Easy'), ('Normal', 'Normal'), ('Hard', 'Hard'), ('Very Hard', 'Very Hard')])
+    difficulty = SelectField('Difficulty', choices=[('Very Easy', 'Very Easy'), ('Easy', 'Easy'), ('Normal', 'Normal'),
+                                                    ('Hard', 'Hard'), ('Very Hard', 'Very Hard')])
     playtime = IntegerField('Playtime (in hours)')
-    achievements = IntegerField('Achievements (in %)', validators=[NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
-    rating = IntegerField('Rating (0-10)', validators=[NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
+    achievements = IntegerField('Achievements (in %)', validators=[
+        NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
+    rating = IntegerField('Rating (0-10)',
+                          validators=[NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
     submit = SubmitField('Add Game')
 
+
 class GameEditForm(FlaskForm):
-    difficulty = SelectField('Difficulty', choices=[('Very Easy', 'Very Easy'), ('Easy', 'Easy'), ('Normal', 'Normal'), ('Hard', 'Hard'), ('Very Hard', 'Very Hard')])
+    difficulty = SelectField('Difficulty', choices=[('Very Easy', 'Very Easy'), ('Easy', 'Easy'), ('Normal', 'Normal'),
+                                                    ('Hard', 'Hard'), ('Very Hard', 'Very Hard')])
     playtime = IntegerField('Playtime (in hours)')
-    achievements = IntegerField('Achievements (in %)', validators=[NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
-    rating = IntegerField('Rating (0-10)', validators=[NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
+    achievements = IntegerField('Achievements (in %)', validators=[
+        NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
+    rating = IntegerField('Rating (0-10)',
+                          validators=[NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
     submit = SubmitField('Update Game')
+
 
 class WishListForm(FlaskForm):
     game = SelectField('Game Name:', coerce=int)
@@ -257,6 +293,7 @@ def get_games():
 
     return render_template("get-games.html", games=games)
 
+
 @app.route("/search-games")
 def search_games():
     search = request.args.get('q')
@@ -273,6 +310,7 @@ def search_games():
 
     return jsonify(games)
 
+
 @app.route("/get-users")
 def get_users():
     connection_obj = sqlite3.connect('CS4750Project.db')
@@ -288,6 +326,7 @@ def get_users():
         return render_template("user-table.html", users=users)
 
     return render_template("get-users.html", users=users)
+
 
 @app.route("/create-user", methods=["POST"])
 def create_user():
@@ -307,6 +346,7 @@ def create_user():
 
     return "User created successfully"
 
+
 @app.route("/delete-user", methods=["POST"])
 def delete_user():
     user_id = request.form.get("user_id")
@@ -324,6 +364,7 @@ def delete_user():
     connection_obj.close()
 
     return f"User {user_name} deleted successfully. <a href='/get-users'>Return to User List</a>"
+
 
 @app.route('/')
 def home():
@@ -346,6 +387,7 @@ def home():
     conn.close()
     return render_template('landingPage.html', games=games)
 
+
 @app.route('/add-game', methods=['GET', 'POST'])
 def add_game():
     # connect to the database
@@ -363,8 +405,9 @@ def add_game():
     # handle form submission
     if form.validate_on_submit():
         # insert the new game into the UserGame table
-        c.execute("INSERT INTO UserGame (UG_GameID, Difficulty, Playtime, Achievements, Rating, Date_Added) VALUES (?, ?, ?, ?, ?, date('now'))",
-                  (form.game.data, form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data))
+        c.execute(
+            "INSERT INTO UserGame (UG_GameID, Difficulty, Playtime, Achievements, Rating, Date_Added) VALUES (?, ?, ?, ?, ?, date('now'))",
+            (form.game.data, form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data))
         conn.commit()
         conn.close()
 
@@ -407,6 +450,7 @@ def edit_game(game_id):
 
     return render_template('edit_game.html', form=form)
 
+
 @app.route('/delete-game/<int:game_id>', methods=['POST'])
 def delete_game(game_id):
     # connect to the database
@@ -421,6 +465,7 @@ def delete_game(game_id):
     flash('Game deleted successfully!')
     return redirect(url_for('home'))
 
+
 @app.route('/confirm-delete/<int:game_id>')
 def confirm_delete(game_id):
     # connect to the database
@@ -428,7 +473,8 @@ def confirm_delete(game_id):
     c = conn.cursor()
 
     # retrieve the game from the UserGame table
-    c.execute("SELECT UGID, Game.Game_Name FROM UserGame JOIN Game ON UserGame.UG_GameID = Game.GameID WHERE UGID = ?", (game_id,))
+    c.execute("SELECT UGID, Game.Game_Name FROM UserGame JOIN Game ON UserGame.UG_GameID = Game.GameID WHERE UGID = ?",
+              (game_id,))
     game = c.fetchone()
     conn.close()
 
@@ -474,11 +520,8 @@ def wishlist():
     return render_template("wishlist.html", form=form, wishlist=wishlist)
 
 
-
-
 @app.route("/connect")
 def connect():
-
     class_id = int(request.args.get("class_id"))
     user_id = int(request.args.get("user_id"))
 
@@ -496,10 +539,11 @@ def connect():
         connection_obj.commit()
     except:
         return "Either user_id or class_id doens't exist"
-    
+
     return "Done!"
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
