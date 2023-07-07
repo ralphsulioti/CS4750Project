@@ -45,187 +45,211 @@ def create_db():
     connection_obj.commit()
     cursor_obj.execute("DROP TABLE IF EXISTS Horror")
     connection_obj.commit()
+    cursor_obj.execute("DROP TABLE IF EXISTS RPG")
+    connection_obj.commit()
 
-    # Creating User table
-    table = """ CREATE TABLE User (
+     # Users Table
+    table = """
+    CREATE TABLE User (
         UserID INTEGER PRIMARY KEY AUTOINCREMENT,
-        User_Name TEXT
-    ); """
+        User_Name VARCHAR(255)
+    )
+    """
     cursor_obj.execute(table)
 
-    # Creating Game table
-    table = """ CREATE TABLE Game (
-        GameID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Game_Name TEXT, 
-        Game_Genre TEXT,   
+    # Game Table
+    table = """
+    CREATE TABLE Game (
+        GameID INTEGER PRIMARY KEY,
+        Game_Name TEXT,
         Game_Developer TEXT,
         Game_Release_Date TEXT,
         Game_Platform TEXT,
-        Game_Price REAL
-    ); """
+        Game_Player_Capacity INTEGER,
+        Game_Price REAL,
+        Game_Genre TEXT
+    )
+    """
     cursor_obj.execute(table)
 
-    # Creating UserGame table
-    table = """ CREATE TABLE UserGame (
-        UGID INTEGER PRIMARY KEY AUTOINCREMENT,
-        UG_GameID INTEGER,
-        Difficulty STRING,
-        Playtime INTEGER,
-        Achievements TEXT,
-        Rating INTEGER,
-        Date_Added DATE,
-        FOREIGN KEY (UG_GameID) REFERENCES Game (GameID)
-    ); """
-    # FOREIGN KEY (UG_UserID) REFERENCES User (UserID),
-    # UG_UserID INTEGER,
-
+    # User_Game_Library Table
+    table = """
+    CREATE TABLE UserGame (
+        UserGameID INTEGER PRIMARY KEY,
+        UserID INTEGER,
+        GameID INTEGER,
+        Difficulty TEXT,
+        Playtime INTEGER CHECK (Playtime > 0),
+        Achievements INTEGER CHECK (Achievements >= 0 AND Achievements <= 100),
+        Rating REAL CHECK (Rating > 0 AND Rating <= 10),
+        Review TEXT,
+        Date_Added TEXT,
+        FOREIGN KEY (UserID) REFERENCES Users (UserID),
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
     cursor_obj.execute(table)
 
-    # Creating Review table
-    table = """ CREATE TABLE Reviews (
-        ReviewID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Review_UGID INTEGER,
-        Review_Thoughts TEXT,
-        FOREIGN KEY (Review_UGID) REFERENCES UserGame (UGID)
-    ); """
-    cursor_obj.execute(table)
-
-    # Creating WishListGame table
-    table = """ CREATE TABLE WishListGame (
-        WLGID INTEGER PRIMARY KEY AUTOINCREMENT,
+    # Wishlist_Game Table
+    table = """
+    CREATE TABLE WishListGame (
+        WLGID INTEGER PRIMARY KEY,
         WLG_GameID INTEGER,
         WLG_UserID INTEGER,
-        WLG_Priority INTEGER,
+        WLG_Priority TEXT,
         FOREIGN KEY (WLG_GameID) REFERENCES Game (GameID),
-        FOREIGN KEY (WLG_UserID) REFERENCES User (UserID)
+        FOREIGN KEY (WLG_UserID) REFERENCES Users (UserID)
+    )
+    """
+    cursor_obj.execute(table)
+
+    # Fighting Table
+    table = """
+    CREATE TABLE Fighting (
+        GameID INTEGER PRIMARY KEY,
+        Game_Mode TEXT,
+        Combo_Importance INTEGER,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
+    cursor_obj.execute(table)
+
+    # Horror Table
+    table = """
+    CREATE TABLE Horror (
+        GameID INTEGER PRIMARY KEY,
+        Jump_Scare_Rating INTEGER,
+        Suspense_Level INTEGER,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
+    cursor_obj.execute(table)
+
+    # Racing Table
+    table = """
+    CREATE TABLE Racing (
+        GameID INTEGER PRIMARY KEY,
+        Realistic INTEGER,
+        Number_Of_Vehicles INTEGER,
+        Number_Of_Tracks INTEGER,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
+    cursor_obj.execute(table)
+
+    # Platformer Table
+    table = """
+    CREATE TABLE Platformer (
+        GameID INTEGER PRIMARY KEY,
+        Momentum_Based TEXT,
+        Total_Levels INTEGER,
+        Total_Environments INTEGER,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
+    cursor_obj.execute(table)
+
+    # Shooter Table
+    table = """
+    CREATE TABLE Shooter (
+        GameID INTEGER PRIMARY KEY,
+        Perspective TEXT,
+        Realistic INTEGER,
+        Ranked TEXT,
+        Game_Mode TEXT,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
+    cursor_obj.execute(table)
+
+    # MMORPG Table
+    table = """
+    CREATE TABLE MMORPG (
+        GameID INTEGER PRIMARY KEY,
+        Pay_to_Win INTEGER,
+        MMORPG_Class TEXT,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
+    cursor_obj.execute(table)
+
+    # Creating RPG Table
+    table = """ CREATE TABLE RPG (
+        GameID INTEGER PRIMARY KEY,
+        RPG_GameID INTEGER,
+        RPG_Total_Attributes INTEGER,
+        RPG_Classes INTEGER,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
     ); """
     cursor_obj.execute(table)
 
-    # Creating Horror table
-    table = """ CREATE TABLE Horror (
-        HorrorID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Horror_GameID INTEGER,
-        Horror_Jump_Scare_Rating INTEGER,
-        Horror_Suspense_Level INTEGER,
-        FOREIGN KEY (Horror_GameID) REFERENCES Game (GameID)
-    ); """
-    cursor_obj.execute(table)
-
-    # Creating Racing table
-    table = """ CREATE TABLE Racing (
-        RacingID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Racing_GameID INTEGER,
-        Racing_Realistic INTEGER,
-        Racing_Num_Vehicles INTEGER,
-        Racing_Num_Tracks INTEGER,
-        FOREIGN KEY (Racing_GameID) REFERENCES Game (GameID)
-    ); """
-    cursor_obj.execute(table)
-
-    # Creating MMORPG table
-    table = """ CREATE TABLE MMORPG (
-        MMORPGID INTEGER PRIMARY KEY AUTOINCREMENT,
-        MMORPG_GameID INTEGER,
-        MMORPG_Pay_to_Win INTEGER,
-        MMORPG_Classes INTEGER,
-        FOREIGN KEY (MMORPG_GameID) REFERENCES Game (GameID)
-    ); """
-    cursor_obj.execute(table)
-
-    # Creating Fighting table
-    table = """ CREATE TABLE Fighting (
-        FightingID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Fighting_GameID INTEGER,
-        Fighting_Game_Modes TEXT,
-        Fighting_Combo_Importance INTEGER,
-        FOREIGN KEY (Fighting_GameID) REFERENCES Game (GameID)
-    ); """
-    cursor_obj.execute(table)
-
-    # Creating Sports table
-    table = """ CREATE TABLE Sports (
-        SportsID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Sports_GameID INTEGER,
-        Sports_Sport TEXT,
-        Sports_Realistic INTEGER,
-        FOREIGN KEY (Sports_GameID) REFERENCES Game (GameID)
-    ); """
-    cursor_obj.execute(table)
-
-    # Creating Shooter table
-    table = """ CREATE TABLE Shooter (
-        ShooterID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Shooter_GameID INTEGER,
-        Shooter_Perspective TEXT,
-        Shooter_Realistic INTEGER,
-        Shooter_Ranked TEXT,
-        Shooter_Game_Modes TEXT,
-        FOREIGN KEY (Shooter_GameID) REFERENCES Game (GameID)
-    ); """
-    cursor_obj.execute(table)
-
-    # Creating Platformer table
-    #cursor_obj.execute("DROP TABLE IF EXISTS Platformer")
-    #connection_obj.commit()
-    table = """ CREATE TABLE Platformer (
-        PlatformerID INTEGER PRIMARY KEY AUTOINCREMENT,
-        Platformer_GameID INTEGER,
-        Platformer_Momentum_Based TEXT,
-        Platformer_Total_Levels INTEGER,
-        Platformer_Total_Environments INTEGER,
-        FOREIGN KEY (Platformer_GameID) REFERENCES Game (GameID)
-    ); """
+    # Sports Table
+    table = """
+    CREATE TABLE Sports (
+        GameID INTEGER PRIMARY KEY,
+        Type TEXT,
+        Realistic INTEGER,
+        FOREIGN KEY (GameID) REFERENCES Game (GameID)
+    )
+    """
     cursor_obj.execute(table)
 
 
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                    ("The Witcher 3", "MMORPG", "CD Projekt Red", "PC", 29.99))
+                    ("The Witcher 3", "RPG", "CD Projekt Red", "PC", 29.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
                     ("Doom", "Shooter", "id Software", "PC", 19.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                    ("Animal Crossing", "MMORPG", "Nintendo", "Switch", 59.99))
+                    ("Animal Crossing", "RPG", "Nintendo", "Switch", 59.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                    ("Red Dead Redemption 2", "Action Adventure", "Rockstar Games", "PS4", 39.99))
+                    ("Red Dead Redemption 2", "RPG", "Rockstar Games", "PS4", 39.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Call of Duty: Modern Warfare", "First-person shooter", "Infinity Ward", "PC", 59.99))
+                        ("Call of Duty: Modern Warfare", "Shooter", "Infinity Ward", "PC", 59.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Among Us", "Party game", "InnerSloth", "PC", 4.99))
+                        ("Among Us", "MMORPG", "InnerSloth", "PC", 4.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Grand Theft Auto V", "Action Adventure", "Rockstar Games", "PS4", 29.99))
+                        ("Grand Theft Auto V", "MMORPG", "Rockstar Games", "PS4", 29.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Minecraft", "Sandbox", "Mojang Studios", "PC", 26.95))
+                        ("Minecraft", "RPG", "Mojang Studios", "PC", 26.95))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("The Legend of Zelda: Breath of the Wild", "Action Adventure", "Nintendo", "Switch", 59.99))
+                        ("The Legend of Zelda: Breath of the Wild", "RPG", "Nintendo", "Switch", 59.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
                         ("Super Smash Bros. Ultimate", "Fighting", "Nintendo", "Switch", 59.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("God of War", "Action Adventure", "Santa Monica Studio", "PS4", 19.99))
+                        ("God of War", "RPG", "Santa Monica Studio", "PS4", 19.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Fortnite", "Battle Royale", "Epic Games", "PC", 0.00))
+                        ("Fortnite", "Shooter", "Epic Games", "PC", 0.00))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("PlayerUnknown's Battlegrounds", "Battle Royale", "PUBG Corporation", "PC", 29.99))
+                        ("PlayerUnknown's Battlegrounds", "Shooter", "PUBG Corporation", "PC", 29.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                    ("Overwatch", "First-person shooter", "Blizzard Entertainment", "PC", 39.99))
+                    ("Overwatch", "Shooter", "Blizzard Entertainment", "PC", 39.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Cyberpunk 2077", "Role-playing", "CD Projekt", "PC", 59.99))
+                        ("Cyberpunk 2077", "RPG", "CD Projekt", "PC", 59.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Horizon Zero Dawn", "Action role-playing", "Guerrilla Games", "PS4", 19.99))
+                        ("Horizon Zero Dawn", "RPG", "Guerrilla Games", "PS4", 19.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("The Last of Us Part II", "Action-adventure", "Naughty Dog", "PS4", 39.99))
+                        ("The Last of Us Part II", "RPG", "Naughty Dog", "PS4", 39.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Final Fantasy VII Remake", "Role-playing", "Square Enix", "PS4", 59.99))
+                        ("Final Fantasy VII Remake", "RPG", "Square Enix", "PS4", 59.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
                         ("Super Mario Odyssey", "Platform", "Nintendo", "Switch", 59.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Animal Crossing: New Horizons", "Social simulation", "Nintendo", "Switch", 59.99))
+                        ("Animal Crossing: New Horizons", "MMORPG", "Nintendo", "Switch", 59.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Death Stranding", "Action", "Kojima Productions", "PS4", 39.99))
+                        ("Death Stranding", "RPG", "Kojima Productions", "PS4", 39.99))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-                        ("Apex Legends", "Battle Royale", "Respawn Entertainment", "PC", 0.00))
+                        ("Apex Legends", "Shooter", "Respawn Entertainment", "PC", 0.00))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
                         ("Fall Guys: Ultimate Knockout", "Platform", "Mediatonic", "PC", 19.99))
-
-
+    
+    cursor_obj.execute("INSERT INTO Fighting (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Fighting'")
+    cursor_obj.execute("INSERT INTO Horror (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Horror'")
+    cursor_obj.execute("INSERT INTO Racing (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Racing'")
+    cursor_obj.execute("INSERT INTO Platformer (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Platform'")
+    cursor_obj.execute("INSERT INTO Shooter (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Shooter'")
+    cursor_obj.execute("INSERT INTO MMORPG (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'MMORPG'")
+    cursor_obj.execute("INSERT INTO RPG (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'RPG'")
+    cursor_obj.execute("INSERT INTO Sports (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Sports'")
 
     connection_obj.commit()
 
@@ -323,7 +347,12 @@ def delete_user():
 
     # Get the user name before deleting
     cursor_obj.execute("SELECT User_Name FROM User WHERE UserID = ?", (user_id,))
-    user_name = cursor_obj.fetchone()[0]
+    result = cursor_obj.fetchone()
+    
+    if result is None:
+        return "User not found. <a href='/get-users'>Return to User List</a>"
+
+    user_name = result[0]
 
     cursor_obj.execute("DELETE FROM User WHERE UserID = ?", (user_id,))
     connection_obj.commit()
@@ -331,14 +360,13 @@ def delete_user():
     connection_obj.close()
 
     return f"User {user_name} deleted successfully. <a href='/get-users'>Return to User List</a>"
-
 @app.route('/')
 def home():
     conn = sqlite3.connect('CS4750Project.db')
     c = conn.cursor()
     c.execute("""
         SELECT 
-            UserGame.UGID, 
+            UserGame.GameID, 
             Game.Game_Name, 
             Game.Game_Genre,
             UserGame.Difficulty, 
@@ -346,7 +374,7 @@ def home():
             UserGame.Achievements, 
             UserGame.Rating 
         FROM UserGame 
-        JOIN Game ON UserGame.UG_GameID = Game.GameID 
+        JOIN Game ON UserGame.GameID = Game.GameID 
         ORDER BY UserGame.Date_Added DESC
     """)
     games = c.fetchall()
@@ -370,7 +398,7 @@ def add_game():
     # handle form submission
     if form.validate_on_submit():
         # insert the new game into the UserGame table
-        c.execute("INSERT INTO UserGame (UG_GameID, Difficulty, Playtime, Achievements, Rating, Date_Added) VALUES (?, ?, ?, ?, ?, date('now'))",
+        c.execute("INSERT INTO UserGame (GameID, Difficulty, Playtime, Achievements, Rating, Date_Added) VALUES (?, ?, ?, ?, ?, date('now'))",
                   (form.game.data, form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data))
         conn.commit()
         conn.close()
@@ -389,7 +417,7 @@ def edit_game(game_id):
     c = conn.cursor()
 
     # retrieve the game from the UserGame table
-    c.execute("SELECT * FROM UserGame WHERE UGID = ?", (game_id,))
+    c.execute("SELECT * FROM UserGame WHERE GameID = ?", (game_id,))
     game = c.fetchone()
 
     form = GameEditForm()
@@ -397,15 +425,15 @@ def edit_game(game_id):
     if request.method == 'GET':
         # populate the form with the game's data
         # convert to int to make sure correct type is received, default to 0 if nothing is entered
-        form.difficulty.data = game[2]
-        form.playtime.data = int(game[3]) if game[3] is not None else 0
-        form.achievements.data = int(game[4]) if game[4] is not None else 0
-        form.rating.data = int(game[5]) if game[5] is not None else 0
+        form.difficulty.data = game[3]
+        form.playtime.data = int(game[4]) if game[4] is not None else 0
+        form.achievements.data = int(game[5]) if game[5] is not None else 0
+        form.rating.data = int(game[6]) if game[6] is not None else 0
 
     if form.validate_on_submit():
         # update the game in the UserGame table
         # if form is valid, update fields
-        c.execute("UPDATE UserGame SET Difficulty = ?, Playtime = ?, Achievements = ?, Rating = ? WHERE UGID = ?",
+        c.execute("UPDATE UserGame SET Difficulty = ?, Playtime = ?, Achievements = ?, Rating = ? WHERE GameID = ?",
                   (form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data, game_id))
         conn.commit()
         conn.close()
@@ -421,7 +449,7 @@ def delete_game(game_id):
     c = conn.cursor()
 
     # delete the game from the UserGame table
-    c.execute("DELETE FROM UserGame WHERE UGID = ?", (game_id,))
+    c.execute("DELETE FROM UserGame WHERE GameID = ?", (game_id,))
     conn.commit()
     conn.close()
 
@@ -435,7 +463,7 @@ def confirm_delete(game_id):
     c = conn.cursor()
 
     # retrieve the game from the UserGame table
-    c.execute("SELECT UGID, Game.Game_Name FROM UserGame JOIN Game ON UserGame.UG_GameID = Game.GameID WHERE UGID = ?", (game_id,))
+    c.execute("SELECT UserGame.GameID, Game.Game_Name FROM UserGame JOIN Game ON UserGame.GameID = Game.GameID WHERE Game.GameID = ?", (game_id,))
     game = c.fetchone()
     conn.close()
 
