@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Landing Page</title>
+    <style>
+        .new-game-button {
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border: none;
+            cursor: pointer;
+        }
+        .edit-button, .confirm-delete-button, .details-button {
+            padding: 5px 10px;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+        }
+        /* Styling for the user library table */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Styling for the main content */
+        h1 {
+            margin-top: 20px;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        #add-game-form {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <h1>My Game Library</h1>
+
+    <a href="{{ url_for('add_game') }}">
+        <button class="new-game-button">Add Game</button>
+    </a>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Genre</th>
+            <th>Difficulty</th>
+            <th>Playtime (hrs)</th>
+            <th>Achievements (%)</th>
+            <th>Rating</th>
+            <th>Actions</th>
+        </tr>
+        {% for game in games %}
+        <tr>
+            <td>{{ game[1] }}</td>
+            <td>{{ game[2] }}</td>
+            <td>{{ game[3] }}</td>
+            <td>{{ game[4] }} hrs</td>
+            <td>{{ game[5] }}%</td>
+            <td>{{ game[6] }}/10</td>
+            <td>
+                <a href="{{ url_for('edit_game', game_id=game[0]) }}">
+                    <button class="edit-button">Edit</button>
+                </a>
+                <a href="{{ url_for('confirm_delete', game_id=game[0]) }}">
+                    <button class="confirm-delete-button">Delete</button>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+
+

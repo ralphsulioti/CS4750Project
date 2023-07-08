@@ -1,0 +1,19 @@
+<table>
+    <tr>
+        <th>User ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    {% for user in users|sort(attribute=0) if user %}
+    <tr>
+        <td>{{ user[0] }}</td>
+        <td>{{ user[1] }}</td>
+        <td>
+            <form id="deleteForm{{ user[0] }}" action="/delete-user" method="post" style="display: inline;">
+                <input type="hidden" name="user_id" value="{{ user[0] }}">
+                <button onclick="deleteUser('{{ user[0] }}')">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
