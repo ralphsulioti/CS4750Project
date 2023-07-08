@@ -7,6 +7,19 @@
       * **Krishna**
       * **Ralph**
 
+## Run App on MacOS
+
+### **Prerequisites:**
+
+Python 3.x should be installed on your system.
+Steps:
+
+1. [x] **Create virtual environment:** _python3 -m venv env_
+2. [x] **Install requirements:** pip3 install -r requirements.txt
+3. [x] **Activate virtual environment:** source env/bin/activate
+4. [x] **Run app:** python3 run.py runserver
+
+Access the app in your web browser using the specified address.
 
 This repository contains the source code for a Flask web application that serves as a game catalog.
 It allows users to explore and manage their game collection, wishlist, and reviews. The app provides a user-friendly interface to interact with the database and perform various operations such as adding new games, updating game details, managing user reviews, and organizing games into different categories.
