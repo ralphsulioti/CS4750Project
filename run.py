@@ -15,7 +15,6 @@ app.config['SECRET_KEY'] = 'your-secret-key'
 #   host="localhost",
 #   user="yourusername",
 #   password="yourpassword"
-
 # )
 
 
@@ -77,13 +76,13 @@ def create_db():
    # Creating UserGame table
    table = """ CREATE TABLE UserGame (
        UGID INTEGER PRIMARY KEY AUTOINCREMENT,
-       GameID INTEGER,
+       UG_GameID INTEGER,
        Difficulty STRING,
        Playtime INTEGER,
        Achievements TEXT,
        Rating INTEGER,
        Date_Added DATE,
-       FOREIGN KEY (GameID) REFERENCES Game (GameID)
+       FOREIGN KEY (UG_GameID) REFERENCES Game (GameID)
    ); """
    # FOREIGN KEY (UG_UserID) REFERENCES User (UserID),
    # UG_UserID INTEGER,
@@ -95,9 +94,9 @@ def create_db():
    # Creating Review table
    table = """ CREATE TABLE Reviews (
        ReviewID INTEGER PRIMARY KEY AUTOINCREMENT,
-       UGID INTEGER,
+       Review_UGID INTEGER,
        Review_Thoughts TEXT,
-       FOREIGN KEY (UGID) REFERENCES UserGame (UGID)
+       FOREIGN KEY (Review_UGID) REFERENCES UserGame (UGID)
    ); """
    cursor_obj.execute(table)
 
@@ -105,11 +104,11 @@ def create_db():
    # Creating WishListGame table
    table = """ CREATE TABLE WishListGame (
        WLGID INTEGER PRIMARY KEY AUTOINCREMENT,
-       GameID INTEGER,
-       UserID INTEGER,
+       WLG_GameID INTEGER,
+       WLG_UserID INTEGER,
        WLG_Priority INTEGER,
-       FOREIGN KEY (GameID) REFERENCES Game (GameID),
-       FOREIGN KEY (UserID) REFERENCES User (UserID)
+       FOREIGN KEY (WLG_GameID) REFERENCES Game (GameID),
+       FOREIGN KEY (WLG_UserID) REFERENCES User (UserID)
    ); """
    cursor_obj.execute(table)
 
@@ -117,10 +116,10 @@ def create_db():
    # Creating Horror table
    table = """ CREATE TABLE Horror (
        HorrorID INTEGER PRIMARY KEY AUTOINCREMENT,
-       GameID INTEGER,
+       Horror_GameID INTEGER,
        Horror_Jump_Scare_Rating INTEGER,
        Horror_Suspense_Level INTEGER,
-       FOREIGN KEY (GameID) REFERENCES Game (GameID)
+       FOREIGN KEY (Horror_GameID) REFERENCES Game (GameID)
    ); """
    cursor_obj.execute(table)
 
@@ -128,11 +127,11 @@ def create_db():
    # Creating Racing table
    table = """ CREATE TABLE Racing (
        RacingID INTEGER PRIMARY KEY AUTOINCREMENT,
-       GameID INTEGER,
+       Racing_GameID INTEGER,
        Racing_Realistic INTEGER,
        Racing_Num_Vehicles INTEGER,
        Racing_Num_Tracks INTEGER,
-       FOREIGN KEY (GameID) REFERENCES Game (GameID)
+       FOREIGN KEY (Racing_GameID) REFERENCES Game (GameID)
    ); """
    cursor_obj.execute(table)
 
@@ -140,10 +139,10 @@ def create_db():
    # Creating MMORPG table
    table = """ CREATE TABLE MMORPG (
        MMORPGID INTEGER PRIMARY KEY AUTOINCREMENT,
-       GameID INTEGER,
+       MMORPG_GameID INTEGER,
        MMORPG_Pay_to_Win INTEGER,
        MMORPG_Classes INTEGER,
-       FOREIGN KEY (GameID) REFERENCES Game (GameID)
+       FOREIGN KEY (MMORPG_GameID) REFERENCES Game (GameID)
    ); """
    cursor_obj.execute(table)
 
@@ -151,10 +150,10 @@ def create_db():
    # Creating Fighting table
    table = """ CREATE TABLE Fighting (
        FightingID INTEGER PRIMARY KEY AUTOINCREMENT,
-       GameID INTEGER,
+       Fighting_GameID INTEGER,
        Fighting_Game_Modes TEXT,
        Fighting_Combo_Importance INTEGER,
-       FOREIGN KEY (GameID) REFERENCES Game (GameID)
+       FOREIGN KEY (Fighting_GameID) REFERENCES Game (GameID)
    ); """
    cursor_obj.execute(table)
 
@@ -162,10 +161,10 @@ def create_db():
    # Creating Sports table
    table = """ CREATE TABLE Sports (
        SportsID INTEGER PRIMARY KEY AUTOINCREMENT,
-       GameID INTEGER,
+       Sports_GameID INTEGER,
        Sports_Sport TEXT,
        Sports_Realistic INTEGER,
-       FOREIGN KEY (GameID) REFERENCES Game (GameID)
+       FOREIGN KEY (Sports_GameID) REFERENCES Game (GameID)
    ); """
    cursor_obj.execute(table)
 
@@ -173,12 +172,12 @@ def create_db():
    # Creating Shooter table
    table = """ CREATE TABLE Shooter (
        ShooterID INTEGER PRIMARY KEY AUTOINCREMENT,
-       GameID INTEGER,
+       Shooter_GameID INTEGER,
        Shooter_Perspective TEXT,
        Shooter_Realistic INTEGER,
        Shooter_Ranked TEXT,
        Shooter_Game_Modes TEXT,
-       FOREIGN KEY (GameID) REFERENCES Game (GameID)
+       FOREIGN KEY (Shooter_GameID) REFERENCES Game (GameID)
    ); """
    cursor_obj.execute(table)
 
@@ -188,11 +187,11 @@ def create_db():
    # connection_obj.commit()
    table = """ CREATE TABLE Platformer (
        PlatformerID INTEGER PRIMARY KEY AUTOINCREMENT,
-       GameID INTEGER,
+       Platformer_GameID INTEGER,
        Platformer_Momentum_Based TEXT,
        Platformer_Total_Levels INTEGER,
        Platformer_Total_Environments INTEGER,
-       FOREIGN KEY (GameID) REFERENCES Game (GameID)
+       FOREIGN KEY (Platformer_GameID) REFERENCES Game (GameID)
    ); """
    cursor_obj.execute(table)
 
