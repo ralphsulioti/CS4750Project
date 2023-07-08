@@ -1,6 +1,30 @@
-# Cloned repo from TA for our project
-Setting up a quick flask app with user interface and db connection.
+# Project Title: The GameHub
+* **Contributors**: 
+  *
+       **Team Members**
+      *    **Daniel**
+      * **Baran**
+      * **Krishna**
+      * **Ralph**
 
+
+This repository contains the source code for a Flask web application that serves as a game catalog.
+It allows users to explore and manage their game collection, wishlist, and reviews. The app provides a user-friendly interface to interact with the database and perform various operations such as adding new games, updating game details, managing user reviews, and organizing games into different categories.
+
+Features:
+- **User Registration and Authentication:** We don't have this feature implemented yet.
+- **Game Management:** Users can add new games to their collection, update game details such as name, genre, developer, platform, and price.
+- **Wishlist:** Users can maintain a wishlist of games they wish to acquire, prioritize them, and keep track of upcoming releases.
+- **User Reviews:** Users can write and publish reviews for games, share their thoughts, and rate their gaming experience.
+- **Genre-Specific Attributes:** The app supports genre-specific attributes for games, such as pay-to-win status, classes for MMORPGs, perspective and realism for shooters, sports types, racing realism, platformer momentum-based mechanics, fighting game modes, and horror elements.
+- **Database Integration:** The app utilizes a SQLite database to store game and user-related data, ensuring data persistence and efficient retrieval.
+
+This Flask app provides an intuitive and efficient way for gamers to manage their game catalog, wishlist, and reviews. It can be easily customized and extended to include additional features and functionalities based on specific requirements.
+
+
+
+  * Setting up a quick flask app with user interface and db connection.
+### Cloned repo from TA 
 ## Install libs:
 * python3 -m pip install mysql-connector-python
 * python3 -m pip install flask
