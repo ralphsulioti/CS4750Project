@@ -196,8 +196,8 @@ def create_db():
    cursor_obj.execute(table)
 
    cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-       ("Soulcalibur VI", "Fighting", "Bandai Namco Entertainment", "Xbox Series X", 49.99))
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer,Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?,?)",
+       ("Soulcalibur VI", "Fighting", "Bandai Namco Entertainment","2010-10-25", "Xbox Series X", 49.99))
 
    game_id = cursor_obj.lastrowid  # Retrieve the last inserted GameID
 
@@ -958,6 +958,7 @@ def connect():
 
 if __name__ == '__main__':
    app.run(debug=True)
+
 
 
 
