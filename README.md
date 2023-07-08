@@ -21,10 +21,11 @@ Steps:
 
 Access the app in your web browser using the specified address.
 
+###  Description: 
 This repository contains the source code for a Flask web application that serves as a game catalog.
 It allows users to explore and manage their game collection, wishlist, and reviews. The app provides a user-friendly interface to interact with the database and perform various operations such as adding new games, updating game details, managing user reviews, and organizing games into different categories.
 
-Features:
+### Features:
 - **User Registration and Authentication:** We don't have this feature implemented yet.
 - **Game Management:** Users can add new games to their collection, update game details such as name, genre, developer, platform, and price.
 - **Wishlist:** Users can maintain a wishlist of games they wish to acquire, prioritize them, and keep track of upcoming releases.
@@ -37,7 +38,7 @@ This Flask app provides an intuitive and efficient way for gamers to manage thei
 
 
   * Setting up a quick flask app with user interface and db connection.
-### Cloned repo from TA 
+#### Special Note:  Cloned repo from TA for project initialization
 ## Install libs:
 * python3 -m pip install mysql-connector-python
 * python3 -m pip install flask
