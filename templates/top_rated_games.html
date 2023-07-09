@@ -1,0 +1,55 @@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    h1 {
+        margin-top: 20px;
+    }
+
+    h2 {
+        margin-top: 30px;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    #add-game-form {
+        display: none;
+    }
+</style>
+
+{% include 'navbar.html' %}
+
+<table>
+    <tr>
+        <th>UGID</th>
+        <th>Game Name</th>
+        <th>Genre</th>
+        <th>Playtime</th>
+        <th>Achievements</th>
+        <th>Rating</th>
+    </tr>
+    {% for game in games %}
+    <tr>
+        <td>{{ game[0] }}</td>
+        <td>{{ game[1] }}</td>
+        <td>{{ game[2] }}</td>
+        <td>{{ game[3] }}</td>
+        <td>{{ game[4] }}</td>
+        <td>{{ game[5] }}</td>
+    </tr>
+    {% endfor %}
+</table>

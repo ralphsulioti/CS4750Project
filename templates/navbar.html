@@ -1,8 +1,10 @@
 <style>
-    /* Styling for the navbar */
     nav {
-        background-color: #f2f2f2;
+        background-color: #4285F4;
         padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     nav ul {
@@ -10,7 +12,7 @@
         margin: 0;
         padding: 0;
         display: flex;
-        justify-content: flex-start;
+        align-items: center;
     }
 
     nav ul li {
@@ -19,16 +21,30 @@
 
     nav ul li a {
         text-decoration: none;
-        color: #333;
+        color: #FFFFFF;
         padding: 5px;
+    }
+
+    .logo {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .top-rated-badge {
+        background-color: #FFD700;
+        color: #333;
+        padding: 5px 10px;
+        border-radius: 50%;
+        font-weight: bold;
     }
 </style>
 
 <nav>
     <ul>
-        <li><a href="/">Home</a></li>
+        <li><a href="/"><span class="logo">Game Library</span></a></li>
         <li><a href="/get-users">View Users</a></li>
         <li><a href="{{ url_for('add_game') }}">Add Game</a></li>
         <li><a href="/wishlist">Wish List</a></li>
+        <li><a href="/top-rated-games">Top Rated Games</a></li>
     </ul>
 </nav>

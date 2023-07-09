@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import sqlite3
 from flask_wtf import FlaskForm
@@ -759,6 +760,28 @@ def home():
    games = c.fetchall()
    conn.close()
    return render_template('landingPage.html', games=games)
+
+@app.route("/top-rated-games")
+def top_rated_games():
+    conn = sqlite3.connect('CS4750Project.db')
+    c = conn.cursor()
+    c.execute("""
+        SELECT
+            UserGame.UGID,
+            Game.Game_Name,
+            Game.Game_Genre,
+            UserGame.Difficulty,
+            UserGame.Playtime,
+            UserGame.Achievements,
+            UserGame.Rating
+        FROM UserGame
+        JOIN Game ON UserGame.UG_GameID = Game.GameID
+        WHERE UserGame.Rating >= 7
+        ORDER BY UserGame.Rating DESC
+    """)
+    top_rated_games = c.fetchall()
+    conn.close()
+    return render_template('top_rated_games.html', games=top_rated_games)
 
 
 
