@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import sqlite3
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FloatField, SelectField, IntegerField, FloatField, SubmitField
+from wtforms import StringField, SubmitField, SelectField, IntegerField, FloatField, TextAreaField
 from wtforms.validators import DataRequired, NumberRange
 
 
@@ -26,8 +26,6 @@ def create_db():
     cursor_obj.execute("DROP TABLE IF EXISTS Game")
     connection_obj.commit()
     cursor_obj.execute("DROP TABLE IF EXISTS UserGame")
-    connection_obj.commit()
-    cursor_obj.execute("DROP TABLE IF EXISTS Reviews")
     connection_obj.commit()
     cursor_obj.execute("DROP TABLE IF EXISTS WishListGame")
     connection_obj.commit()
@@ -245,7 +243,7 @@ def create_db():
     cursor_obj.execute("INSERT INTO Fighting (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Fighting'")
     cursor_obj.execute("INSERT INTO Horror (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Horror'")
     cursor_obj.execute("INSERT INTO Racing (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Racing'")
-    cursor_obj.execute("INSERT INTO Platformer (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Platform'")
+    cursor_obj.execute("INSERT INTO Platformer (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Platformer'")
     cursor_obj.execute("INSERT INTO Shooter (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Shooter'")
     cursor_obj.execute("INSERT INTO MMORPG (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'MMORPG'")
     cursor_obj.execute("INSERT INTO RPG (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'RPG'")
@@ -277,6 +275,64 @@ class WishListForm(FlaskForm):
     priority = IntegerField('Priority:', validators=[DataRequired()])
     submit = SubmitField('Add to Wishlist')
 
+
+class ReviewForm(FlaskForm):
+    review = TextAreaField('Review', validators=[DataRequired()])
+    submit = SubmitField('Save Review')
+
+def create_form(field_names):
+    class DynamicForm(FlaskForm):
+        pass
+
+    for field_name in field_names:
+        setattr(DynamicForm, field_name, StringField(field_name))
+
+    setattr(DynamicForm, "submit", SubmitField("Save"))
+    return DynamicForm
+
+
+@app.route('/view-details/<int:game_id>', methods=['GET', 'POST'])
+def view_details(game_id):
+    conn = sqlite3.connect('CS4750Project.db')
+    c = conn.cursor()
+
+    # retrieve the game from the Game table and UserGame table
+    c.execute("SELECT Game.GameID, Game.Game_Name, Game.Game_Developer, Game.Game_Platform, Game.Game_Genre, UserGame.Review FROM Game JOIN UserGame ON Game.GameID = UserGame.GameID WHERE Game.GameID = ?", (game_id,))
+    game = c.fetchone()
+
+    genre_table = game[4]
+    c.execute(f"PRAGMA table_info({genre_table})")
+    columns = [column[1] for column in c.fetchall()]
+
+    c.execute(f"SELECT {', '.join(columns)} FROM {genre_table} WHERE GameID = ?", (game_id,))
+    genre_data = c.fetchone()
+
+    form_review = ReviewForm()
+    form_genre = create_form(columns[1:])()
+
+    if request.method == 'GET':
+        form_review.review.data = game[5]
+        for field_name, data in zip(columns[1:], genre_data[1:]):
+            getattr(form_genre, field_name).data = data
+
+    if form_review.validate_on_submit():
+        # update the review in the UserGame table
+        c.execute("UPDATE UserGame SET Review = ? WHERE GameID = ?", (form_review.review.data, game_id))
+        conn.commit()
+        flash('Review updated successfully!')
+        return redirect(url_for('view_details', game_id=game_id))
+
+    if form_genre.validate_on_submit():
+        # Update the genre data in the genre table
+        updates = ", ".join(f"{field_name} = ?" for field_name in columns[1:])
+        c.execute(f"UPDATE {genre_table} SET {updates} WHERE GameID = ?", (*[getattr(form_genre, field_name).data for field_name in columns[1:]], game_id))
+        conn.commit()
+        flash('Genre data updated successfully!')
+        return redirect(url_for('view_details', game_id=game_id))
+
+    conn.close()
+
+    return render_template('view_details.html', game=game, form_review=form_review, form_genre=form_genre)
 
 @app.route("/get-games")
 def get_games():
@@ -360,6 +416,7 @@ def delete_user():
     connection_obj.close()
 
     return f"User {user_name} deleted successfully. <a href='/get-users'>Return to User List</a>"
+
 @app.route('/')
 def home():
     conn = sqlite3.connect('CS4750Project.db')
@@ -442,6 +499,7 @@ def edit_game(game_id):
 
     return render_template('edit_game.html', form=form)
 
+
 @app.route('/delete-game/<int:game_id>', methods=['POST'])
 def delete_game(game_id):
     # connect to the database
@@ -455,6 +513,7 @@ def delete_game(game_id):
 
     flash('Game deleted successfully!')
     return redirect(url_for('home'))
+
 
 @app.route('/confirm-delete/<int:game_id>')
 def confirm_delete(game_id):
@@ -507,8 +566,6 @@ def wishlist():
 
     # Render the form and the wishlist
     return render_template("wishlist.html", form=form, wishlist=wishlist)
-
-
 
 
 @app.route("/connect")

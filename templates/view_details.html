@@ -1,0 +1,26 @@
+{% include 'navbar.html' %}
+
+{% block content %}
+<h1>{{ game[1] }}</h1>
+<p>Developer: {{ game[2] }}</p>
+<p>Platform: {{ game[3] }}</p>
+
+<h2>Review</h2>
+<form method="POST">
+    {{ form_review.hidden_tag() }}
+    <p>Review: {{ form_review.review }}</p>
+    <p>{{ form_review.submit }}</p>
+</form>
+
+<h2>Genre-specific data</h2>
+<form method="POST">
+    {{ form_genre.hidden_tag() }}
+    {% for field in form_genre if field.name != 'csrf_token' and field.name != 'submit' %}
+        <p>{{ field.label }}: {{ field }}</p>
+    {% endfor %}
+    <p>{{ form_genre.submit }}</p>
+</form>
+
+<a href="{{ url_for('home') }}">Back</a>
+{% endblock %}
+

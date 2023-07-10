@@ -83,6 +83,9 @@
                 <a href="{{ url_for('confirm_delete', game_id=game[0]) }}">
                     <button class="confirm-delete-button">Delete</button>
                 </a>
+                <a href="{{ url_for('view_details', game_id=game[0]) }}">
+                    <button class="details-button">Details </button>
+                </a>
             </td>
         </tr>
         {% endfor %}
