@@ -2,9 +2,7 @@
 <html>
 <head>
     <title>Game List</title>
-</head>
-
-<style>
+    <style>
         /* Styling for the user library table */
         table {
             border-collapse: collapse;
@@ -39,13 +37,33 @@
             display: none;
         }
     </style>
-
+</head>
 <body>
-
-   {% include 'navbar.html' %}
-
+    {% include 'navbar.html' %}
     <h1>Game List</h1>
-    <table>
+    <form id="filter-form">
+        <h2>Filters</h2>
+        <label for="game-id-filter">Game ID:</label>
+        <input type="text" id="game-id-filter">
+        <br>
+        <label for="name-filter">Name:</label>
+        <input type="text" id="name-filter">
+        <br>
+        <label for="genre-filter">Genre:</label>
+        <input type="text" id="genre-filter">
+        <br>
+        <label for="platform-filter">Platform:</label>
+        <input type="text" id="platform-filter">
+        <br>
+        <label for="release-date-filter">Release Date:</label>
+        <input type="text" id="release-date-filter">
+        <br>
+        <label for="price-filter">Price:</label>
+        <input type="text" id="price-filter">
+        <br>
+        <input type="button" value="Apply Filters" onclick="applyFilters()">
+    </form>
+    <table id="game-table">
         <tr>
             <th>Game ID</th>
             <th>Name</th>
@@ -65,5 +83,38 @@
         </tr>
         {% endfor %}
     </table>
+
+    <script>
+        function applyFilters() {
+            var gameRows = document.querySelectorAll('#game-table tr');
+            var gameIdFilter = document.getElementById('game-id-filter').value.toLowerCase();
+            var nameFilter = document.getElementById('name-filter').value.toLowerCase();
+            var genreFilter = document.getElementById('genre-filter').value.toLowerCase();
+            var platformFilter = document.getElementById('platform-filter').value.toLowerCase();
+            var releaseDateFilter = document.getElementById('release-date-filter').value.toLowerCase();
+            var priceFilter = document.getElementById('price-filter').value.toLowerCase();
+
+            for (var i = 1; i < gameRows.length; i++) {
+                var gameRow = gameRows[i];
+                var gameId = gameRow.cells[0].textContent.toLowerCase();
+                var name = gameRow.cells[1].textContent.toLowerCase();
+                var genre = gameRow.cells[2].textContent.toLowerCase();
+                var platform = gameRow.cells[3].textContent.toLowerCase();
+                var releaseDate = gameRow.cells[4].textContent.toLowerCase();
+                var price = gameRow.cells[5].textContent.toLowerCase();
+
+                if (gameId.includes(gameIdFilter) &&
+                    name.includes(nameFilter) &&
+                    genre.includes(genreFilter) &&
+                    platform.includes(platformFilter) &&
+                    releaseDate.includes(releaseDateFilter) &&
+                    price.includes(priceFilter)) {
+                    gameRow.style.display = "";
+                } else {
+                    gameRow.style.display = "none";
+                }
+            }
+        }
+    </script>
 </body>
 </html>

@@ -31,7 +31,6 @@
             background-color: #f2f2f2;
         }
 
-
         h1 {
             margin-top: 20px;
         }
@@ -47,6 +46,20 @@
         #add-game-form {
             display: none;
         }
+
+        .filter-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .filter-label {
+            margin-right: 10px;
+        }
+
+        .filter-select {
+            padding: 5px;
+        }
     </style>
 </head>
 <body>
@@ -54,11 +67,80 @@
 
     <h1>My Game Library</h1>
 
+    <form id="filter-form">
+        <h2>Filters</h2>
+        <div class="filter-container">
+            <label class="filter-label" for="name-filter">Name:</label>
+            <input type="text" id="name-filter">
+        </div>
+        <div class="filter-container">
+            <label class="filter-label" for="genre-filter">Genre:</label>
+            <select id="genre-filter" class="filter-select">
+                <option value="">All</option>
+                <option value="Action">Action</option>
+                <option value="Adventure">Adventure</option>
+                <option value="RPG">RPG</option>
+                <option value="Strategy">Strategy</option>
+                <option value="Sports">Sports</option>
+            </select>
+        </div>
+        <div class="filter-container">
+            <label class="filter-label" for="difficulty-filter">Difficulty:</label>
+            <select id="difficulty-filter" class="filter-select">
+                <option value="">All</option>
+                <option value="Very Easy">Very Easy</option>
+                <option value="Easy">Easy</option>
+                <option value="Normal">Normal</option>
+                <option value="Hard">Hard</option>
+                <option value="Very Hard">Very Hard</option>
+            </select>
+        </div>
+        <div class="filter-container">
+            <label class="filter-label" for="playtime-filter">Playtime (hrs):</label>
+            <select id="playtime-filter" class="filter-select">
+                <option value="">All</option>
+                <option value="&lt;5">Less than 5 hours</option>
+                <option value="5-10">5-10 hours</option>
+                <option value="11-25">11-25 hours</option>
+                <option value="&gt;25">More than 25 hours</option>
+            </select>
+        </div>
+        <div class="filter-container">
+            <label class="filter-label" for="achievements-filter">Achievements (%):</label>
+            <select id="achievements-filter" class="filter-select">
+                <option value="">All</option>
+                <option value="0-10">0-10%</option>
+                <option value="11-20">11-20%</option>
+                <option value="21-30">21-30%</option>
+                <option value="31-40">31-40%</option>
+                <option value="41-50">41-50%</option>
+                <!-- Add more options as needed -->
+            </select>
+        </div>
+        <div class="filter-container">
+            <label class="filter-label" for="rating-filter">Rating:</label>
+            <select id="rating-filter" class="filter-select">
+                <option value="">All</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <input type="button" value="Apply Filters" onclick="applyFilters()">
+    </form>
+
     <a href="{{ url_for('add_game') }}">
         <button class="new-game-button">Add Game</button>
     </a>
 
-    <table>
+    <table id="game-table">
         <tr>
             <th>Name</th>
             <th>Genre</th>
@@ -87,7 +169,38 @@
         </tr>
         {% endfor %}
     </table>
+
+    <script>
+        function applyFilters() {
+            var gameRows = document.querySelectorAll('#game-table tr');
+            var nameFilter = document.getElementById('name-filter').value.toLowerCase();
+            var genreFilter = document.getElementById('genre-filter').value.toLowerCase();
+            var difficultyFilter = document.getElementById('difficulty-filter').value.toLowerCase();
+            var playtimeFilter = document.getElementById('playtime-filter').value.toLowerCase();
+            var achievementsFilter = document.getElementById('achievements-filter').value.toLowerCase();
+            var ratingFilter = document.getElementById('rating-filter').value.toLowerCase();
+
+            for (var i = 1; i < gameRows.length; i++) {
+                var gameRow = gameRows[i];
+                var name = gameRow.cells[0].textContent.toLowerCase();
+                var genre = gameRow.cells[1].textContent.toLowerCase();
+                var difficulty = gameRow.cells[2].textContent.toLowerCase();
+                var playtime = gameRow.cells[3].textContent.toLowerCase();
+                var achievements = gameRow.cells[4].textContent.toLowerCase();
+                var rating = gameRow.cells[5].textContent.toLowerCase();
+
+                if (name.includes(nameFilter) &&
+                    genre.includes(genreFilter) &&
+                    difficulty.includes(difficultyFilter) &&
+                    playtime.includes(playtimeFilter) &&
+                    achievements.includes(achievementsFilter) &&
+                    rating.includes(ratingFilter)) {
+                    gameRow.style.display = "";
+                } else {
+                    gameRow.style.display = "none";
+                }
+            }
+        }
+    </script>
 </body>
 </html>
-
-
