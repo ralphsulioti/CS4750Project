@@ -582,7 +582,7 @@ def create_db():
    connection_obj.close()
 
 
-   return "DB is fresh and ready"
+   return render_template("create_db.html")
 
 
 

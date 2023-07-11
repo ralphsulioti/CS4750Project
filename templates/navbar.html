@@ -38,6 +38,22 @@
         font-weight: bold;
 
     }
+
+    .refresh-db-link {
+        color: white;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .refresh-db-link:hover {
+        color: #FF0000;
+    }
+
+    .warning-message {
+        color: rgba(255, 106, 0, 0.98);
+        font-weight: bold;
+        margin-top: 10px;
+    }
 </style>
 
 <nav>
@@ -46,5 +62,10 @@
         <li><a href="/get-users">View Users</a></li>
         <li><a href="/wishlist">Wish List</a></li>
         <li><a href="/top-rated-games">Top Rated</a></li>
+        <li><a href="/create-db" class="refresh-db-link">Refresh DB</a></li>
     </ul>
 </nav>
+
+<div class="warning-message">
+    Warning: Refreshing the database will remove all existing data. Proceed with caution.
+</div>
