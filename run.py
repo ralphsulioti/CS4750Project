@@ -1,5 +1,6 @@
 
 
+
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import sqlite3
 from flask_wtf import FlaskForm
@@ -217,14 +218,6 @@ def create_db():
        "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
        (doom_game_id, "First-person", 1, "Yes", "Single-player, Multiplayer"))
 
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
-       ("Animal Crossing", "MMORPG", "Nintendo", "Switch", 59.99))
-
-   animal_crossing_game_id = cursor_obj.lastrowid
-
-   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Pay_to_Win, MMORPG_Classes) VALUES (?, ?, ?)",
-                      (animal_crossing_game_id, 0, 8))
 
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
