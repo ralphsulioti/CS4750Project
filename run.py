@@ -12,17 +12,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
 
 
-
-
-# mydb = mysql.connector.connect(
-#   host="localhost",
-#   user="yourusername",
-#   password="yourpassword"
-# )
-
-
-
-
 @app.route("/create-db")
 def create_db():
    connection_obj = sqlite3.connect('CS4750Project.db')
@@ -583,6 +572,7 @@ def create_db():
 
 
    return render_template("create_db.html")
+
 
 
 

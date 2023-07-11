@@ -8,37 +8,19 @@
 </head>
 
 <style>
-    /* Styling for the user library table */
-    table {
-        border-collapse: collapse;
-        width: 100%;
+    body {
+        margin: 0;
+        padding: 0;
     }
 
-    th, td {
-        text-align: left;
-        padding: 8px;
-        border-bottom: 1px solid #ddd;
+    nav {
+        background-color: #f0f0f0;
+        padding: 10px;
     }
 
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    /* Styling for the main content */
-    h1 {
-        margin-top: 20px;
-    }
-
-    h2 {
-        margin-top: 30px;
-    }
-
-    form {
-        margin-top: 20px;
-    }
-
-    #add-game-form {
-        display: none;
+    nav > * {
+        display: flex;
+        align-items: center;
     }
 
     .filters-container {
@@ -59,6 +41,13 @@
         margin-left: 20px;
     }
 
+    .right-filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-left: 20px;
+    }
+
     .filter-container {
         display: flex;
         align-items: center;
@@ -68,6 +57,7 @@
     .filter-label {
         margin-right: 10px;
         margin-left: 20px;
+        font-weight: bold;
     }
 
     .filter-select,
@@ -88,6 +78,36 @@
         display: block;
         margin: 0 auto;
         transition: background-color 0.3s;
+    }
+
+    .filter-button:hover {
+        background-color: rebeccapurple;
+        color: white;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    h1 {
+        margin-top: 20px;
+    }
+
+    h2 {
+        margin-top: 30px;
     }
 </style>
 
@@ -162,7 +182,7 @@
         {% endfor %}
     </table>
 
-    <h2>Add New Game</h2>
+    <h2>Add New Game to Your Wishlist </h2>
     <form method="POST">
         {{ form.hidden_tag() }}
         <p>{{ form.game.label }}: {{ form.game(id="select2") }}</p>
@@ -170,7 +190,6 @@
         <p>{{ form.submit() }}</p>
     </form>
 
-    <!-- Apply Filters and Initialize Select2 -->
     <script>
     function applyFilters() {
         var gameRows = document.querySelectorAll('table tbody tr');
@@ -211,7 +230,7 @@
         } else if (filter === "100+") {
             return price > 100;
         }
-        return true; // All
+        return true;
     }
 
     $(document).ready(function() {
