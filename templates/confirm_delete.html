@@ -1,4 +1,6 @@
+
 {% block content %}
+  {% include "navbar.html" %}
 <h1>Confirm Delete</h1>
 <p>Are you sure you want to delete the game "{{ game[1] }}"?</p>
 <form method="POST" action="{{ url_for('delete_game', game_id=game[0]) }}">

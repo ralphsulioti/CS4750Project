@@ -6,45 +6,196 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 </head>
-
 <style>
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
+body {
+    margin: 0;
+    padding: 0;
+}
 
-    th, td {
-        text-align: left;
-        padding: 8px;
-        border-bottom: 1px solid #ddd;
-    }
+nav {
+    background-color: #f0f0f0;
+    padding: 10px;
+}
 
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
+nav > * {
+    display: flex;
+    align-items: center;
+}
 
-    h1 {
-        margin-top: 20px;
-    }
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
 
-    h2 {
-        margin-top: 30px;
-    }
+   .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
 
-    form {
-        margin-top: 20px;
-    }
+}
 
-    #add-game-form {
-        display: none;
-    }
+.left-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-right: 15px;
+    margin-left: 20px;
+}
+
+.right-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.filter-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.filter-label {
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+.filter-select,
+#name-filter {
+    padding: 7px;
+}
+
+.filter-button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: rgb(78, 240, 81);
+    color: black;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    margin: 0 auto;
+    transition: background-color 0.3s;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+h1 {
+    margin-top: 20px;
+}
+
+h2 {
+    margin-top: 30px;
+}
+
+.new-game-button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: rgba(255, 106, 0, 0.98);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+    margin-left: auto;
+}
+
 </style>
 
 <body>
     {% include 'navbar.html' %}
+<div class="filters-container">
+    <div class="left-filters">
+        <h2>Filters</h2>
+        <div class="filter-container" style="margin-bottom: 20px;">
+            <label class="filter-label" for="name-filter">Game Name:</label>
+            <input type="text" id="name-filter">
+        </div>
+        <div class="filter-container" style="margin-bottom: 20px;">
+            <label class="filter-label" for="genre-filter">Genre:</label>
+            <select id="genre-filter" class="filter-select">
+                <option value="">All</option>
+                <option value="Horror">Horror</option>
+                <option value="Fighting">Fighting</option>
+                <option value="RPG">RPG</option>
+                <option value="Racing">Strategy</option>
+                <option value="MMORPG">Sports</option>
+                <option value="Sports">Sports</option>
+                <option value="Platformer">Platformer</option>
+                <option value="Shooter">Shooter</option>
+            </select>
+        </div>
+        <div class="filter-container" style="margin-bottom: 20px;">
+            <label class="filter-label" for="priority-filter">Priority:</label>
+            <select id="priority-filter" class="filter-select">
+                <option value="">All</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+        <div class="filter-container" style="margin-bottom: 20px;">
+            <label class="filter-label" for="platform-filter">Platform:</label>
+            <select id="platform-filter" class="filter-select">
+                <option value="">All</option>
+                <option value="Xbox">Xbox</option>
+                <option value="Playstation">Playstation</option>
+                <option value="PC">PC</option>
+                <option value="iOS">iOS</option>
+                <option value="Android">Android</option>
+            </select>
+        </div>
+        <div class="filter-container" style="margin-bottom: 20px;">
+            <label class="filter-label" for="price-filter">Price:</label>
+            <select id="price-filter" class="filter-select">
+                <option value="">All</option>
+                <option value="0-20">$0 - $20</option>
+                <option value="21-40">$21 - $40</option>
+                <option value="41-60">$41 - $60</option>
+                <option value="61-80">$61 - $80</option>
+                <option value="81-100">$81 - $100</option>
+                <option value="100+">More than $100</option>
+            </select>
+        </div>
+    </div>
+    <input type="button" value="Apply Filters" onclick="applyFilters()" class="filter-button">
+</div>
 
-    <h1>Wishlist</h1>
-    <table>
+<h1>Wishlist</h1>
+<table>
+    <thead>
         <tr>
             <th>Priority</th>
             <th>Game Name</th>
@@ -52,31 +203,79 @@
             <th>Platform</th>
             <th>Price</th>
         </tr>
+    </thead>
+    <tbody>
         {% for item in wishlist %}
         <tr>
             <td>{{ item[0] }}</td>
             <td>{{ item[1] }}</td>
             <td>{{ item[2] }}</td>
             <td>{{ item[3] }}</td>
-            <td>{{ item[4] }}</td>
+            <td>{{ item[4] }}</td```
         </tr>
         {% endfor %}
-    </table>
+    </tbody>
+</table>
 
-    <h2>Add New Game</h2>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        <p>{{ form.game.label }}: {{ form.game(id="select2") }}</p>
-        <p>{{ form.priority.label }}: {{ form.priority() }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
+<h2>Add New Game</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>{{ form.game.label }}: {{ form.game(id="select2") }}</p>
+    <p>{{ form.priority.label }}: {{ form.priority() }}</p>
+    <p>{{ form.submit() }}</p>
+</form>
+<script>
+function applyFilters() {
+    var gameRows = document.querySelectorAll('table tbody tr');
+    var nameFilter = document.getElementById('name-filter').value.toLowerCase();
+    var genreFilter = document.getElementById('genre-filter').value.toLowerCase();
+    var priorityFilter = document.getElementById('priority-filter').value.toLowerCase();
+    var platformFilter = document.getElementById('platform-filter').value.toLowerCase();
+    var priceFilter = document.getElementById('price-filter').value.toLowerCase();
 
-    
+    for (var i = 0; i < gameRows.length; i++) {
+        var gameRow = gameRows[i];
+        var name = gameRow.cells[1].textContent.toLowerCase();
+        var genre = gameRow.cells[2].textContent.toLowerCase();
+        var priority = gameRow.cells[3].textContent.toLowerCase();
+        var platform = gameRow.cells[4].textContent.toLowerCase();
+        var price = gameRow.cells[5].textContent.toLowerCase();
 
-    <script>
-    $(document).ready(function() {
-        $('#select2').select2();
-    });
-    </script>
+        if (name.includes(nameFilter) &&
+            genre.includes(genreFilter) &&
+            priority.includes(priorityFilter) &&
+            platform.includes(platformFilter) &&
+            priceFilterMatch(price, priceFilter)) {
+            gameRow.style.display = "";
+        } else {
+            gameRow.style.display = "none";
+        }
+    }
+}
+
+function priceFilterMatch(price, filter) {
+    if (filter === "0-20") {
+        return price < 20;
+    } else if (filter === "21-40") {
+        return price >= 21 && price <= 40;
+    } else if (filter === "41-60") {
+        return price >= 41 && price <= 60;
+    } else if (filter === "61-80") {
+        return price >= 61 && price <= 80;
+    } else if (filter === "81-100") {
+        return price >= 81 && price <= 100;
+    } else if (filter === "100+") {
+        return price > 100;
+    }
+    return true; // All
+}
+
+$(document).ready(function() {
+    $('#genre-filter').select2();
+    $('#priority-filter').select2();
+    $('#platform-filter').select2();
+    $('#price-filter').select2();
+});
+</script>
 </body>
 </html>
