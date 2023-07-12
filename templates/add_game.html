@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html>
     <head>
         <title>Add Game</title>
-        
+
         <!-- Add the jQuery, and then the Select2 CSS and JS files here -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
@@ -11,7 +10,7 @@
     </head>
     <style>
         .add-game-button {
-            background-color: turquoise; 
+            background-color: turquoise;
             border: none;
             color: rgb(0, 0, 0);
             padding: 5px 10px;
@@ -35,6 +34,8 @@
                 <p>{{ form.playtime.label }}: {{ form.playtime() }}</p>
                 <p>{{ form.achievements.label }}: {{ form.achievements() }}</p>
                 <p>{{ form.rating.label }}: {{ form.rating() }}</p>
+                <p>{{ form.Review.label }}: {{ form.Review() }}</p>
+
                 {% if error %}
                     <p>{{ error }}</p>
                 {% endif %}

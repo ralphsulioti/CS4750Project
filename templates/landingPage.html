@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -246,6 +245,7 @@
             <th>Difficulty</th>
             <th>Playtime (hrs)</th>
             <th>Achievements (%)</th>
+            <th>Review</th>
             <th>Rating</th>
             <th>Actions</th>
         </tr>
@@ -256,6 +256,7 @@
             <td>{{ game[3] }}</td>
             <td>{{ game[4] }} hrs</td>
             <td>{{ game[5] }}%</td>
+            <td>{{ game[7] }}</td>
             <td>{{ game[6] }}/10</td>
             <td>
                 <a href="{{ url_for('edit_game', game_id=game[0]) }}">

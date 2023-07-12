@@ -805,6 +805,7 @@ def create_db():
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
        ("Minecraft", "Sandbox", "Mojang Studios", "PC", 26.95))
 
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
        ("God of War", "Action Adventure", "Santa Monica Studio", "PS4", 19.99))
@@ -1220,6 +1221,8 @@ class GameAddForm(FlaskForm):
        DataRequired(), NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
    rating = IntegerField('Rating (0-10)',
                          validators=[DataRequired(), NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
+   Review = TextAreaField('Review')
+
    submit = SubmitField('Add Game')
 
 
@@ -1360,24 +1363,41 @@ def delete_user():
 
 @app.route('/')
 def home():
-   conn = sqlite3.connect('CS4750Project.db')
-   c = conn.cursor()
-   c.execute("""
-       SELECT
-           UserGame.UGID,
-           Game.Game_Name,
-           Game.Game_Genre,
-           UserGame.Difficulty,
-           UserGame.Playtime,
-           UserGame.Achievements,
-           UserGame.Rating
-       FROM UserGame
-       JOIN Game ON UserGame.UG_GameID = Game.GameID
-       ORDER BY UserGame.Date_Added DESC
-   """)
-   games = c.fetchall()
-   conn.close()
-   return render_template('landingPage.html', games=games)
+    conn = sqlite3.connect('CS4750Project.db')
+    c = conn.cursor()
+    c.execute("""
+        CREATE TABLE IF NOT EXISTS UserGame (
+            UGID INTEGER PRIMARY KEY,
+            UG_GameID INTEGER,
+            Difficulty STRING,
+            Playtime INTEGER,
+            Achievements TEXT,
+            Rating INTEGER,
+            Review TEXT,
+            Date_Added DATE,
+            FOREIGN KEY (UG_GameID) REFERENCES Game (GameID)
+        );
+    """)
+
+    c.execute("""
+        SELECT
+            UserGame.UGID,
+            Game.Game_Name,
+            Game.Game_Genre,
+            UserGame.Difficulty,
+            UserGame.Playtime,
+            UserGame.Achievements,
+            UserGame.Rating,
+            UserGame.Review,
+            UserGame.Date_Added
+        FROM UserGame
+        JOIN Game ON UserGame.UG_GameID = Game.GameID
+        ORDER BY UserGame.Date_Added DESC
+    """)
+    games = c.fetchall()
+    conn.close()
+    return render_template('landingPage.html', games=games)
+
 
 @app.route("/top-rated-games")
 def top_rated_games():
@@ -1427,8 +1447,11 @@ def add_game():
             error = 'This game is already in your library!'
         else:
             # insert the new game into the UserGame table
-            c.execute("INSERT INTO UserGame (UG_GameID, Difficulty, Playtime, Achievements, Rating, Date_Added) VALUES (?, ?, ?, ?, ?, date('now'))",
-                      (form.game.data, form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data))
+            c.execute(
+                "INSERT INTO UserGame (UG_GameID, Difficulty, Playtime, Achievements, Rating,Review, Date_Added) VALUES (?, ?, ?, ?, ?, ?, date('now'))",
+                (form.game.data, form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data,
+                 form.Review.data))
+
             conn.commit()
             flash('Game added successfully!')
             return redirect(url_for('home'))
