@@ -233,10 +233,6 @@ def create_db():
        INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
        VALUES (last_insert_rowid(), "Yes", 48, 6);
 
-       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
-       VALUES ("A Hat in Time", "Platformer", "Gears for Breakfast", "2017-10-05", "PC", 29.99);
-       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
-       VALUES (last_insert_rowid(), "Yes", 5, 4);
        
         INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
         VALUES ("Destiny 2", "Shooter", "Bungie", "2017-09-06", "PS4", 0);
@@ -267,6 +263,7 @@ def create_db():
         VALUES ("Outlast", "Horror", "Red Barrels", "2013-09-04", "Xbox One", 19.99);
         INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level)
         VALUES (last_insert_rowid(), 5, 4);
+        
         
         INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
         VALUES ("Forza Horizon 4", "Racing", "Playground Games", "2018-10-02", "Xbox One", 59.99);
@@ -344,13 +341,7 @@ def create_db():
    skyrim_game_id = cursor_obj.lastrowid
    cursor_obj.execute("INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
                       (skyrim_game_id, 18, 5))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Call of Duty: Warzone", "Shooter", "Infinity Ward", "2020-03-10", "PS4", 0))
-   warzone_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
-       (warzone_game_id, "First Person", 1, "Yes", "Battle Royale, Plunder"))
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
        ("Outlast", "Horror", "Red Barrels", "2013-09-04", "Xbox One", 19.99))
@@ -558,13 +549,7 @@ def create_db():
    botw_game_id = cursor_obj.lastrowid
    cursor_obj.execute("INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
                       (botw_game_id, 14, 2))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Call of Duty: Warzone", "Shooter", "Infinity Ward", "2020-03-10", "PC", 0))
-   warzone_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
-       (warzone_game_id, "First Person", 0, "Yes", "Battle Royale, Plunder"))
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
        ("Outlast", "Horror", "Red Barrels", "2013-09-04", "PC", 19.99))
