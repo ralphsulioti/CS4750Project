@@ -1537,7 +1537,7 @@
       <DasType>INTEGER|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="542" parent="507" name="MMORPG_Pay_to_Win">
+    <column id="542" parent="507" name="MMORPG_Total_Attributes">
       <DasType>INTEGER|0s</DasType>
       <Position>3</Position>
     </column>
