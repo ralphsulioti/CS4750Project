@@ -198,30 +198,12 @@ def create_db():
        INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
        VALUES (last_insert_rowid(), "Yes", 9, 5);
 
-       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
-       VALUES ("Crash Bandicoot N. Sane Trilogy", "Platformer", "Vicarious Visions", "2017-06-30", "PS4", 39.99);
-       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
-       VALUES (last_insert_rowid(), "No", 45, 6);
-
-       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
-       VALUES ("Donkey Kong Country: Tropical Freeze", "Platformer", "Retro Studios", "2018-05-04", "Switch", 59.99);
-       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
-       VALUES (last_insert_rowid(), "Yes", 21, 6);
-
-       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
-       VALUES ("Rayman Legends", "Platformer", "Ubisoft Montpellier", "2013-08-29", "PS4", 29.99);
-       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
-       VALUES (last_insert_rowid(), "Yes", 120, 5);
 
        INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
        VALUES ("Ori and the Will of the Wisps", "Platformer", "Moon Studios", "2020-03-11", "Xbox One", 29.99);
        INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
        VALUES (last_insert_rowid(), "Yes", 40, 8);
 
-       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
-       VALUES ("Hollow Knight", "Platformer", "Team Cherry", "2017-02-24", "PC", 14.99);
-       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
-       VALUES (last_insert_rowid(), "Yes", 30, 5);
 
        INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
        VALUES ("Little Nightmares", "Platformer", "Tarsier Studios", "2017-04-28", "PS4", 19.99);
@@ -254,17 +236,7 @@ def create_db():
         INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes)
         VALUES (last_insert_rowid(), 28, 12);
         
-        INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
-        VALUES ("Resident Evil 2 Remake", "Horror", "Capcom", "2019-01-25", "PC", 39.99);
-        INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level)
-        VALUES (last_insert_rowid(), 4, 5);
-    
-        INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
-        VALUES ("Outlast", "Horror", "Red Barrels", "2013-09-04", "Xbox One", 19.99);
-        INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level)
-        VALUES (last_insert_rowid(), 5, 4);
-        
-        
+  
         INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
         VALUES ("Forza Horizon 4", "Racing", "Playground Games", "2018-10-02", "Xbox One", 59.99);
         INSERT INTO Racing (Racing_GameID, Racing_Realistic, Racing_Num_Vehicles, Racing_Num_Tracks)
@@ -286,13 +258,7 @@ def create_db():
    pokemon_game_id = cursor_obj.lastrowid
    cursor_obj.execute("INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
                       (pokemon_game_id, 20, 4))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Destiny 2", "Shooter", "Bungie", "2017-09-06", "PS4", 0))
-   destiny_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
-       (destiny_game_id, "First Person", 1, "Yes", "Competitive, Co-op"))
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
        ("Resident Evil 2 Remake", "Horror", "Capcom", "2019-01-25", "PC", 39.99))
@@ -300,12 +266,7 @@ def create_db():
    cursor_obj.execute(
        "INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level) VALUES (?, ?, ?)",
        (re2_remake_game_id, 4, 5))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("World of Warcraft", "MMORPG", "Blizzard Entertainment", "2004-11-23", "PC", 14.99))
-   wow_game_id = cursor_obj.lastrowid
-   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
-                      (wow_game_id, 25, 9))
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
        ("Tekken 7", "Fighting", "Bandai Namco Entertainment", "2015-02-18", "PS4", 29.99))
@@ -313,26 +274,14 @@ def create_db():
    cursor_obj.execute(
        "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
        (tekken7_game_id, "Single Player, Multiplayer", 4))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Forza Horizon 4", "Racing", "Playground Games", "2018-10-02", "Xbox One", 59.99))
-   forza_horizon_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Racing (Racing_GameID, Racing_Realistic, Racing_Num_Vehicles, Racing_Num_Tracks) VALUES (?, ?, ?, ?)",
-       (forza_horizon_game_id, 1, 450, 30))
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
        ("FIFA 22", "Sports", "EA Sports", "2021-10-01", "PS5", 69.99))
    fifa22_game_id = cursor_obj.lastrowid
    cursor_obj.execute("INSERT INTO Sports (Sports_GameID, Sports_Sport, Sports_Realistic) VALUES (?, ?, ?)",
                       (fifa22_game_id, "Soccer", 1))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Super Mario Odyssey", "Platformer", "Nintendo", "2017-10-27", "Switch", 59.99))
-   mario_odyssey_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
-       (mario_odyssey_game_id, "Yes", 12, 6))
+
 
    # Games 11-20
    cursor_obj.execute(
@@ -342,46 +291,20 @@ def create_db():
    cursor_obj.execute("INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
                       (skyrim_game_id, 18, 5))
 
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Outlast", "Horror", "Red Barrels", "2013-09-04", "Xbox One", 19.99))
-   outlast_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level) VALUES (?, ?, ?)",
-       (outlast_game_id, 5, 4))
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
        ("World of Warcraft: Shadowlands", "MMORPG", "Blizzard Entertainment", "2020-11-23", "PC", 39.99))
    shadowlands_game_id = cursor_obj.lastrowid
    cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
                       (shadowlands_game_id, 30, 12))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Street Fighter V", "Fighting", "Capcom", "2016-02-16", "PS4", 19.99))
-   sfv_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
-       (sfv_game_id, "Single Player, Multiplayer", 3))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Need for Speed Heat", "Racing", "Ghost Games", "2019-11-08", "PC", 49.99))
-   nfsh_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Racing (Racing_GameID, Racing_Realistic, Racing_Num_Vehicles, Racing_Num_Tracks) VALUES (?, ?, ?, ?)",
-       (nfsh_game_id, 1, 150, 15))
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
        ("NBA 2K22", "Sports", "Visual Concepts", "2021-09-10", "PS5", 59.99))
    nba2k22_game_id = cursor_obj.lastrowid
    cursor_obj.execute("INSERT INTO Sports (Sports_GameID, Sports_Sport, Sports_Realistic) VALUES (?, ?, ?)",
                       (nba2k22_game_id, "Basketball", 1))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Crash Bandicoot N. Sane Trilogy", "Platformer", "Vicarious Visions", "2017-06-30", "PS4", 39.99))
-   crash_trilogy_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
-       (crash_trilogy_game_id, "No", 45, 6))
 
    # Games 21-30
    cursor_obj.execute(
@@ -404,19 +327,7 @@ def create_db():
    cursor_obj.execute(
        "INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level) VALUES (?, ?, ?)",
        (amnesia_game_id, 5, 5))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Final Fantasy XIV Online", "MMORPG", "Square Enix", "2010-09-30", "PC", 29.99))
-   ffxiv_game_id = cursor_obj.lastrowid
-   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
-                      (ffxiv_game_id, 28, 12))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Dragon Ball FighterZ", "Fighting", "Arc System Works", "2018-01-26", "Xbox One", 59.99))
-   dbfz_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
-       (dbfz_game_id, "Single Player, Multiplayer", 5))
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
        ("Gran Turismo Sport", "Racing", "Polyphony Digital", "2017-10-17", "PS4", 39.99))
@@ -424,20 +335,6 @@ def create_db():
    cursor_obj.execute(
        "INSERT INTO Racing (Racing_GameID, Racing_Realistic, Racing_Num_Vehicles, Racing_Num_Tracks) VALUES (?, ?, ?, ?)",
        (gt_sport_game_id, 1, 280, 82))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Madden NFL 22", "Sports", "EA Tiburon", "2021-08-20", "Xbox Series X", 59.99))
-   madden22_game_id = cursor_obj.lastrowid
-   cursor_obj.execute("INSERT INTO Sports (Sports_GameID, Sports_Sport, Sports_Realistic) VALUES (?, ?, ?)",
-                      (madden22_game_id, "American Football", 1))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Celeste", "Platformer", "Matt Makes Games", "2018-01-25", "Switch", 19.99))
-   celeste_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
-       (celeste_game_id, "Yes", 9, 5))
-
 
    # Games 31-40
    cursor_obj.execute(
@@ -446,13 +343,7 @@ def create_db():
    mass_effect2_game_id = cursor_obj.lastrowid
    cursor_obj.execute("INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
                       (mass_effect2_game_id, 20, 6))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Rainbow Six Siege", "Shooter", "Ubisoft", "2015-12-01", "PC", 19.99))
-   r6_siege_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
-       (r6_siege_game_id, "First Person", 1, "Yes", "Competitive, Casual"))
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
        ("Silent Hill 2", "Horror", "Konami", "2001-09-24", "PS2", 29.99))
@@ -460,47 +351,8 @@ def create_db():
    cursor_obj.execute(
        "INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level) VALUES (?, ?, ?)",
        (silent_hill2_game_id, 4, 5))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("World of Warcraft", "MMORPG", "Blizzard Entertainment", "2004-11-23", "PC", 19.99))
-   wow_game_id = cursor_obj.lastrowid
-   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
-                      (wow_game_id, 32, 10))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Tekken 7", "Fighting", "Bandai Namco Entertainment", "2015-02-18", "Xbox Series X", 39.99))
-   tekken7_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
-       (tekken7_game_id, "Single Player, Multiplayer", 4))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Forza Horizon 4", "Racing", "Playground Games", "2018-10-02", "Xbox One", 59.99))
-   forza_horizon4_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Racing (Racing_GameID, Racing_Realistic, Racing_Num_Vehicles, Racing_Num_Tracks) VALUES (?, ?, ?, ?)",
-       (forza_horizon4_game_id, 1, 700, 50))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("FIFA 22", "Sports", "EA Vancouver", "2021-10-01", "PS5", 59.99))
-   fifa22_game_id = cursor_obj.lastrowid
-   cursor_obj.execute("INSERT INTO Sports (Sports_GameID, Sports_Sport, Sports_Realistic) VALUES (?, ?, ?)",
-                      (fifa22_game_id, "Football (Soccer)", 1))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("Super Mario Odyssey", "Platformer", "Nintendo", "2017-10-27", "Switch", 59.99))
-   mario_odyssey_game_id = cursor_obj.lastrowid
-   cursor_obj.execute(
-       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
-       (mario_odyssey_game_id, "No", 14, 9))
 
-   # Games 41-50
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("The Elder Scrolls V: Skyrim", "RPG", "Bethesda Game Studios", "2011-11-11", "PC", 39.99))
-   skyrim_game_id = cursor_obj.lastrowid
-   cursor_obj.execute("INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
-                      (skyrim_game_id, 18, 5))
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
        ("Counter-Strike: Global Offensive", "Shooter", "Valve", "2012-08-21", "PC", 0))
@@ -577,14 +429,8 @@ def create_db():
    cursor_obj.execute(
        "INSERT INTO Racing (Racing_GameID, Racing_Realistic, Racing_Num_Vehicles, Racing_Num_Tracks) VALUES (?, ?, ?, ?)",
        (f1_2021_game_id, 1, 20, 23))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("NBA 2K22", "Sports", "Visual Concepts", "2021-09-10", "PS5", 59.99))
-   nba2k22_game_id = cursor_obj.lastrowid
-   cursor_obj.execute("INSERT INTO Sports (Sports_GameID, Sports_Sport, Sports_Realistic) VALUES (?, ?, ?)",
-                      (nba2k22_game_id, "Basketball", 1))
 
-   # Games 61-70
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
        ("Red Dead Redemption 2", "RPG", "Rockstar Games", "2018-10-26", "PS4", 59.99))
@@ -605,12 +451,7 @@ def create_db():
    cursor_obj.execute(
        "INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level) VALUES (?, ?, ?)",
        (alien_isolation_game_id, 4, 5))
-   cursor_obj.execute(
-       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
-       ("World of Warcraft: Shadowlands", "MMORPG", "Blizzard Entertainment", "2020-11-23", "PC", 39.99))
-   shadowlands_game_id = cursor_obj.lastrowid
-   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
-                      (shadowlands_game_id, 30, 12))
+
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
        ("Street Fighter V", "Fighting", "Capcom", "2016-02-16", "PC", 19.99))
@@ -777,16 +618,7 @@ def create_db():
                       (madden22_game_id, "American Football", 1))
 
    cursor_obj.executescript("""
-       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
-       VALUES ("Super Mario Odyssey", "Platformer", "Nintendo", "2017-10-27", "Switch", 59.99);
-       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
-       VALUES (last_insert_rowid(), "Yes", 12, 6);
-
-       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
-       VALUES ("Celeste", "Platformer", "Matt Makes Games", "2018-01-25", "Switch", 19.99);
-       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
-       VALUES (last_insert_rowid(), "Yes", 9, 5);
-
+   
        INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
        VALUES ("Crash Bandicoot N. Sane Trilogy", "Platformer", "Vicarious Visions", "2017-06-30", "PS4", 39.99);
        INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
@@ -803,24 +635,10 @@ def create_db():
        VALUES (last_insert_rowid(), "Yes", 120, 5);
 
        INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
-       VALUES ("Ori and the Will of the Wisps", "Platformer", "Moon Studios", "2020-03-11", "Xbox One", 29.99);
-       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
-       VALUES (last_insert_rowid(), "Yes", 40, 8);
-
-       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
        VALUES ("Hollow Knight", "Platformer", "Team Cherry", "2017-02-24", "PC", 14.99);
        INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
        VALUES (last_insert_rowid(), "Yes", 30, 5);
 
-       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
-       VALUES ("Little Nightmares", "Platformer", "Tarsier Studios", "2017-04-28", "PS4", 19.99);
-       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
-       VALUES (last_insert_rowid(), "No", 5, 4);
-
-       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
-       VALUES ("Yoshi's Crafted World", "Platformer", "Good-Feel", "2019-03-29", "Switch", 59.99);
-       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
-       VALUES (last_insert_rowid(), "Yes", 48, 6);
 
        INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
        VALUES ("A Hat in Time", "Platformer", "Gears for Breakfast", "2017-10-05", "PC", 29.99);
