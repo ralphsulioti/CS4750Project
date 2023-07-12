@@ -66,6 +66,9 @@
     </table>
 
     <h2>Add New Game</h2>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
     <form method="POST">
         {{ form.hidden_tag() }}
         <p>{{ form.game.label }}: {{ form.game(id="select2") }}</p>

@@ -258,9 +258,9 @@ def create_db():
 class GameAddForm(FlaskForm):
     game = SelectField('Game', coerce=int, validators=[DataRequired()])
     difficulty = SelectField('Difficulty', choices=[('Very Easy', 'Very Easy'), ('Easy', 'Easy'), ('Normal', 'Normal'), ('Hard', 'Hard'), ('Very Hard', 'Very Hard')])
-    playtime = IntegerField('Playtime (in hours)')
-    achievements = IntegerField('Achievements (in %)', validators=[NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
-    rating = IntegerField('Rating (0-10)', validators=[NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
+    playtime = IntegerField('Playtime (in hours)', validators=[DataRequired()])
+    achievements = IntegerField('Achievements (in %)', validators=[DataRequired(), NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
+    rating = IntegerField('Rating (0-10)', validators=[DataRequired(), NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
     submit = SubmitField('Add Game')
 
 class GameEditForm(FlaskForm):
@@ -451,20 +451,29 @@ def add_game():
     # create the form and populate the select field with the games
     form = GameAddForm()
     form.game.choices = [(g[0], g[1]) for g in game_list]
+    error = None  # No error message to start with
 
     # handle form submission
     if form.validate_on_submit():
-        # insert the new game into the UserGame table
-        c.execute("INSERT INTO UserGame (GameID, Difficulty, Playtime, Achievements, Rating, Date_Added) VALUES (?, ?, ?, ?, ?, date('now'))",
-                  (form.game.data, form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data))
-        conn.commit()
-        conn.close()
+        # check if the game is already in the UserGame table
+        c.execute("SELECT * FROM UserGame WHERE GameID = ?", (form.game.data,))
+        game = c.fetchone()
 
-        flash('Game added successfully!')
-        return redirect(url_for('home'))
+        if game:
+            error = 'This game is already in your library!'
+        else:
+            # insert the new game into the UserGame table
+            c.execute("INSERT INTO UserGame (GameID, Difficulty, Playtime, Achievements, Rating, Date_Added) VALUES (?, ?, ?, ?, ?, date('now'))",
+                      (form.game.data, form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data))
+            conn.commit()
+            flash('Game added successfully!')
+            return redirect(url_for('home'))
+
+    conn.close()
 
     # render the form
-    return render_template('add_game.html', form=form)
+    return render_template('add_game.html', form=form, error=error)
+
 
 
 @app.route('/edit-game/<int:game_id>', methods=['GET', 'POST'])
@@ -544,14 +553,23 @@ def wishlist():
     form = WishListForm()
     form.game.choices = [(g[0], g[1]) for g in game_list]
 
-    if form.validate_on_submit():
-        # Insert the game into the Wishlist table
-        c.execute("INSERT INTO WishListGame (WLG_GameID, WLG_Priority) VALUES (?, ?)",
-                  (form.game.data, form.priority.data))
-        conn.commit()
+    error = None
 
-        flash('Game added to wishlist successfully!')
-        return redirect(url_for("wishlist"))
+    if form.validate_on_submit():
+        # Check if the game is already in the wishlist
+        c.execute("SELECT * FROM WishListGame WHERE WLG_GameID = ?", (form.game.data,))
+        existing_game = c.fetchone()
+
+        if existing_game is None:
+            # Insert the game into the Wishlist table
+            c.execute("INSERT INTO WishListGame (WLG_GameID, WLG_Priority) VALUES (?, ?)",
+                      (form.game.data, form.priority.data))
+            conn.commit()
+
+            flash('Game added to wishlist successfully!')
+            return redirect(url_for("wishlist"))
+        else:
+            error = 'This game is already in your wishlist'
 
     # Retrieve wishlist data
     c.execute("""
@@ -565,7 +583,7 @@ def wishlist():
     conn.close()
 
     # Render the form and the wishlist
-    return render_template("wishlist.html", form=form, wishlist=wishlist)
+    return render_template("wishlist.html", form=form, wishlist=wishlist, error=error)
 
 
 @app.route("/connect")
