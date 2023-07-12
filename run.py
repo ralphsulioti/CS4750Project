@@ -65,7 +65,7 @@ def create_db():
 
     # User_Game_Library Table
    table = """ CREATE TABLE UserGame (
-       UGID INTEGER PRIMARY,
+       UGID INTEGER PRIMARY KEY,
        UG_GameID INTEGER,
        Difficulty STRING,
        Playtime INTEGER,
@@ -1509,7 +1509,6 @@ def top_rated_games():
             UserGame.UGID,
             Game.Game_Name,
             Game.Game_Genre,
-            UserGame.Difficulty,
             UserGame.Playtime,
             UserGame.Achievements,
             UserGame.Rating
@@ -1521,7 +1520,6 @@ def top_rated_games():
     top_rated_games = c.fetchall()
     conn.close()
     return render_template('top_rated_games.html', games=top_rated_games)
-
 
 
 
