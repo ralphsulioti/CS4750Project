@@ -132,7 +132,7 @@ def create_db():
    table = """ CREATE TABLE MMORPG (
        MMORPGID INTEGER PRIMARY KEY AUTOINCREMENT,
        MMORPG_GameID INTEGER,
-       MMORPG_Pay_to_Win INTEGER,
+       MMORPG_Total_Attributes INTEGER,
        MMORPG_Classes INTEGER,
        FOREIGN KEY (MMORPG_GameID) REFERENCES Game (GameID)
    ); """
@@ -214,7 +214,7 @@ def create_db():
 
    animal_crossing_game_id = cursor_obj.lastrowid
 
-   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Pay_to_Win, MMORPG_Classes) VALUES (?, ?, ?)",
+   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
                       (animal_crossing_game_id, 0, 8))
 
    cursor_obj.execute(
@@ -223,7 +223,7 @@ def create_db():
 
    the_witcher_game_id = cursor_obj.lastrowid
 
-   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Pay_to_Win, MMORPG_Classes) VALUES (?, ?, ?)",
+   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
                       (the_witcher_game_id, 1, '3'))
 
    cursor_obj.execute(
@@ -302,7 +302,7 @@ def create_db():
 
    elder_scrolls_game_id = cursor_obj.lastrowid
 
-   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Pay_to_Win, MMORPG_Classes) VALUES (?, ?, ?)",
+   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
                       (elder_scrolls_game_id, 0, '4'))
 
    cursor_obj.execute(
@@ -311,7 +311,7 @@ def create_db():
 
    guild_wars_game_id = cursor_obj.lastrowid
 
-   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Pay_to_Win, MMORPG_Classes) VALUES (?, ?, ?)",
+   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
                       (guild_wars_game_id, 0, '2'))
 
    cursor_obj.execute(
@@ -320,7 +320,7 @@ def create_db():
 
    final_fantasy_game_id = cursor_obj.lastrowid
 
-   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Pay_to_Win, MMORPG_Classes) VALUES (?, ?, ?)",
+   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
                       (final_fantasy_game_id, 0, '5'))
 
    cursor_obj.execute(
@@ -563,6 +563,121 @@ def create_db():
    cursor_obj.execute(
        "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
        ("Fall Guys: Ultimate Knockout", "Platform", "Mediatonic", "PC", 19.99))
+
+
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
+       ("Mortal Kombat 11", "Fighting", "NetherRealm Studios", "2019 - 4 - 23", "Xbox Series X", 59.99))
+
+   mk11_game_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (mk11_game_id, "Versus", 10))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Marvel's Spider-Man: Miles Morales", "Fighting", "Insomniac Games", "2020-11-12", "PlayStation 5", 49.99))
+
+   spiderman_miles_morales_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (spiderman_miles_morales_id, 7, 8))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Kingdom Hearts III", "RPG", "Square Enix", "2019-01-29", "PlayStation 4", 59.99))
+
+   kingdom_hearts_III_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (kingdom_hearts_III_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("The Elder Scrolls V: Skyrim", "RPG", "Bethesda Game Studios", "2011-11-11", "Various", 39.99))
+
+   skyrim_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (skyrim_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Resident Evil Village", "Horror", "Capcom", "2021-05-07", "PlayStation 4", 59.99))
+
+   resident_evil_village_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level) VALUES (?, ?, ?)",
+       (resident_evil_village_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Super Mario 3D World + Bowser's Fury", "Platform", "Nintendo", "2021-02-12", "Nintendo Switch", 59.99))
+
+   mario_3d_world_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
+       (mario_3d_world_id, "7", "8", "50"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Hades", "MMORPG", "Supergiant Games", "2020-09-17", "PlayStation 4", 24.99))
+
+   hades_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
+       (hades_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Ghost of Tsushima", "Fighting", "Sucker Punch Productions", "2020-07-17", "PlayStation 4", 59.99))
+
+   ghost_of_tsushima_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (ghost_of_tsushima_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Halo", "Shooter", "Bungie, 343 Industries", "2001-11-15", "Xbox, Xbox 360, Xbox One", 59.99))
+
+   halo_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (halo_id, "1", "7", "Yes", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("World of Warcraft", "MMORPG", "Blizzard Entertainment", "2004-11-23", "PC", 14.99))
+
+   world_of_warcraft_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
+       (world_of_warcraft_id, True, "Azeroth"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Destiny 2", "Shooter", "Bungie", "2017-09-06", "PlayStation 4, Xbox One, PC", 0.00))
+
+   destiny_2_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (destiny_2_id, "1", "2", "Yes", "8"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
    connection_obj.commit()
