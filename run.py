@@ -548,6 +548,793 @@ def create_db():
 
    """)
 
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer,Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?,?)",
+       ("Soulcalibur VI", "Fighting", "Bandai Namco Entertainment", "2010-10-25", "Xbox Series X", 49.99))
+
+   game_id = cursor_obj.lastrowid  # Retrieve the last inserted GameID
+
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (game_id, "Versus", 8))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Doom", "Shooter", "id Software", "PC", 19.99))
+
+   doom_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (doom_game_id, "First-person", 1, "Yes", "Single-player, Multiplayer"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Animal Crossing", "MMORPG", "Nintendo", "Switch", 59.99))
+
+   animal_crossing_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
+                      (animal_crossing_game_id, 0, 8))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("The Witcher 3", "MMORPG", "CD Projekt Red", "PC", 29.99))
+
+   the_witcher_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
+                      (the_witcher_game_id, 1, '3'))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Doom", "Shooter", "id Software", "PC", 19.99))
+
+   doom_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (doom_game_id, "First-person", "Yes", "Yes", "Single-player, Multiplayer"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("FIFA 22", "Sports", "EA Sports", "PS5", 59.99))
+
+   fifa_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Sports (Sports_GameID, Sports_Sport, Sports_Realistic) VALUES (?, ?, ?)",
+       (fifa_game_id, "Football", 1))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Forza Horizon 5", "Racing", "Playground Games", "Xbox Series X", 69.99))
+
+   forza_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Racing (Racing_GameID, Racing_Realistic, Racing_Num_Vehicles, Racing_Num_Tracks) VALUES (?, ?, ?, ?)",
+       (forza_game_id, 1, 500, 100))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Super Mario Odyssey", "Platformer", "Nintendo", "Switch", 59.99))
+
+   mario_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
+       (mario_game_id, "Yes", 60, 5))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Tekken 7", "Fighting", "Bandai Namco Entertainment", "PS4", 39.99))
+
+   tekken_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (tekken_game_id, "Versus", 8))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Resident Evil 2", "Horror", "Capcom", "PC", 39.99))
+
+   re2_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level) VALUES (?, ?, ?)",
+       (re2_game_id, 9, 8))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Silent Hill 2", "Horror", "Konami", "PS2", 19.99))
+
+   silent_hill_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level) VALUES (?, ?, ?)",
+       (silent_hill_game_id, 7, 9))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Elder Scrolls Online", "MMORPG", "Zenimax Online Studios", "PC", 29.99))
+
+   elder_scrolls_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
+                      (elder_scrolls_game_id, 0, '4'))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Guild Wars 2", "MMORPG", "ArenaNet", "PC", 19.99))
+
+   guild_wars_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
+                      (guild_wars_game_id, 0, '2'))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Final Fantasy XIV", "MMORPG", "Square Enix", "PC", 39.99))
+
+   final_fantasy_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute("INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
+                      (final_fantasy_game_id, 0, '5'))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Battlefield 2042", "Shooter", "DICE", "PC", 59.99))
+
+   battlefield_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (battlefield_game_id, "First-person", "Yes", "Yes", "Multiplayer"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Rainbow Six Siege", "Shooter", "Ubisoft", "PC", 19.99))
+
+   rainbow_six_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (rainbow_six_game_id, "First-person", "Yes", "Yes", "Multiplayer"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Borderlands 3", "Shooter", "Gearbox Software", "PC", 49.99))
+
+   borderlands_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (borderlands_game_id, "First-person", "No", "No", "Single-player, Multiplayer"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Madden NFL 22", "Sports", "Electronic Arts", "PS5", 59.99))
+
+   madden_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Sports (Sports_GameID, Sports_Sport, Sports_Realistic) VALUES (?, ?, ?)",
+       (madden_game_id, "American Football", 1))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("WWE 2K22", "Sports", "Visual Concepts", "Xbox Series X", 59.99))
+
+   wwe_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Sports (Sports_GameID, Sports_Sport, Sports_Realistic) VALUES (?, ?, ?)",
+       (wwe_game_id, "Wrestling", 0))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("PGA Tour 2K21", "Sports", "HB Studios", "PC", 49.99))
+
+   pga_tour_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Sports (Sports_GameID, Sports_Sport, Sports_Realistic) VALUES (?, ?, ?)",
+       (pga_tour_game_id, "Golf", 1))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Dirt 5", "Racing", "Codemasters", "PS5", 59.99))
+
+   dirt_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Racing (Racing_GameID, Racing_Realistic, Racing_Num_Vehicles, Racing_Num_Tracks) VALUES (?, ?, ?, ?)",
+       (dirt_game_id, 1, 100, 70))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Crash Team Racing Nitro-Fueled", "Racing", "Beenox", "Switch", 39.99))
+
+   crash_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Racing (Racing_GameID, Racing_Realistic, Racing_Num_Vehicles, Racing_Num_Tracks) VALUES (?, ?, ?, ?)",
+       (crash_game_id, 0, 40, 21))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("F1 2021", "Racing", "Codemasters", "PC", 49.99))
+
+   f1_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Racing (Racing_GameID, Racing_Realistic, Racing_Num_Vehicles, Racing_Num_Tracks) VALUES (?, ?, ?, ?)",
+       (f1_game_id, 1, 20, 23))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Ori and the Will of the Wisps", "Platformer", "Moon Studios", "Xbox Series X", 29.99))
+
+   ori_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
+       (ori_game_id, "Yes", 50, 5))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Little Nightmares II", "Platformer", "Tarsier Studios", "PC", 29.99))
+
+   nightmares_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
+       (nightmares_game_id, "No", 30, 3))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Yooka-Laylee and the Impossible Lair", "Platformer", "Playtonic Games", "Switch", 39.99))
+
+   yooka_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
+       (yooka_game_id, "Yes", 40, 4))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Dragon Ball FighterZ", "Fighting", "Arc System Works", "PS4", 39.99))
+
+   dragon_ball_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (dragon_ball_game_id, "Versus", 9))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Street Fighter V", "Fighting", "Capcom", "PC", 19.99))
+
+   street_fighter_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (street_fighter_game_id, "Versus", 7))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Soulcalibur VI", "Fighting", "Bandai Namco Entertainment", "Xbox Series X", 49.99))
+
+   soulcalibur_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (soulcalibur_game_id, "Versus", 8))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Amnesia: Rebirth", "Horror", "Frictional Games", "PC", 29.99))
+
+   amnesia_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level) VALUES (?, ?, ?)",
+       (amnesia_game_id, 8, 9))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Alien: Isolation", "Horror", "Creative Assembly", "PS4", 19.99))
+
+   alien_game_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level) VALUES (?, ?, ?)",
+       (alien_game_id, 9, 9))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Dead by Daylight", "Horror", "Behaviour Interactive", "PC", 19.99))
+
+   dead_by_daylight_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level) VALUES (?, ?, ?)",
+       (dead_by_daylight_id, 7, 8))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Red Dead Redemption 2", "Action Adventure", "Rockstar Games", "PS4", 39.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Call of Duty: Modern Warfare", "First-person shooter", "Infinity Ward", "PC", 59.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Among Us", "Party game", "InnerSloth", "PC", 4.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Grand Theft Auto V", "Action Adventure", "Rockstar Games", "PS4", 29.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Minecraft", "Sandbox", "Mojang Studios", "PC", 26.95))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("The Legend of Zelda: Breath of the Wild", "Action Adventure", "Nintendo", "Switch", 59.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Super Smash Bros. Ultimate", "Fighting", "Nintendo", "Switch", 59.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("God of War", "Action Adventure", "Santa Monica Studio", "PS4", 19.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Fortnite", "Battle Royale", "Epic Games", "PC", 0.00))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("PlayerUnknown's Battlegrounds", "Battle Royale", "PUBG Corporation", "PC", 29.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Overwatch", "First-person shooter", "Blizzard Entertainment", "PC", 39.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Cyberpunk 2077", "Role-playing", "CD Projekt", "PC", 59.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Horizon Zero Dawn", "Action role-playing", "Guerrilla Games", "PS4", 19.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("The Last of Us Part II", "Action-adventure", "Naughty Dog", "PS4", 39.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Final Fantasy VII Remake", "Role-playing", "Square Enix", "PS4", 59.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Super Mario Odyssey", "Platform", "Nintendo", "Switch", 59.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Animal Crossing: New Horizons", "Social simulation", "Nintendo", "Switch", 59.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Death Stranding", "Action", "Kojima Productions", "PS4", 39.99))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Apex Legends", "Battle Royale", "Respawn Entertainment", "PC", 0.00))
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+       ("Fall Guys: Ultimate Knockout", "Platform", "Mediatonic", "PC", 19.99))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
+       ("Mortal Kombat 11", "Fighting", "NetherRealm Studios", "2019 - 4 - 23", "Xbox Series X", 59.99))
+
+   mk11_game_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (mk11_game_id, "Versus", 10))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Marvel's Spider-Man: Miles Morales", "Fighting", "Insomniac Games", "2020-11-12", "PlayStation 5", 49.99))
+
+   spiderman_miles_morales_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (spiderman_miles_morales_id, 7, 8))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Kingdom Hearts III", "RPG", "Square Enix", "2019-01-29", "PlayStation 4", 59.99))
+
+   kingdom_hearts_III_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (kingdom_hearts_III_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("The Elder Scrolls V: Skyrim", "RPG", "Bethesda Game Studios", "2011-11-11", "Various", 39.99))
+
+   skyrim_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (skyrim_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Resident Evil Village", "Horror", "Capcom", "2021-05-07", "PlayStation 4", 59.99))
+
+   resident_evil_village_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Horror (Horror_GameID, Horror_Jump_Scare_Rating, Horror_Suspense_Level) VALUES (?, ?, ?)",
+       (resident_evil_village_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Super Mario 3D World + Bowser's Fury", "Platform", "Nintendo", "2021-02-12", "Nintendo Switch", 59.99))
+
+   mario_3d_world_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
+       (mario_3d_world_id, "7", "8", "50"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Hades", "MMORPG", "Supergiant Games", "2020-09-17", "PlayStation 4", 24.99))
+
+   hades_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
+       (hades_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Ghost of Tsushima", "Fighting", "Sucker Punch Productions", "2020-07-17", "PlayStation 4", 59.99))
+
+   ghost_of_tsushima_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (ghost_of_tsushima_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Halo", "Shooter", "Bungie, 343 Industries", "2001-11-15", "Xbox, Xbox 360, Xbox One", 59.99))
+
+   halo_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (halo_id, "1", "7", "Yes", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("World of Warcraft", "MMORPG", "Blizzard Entertainment", "2004-11-23", "PC", 14.99))
+
+   world_of_warcraft_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
+       (world_of_warcraft_id, "15", "Azeroth"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Destiny 2", "Shooter", "Bungie", "2017-09-06", "PlayStation 4, Xbox One, PC", 0.00))
+
+   destiny_2_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (destiny_2_id, "1", "2", "Yes", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Stardew Valley", "MMORPG", "ConcernedApe", "2016-02-26", "Switch", 14.99))
+
+   stardew_valley_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
+       (stardew_valley_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("League of Legends", "MMORPG", "Riot Games", "2009-10-27", "PC", 0.00))
+
+   league_of_legends_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO MMORPG (MMORPG_GameID, MMORPG_Total_Attributes, MMORPG_Classes) VALUES (?, ?, ?)",
+       (league_of_legends_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Counter-Strike: Global Offensive", "Shooter", "Valve Corporation, Hidden Path Entertainment", "2012-08-21",
+        "PC", 0.00))
+
+   counter_strike_go_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (counter_strike_go_id, "1", "8", "Yes", "1"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("The Sims 4", "Life simulation", "Maxis, The Sims Studio", "2014-9-2", "PC, Mac, PlayStation 4, Xbox One",
+        39.99))
+
+   the_sims_4_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (the_sims_4_id, "3", "12"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Dark Souls III", "RPG", "FromSoftware", "2016-03-24", "PlayStation 4, Xbox One, PC", 59.99))
+
+   dark_souls_III_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (dark_souls_III_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Fire Emblem: Engage", "RPG", "Intelligent Systems, Nintendo EPD", "2023-1-20", "Nintendo Switch", 59.99))
+
+   fire_emblem_engage_id = cursor_obj.lastrowid
+
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (fire_emblem_engage_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Super Mario Maker 2", "Platform", "Nintendo", "2019-06-28", "Nintendo Switch", 59.99))
+
+   super_mario_maker_2_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
+       (super_mario_maker_2_id, "7", "120", "10"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Fire Emblem: Three Houses", "RPG", "Intelligent Systems, Koei Tecmo Games", "2019-07-26", "Nintendo Switch",
+        59.99))
+
+   fire_emblem_three_houses_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+
+       (fire_emblem_three_houses_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Ultimate Marvel vs Capcom 3", "Fighting", "Capcom", "2011-11-15", "PlayStation 4", 24.99))
+
+   marvel_vs_capcom_3_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (marvel_vs_capcom_3_id, "3", "9"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Xenoblade Chronicles 2", "RPG", "Monolith Soft", "2017-1-12", "Nintendo Switch", 59.99))
+
+   xenoblade_chronicles_2_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (xenoblade_chronicles_2_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Dragon Quest XI", "RPG", "Square Enix", "2017-7-29", "Nintendo Switch", 59.99))
+
+   dragon_quest_XI_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (dragon_quest_XI_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Marvel vs Capcom: Infinite", "Fighting", "Capcom", "2017-9-19", "PlayStation 4", 39.99))
+
+   marvel_vs_capcom_infinite_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (marvel_vs_capcom_infinite_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Injustice 2", "Fighting", "NetherRealm Studios", "2017-5-11", "PlayStation 4", 19.99))
+
+   injustice_2_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (injustice_2_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Bloodborne", "RPG", "FromSoftware Inc", "2015–3-24", "PlayStation 4", 19.99))
+
+   bloodborne_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (bloodborne_id, "5", "6"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Arms", "Fighting", "Nintendo", "2017-6-16", "Nintendo Switch", 59.99))
+
+   arms_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (arms_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Hyrule Warriors: Age of Calamity", "Fighting", "Omega Force", "2020-11-20", "Nintendo Switch", 59.99))
+
+   hyrule_warriors_age_of_calamity_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (hyrule_warriors_age_of_calamity_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Metroid Dread", "Shooter", "Nintendo", "2021–10-8", "Nintendo Switch", 59.99))
+
+   metroid_dread_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (metroid_dread_id, "1", "2", "No", "1"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Kirby and the Forgotten Land", "Platform", "HAL Laboratory", "2022–3-25", "Nintendo Switch", 59.99))
+
+   kirby_and_the_forgotten_land_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
+       (kirby_and_the_forgotten_land_id, "5", "100", "5"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Bayonetta 3", "Fighting", "PlatinumGames", "2022-10-28", "Nintendo Switch", 59.99))
+
+   bayonetta_3_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (bayonetta_3_id, "5", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Metroid Prime Remastered", "Shooter", "Nintendo", "2023–2-8", "Nintendo Switch", 59.99))
+
+   metroid_prime_remastered_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (metroid_prime_remastered_id, "1", "2", "No", "1"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Just Dance 2022", "Sport", "Ubisoft Paris", "2021–11-4", "Nintendo Switch", 49.99))
+
+   just_dance_2022_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Sports (Sports_GameID, Sports_Sport, Sports_Realistic) VALUES (?, ?, ?)",
+       (just_dance_2022_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Octopath Traveler", "RPG", "Square Enix", "2018–7-13", "Nintendo Switch", 59.99))
+
+   octopath_traveler_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (octopath_traveler_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Monster Hunter Rise", "RPG", "Capcom", "2021–3-26", "Nintendo Switch", 39.99))
+
+   monster_hunter_rise_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (monster_hunter_rise_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Kirby Fighters 2", "Fighting", "HAL Laboratory", "2020-9-23", "Nintendo Switch", 19.99))
+
+   kirby_fighters_2_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (kirby_fighters_2_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Luigi’s Mansion 3", "Shooter", "Next Level Games", "2019–10-31", "Nintendo Switch", 59.99))
+
+   luigi_mansion_3_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Shooter (Shooter_GameID, Shooter_Perspective, Shooter_Realistic, Shooter_Ranked, Shooter_Game_Modes) VALUES (?, ?, ?, ?, ?)",
+       (luigi_mansion_3_id, "3", "1", "No", "1"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Captain Toad: Treasure Tracker", "Platform", "Nintendo", "2014-11-13", "Nintendo Switch", 39.99))
+
+   captain_toad_treasure_tracker_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
+       (captain_toad_treasure_tracker_id, "8", "50", "5"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Yoshi’s Crafted World", "Platform", "Good-Feel", "2019-3-29", "Nintendo Switch", 59.99))
+
+   yoshi_crafted_world_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
+       (yoshi_crafted_world_id, "6", "80", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Donkey Kong Country: Tropical Freeze", "Platform", "Retro Studios", "2014–2-13", "Nintendo Switch", 59.99))
+
+   donkey_kong_country_tropical_freeze_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments) VALUES (?, ?, ?, ?)",
+       (donkey_kong_country_tropical_freeze_id, "10", "60", "6"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Mario Strikers: Battle League", "Sport", "Next Level Games", "2022–6-10", "Nintendo Switch", 59.99))
+
+   mario_strikers_battle_league_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Sports (Sports_GameID, Sports_Sport, Sports_Realistic) VALUES (?, ?, ?)",
+       (mario_strikers_battle_league_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Mario + Rabbits Sparks of Hope", "RPG", "Ubisoft Milan", "2022–10-20", "Nintendo Switch", 59.99))
+
+   mario_rabbits_sparks_of_hope_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (mario_rabbits_sparks_of_hope_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Pokémon Legends: Arceus", "RPG", "Game Freak", "2022–1-28", "Nintendo Switch", 59.99))
+
+   pokémon_legends_arceus_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (pokémon_legends_arceus_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Legend of Zelda: Skyward Sword", "Fighting", "Nintendo", "2011-11-18", "Nintendo Switch", 59.99))
+
+   legend_of_zelda_skyward_sword_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Fighting (Fighting_GameID, Fighting_Game_Modes, Fighting_Combo_Importance) VALUES (?, ?, ?)",
+       (legend_of_zelda_skyward_sword_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?,?,?,?,?,?)",
+       ("Legend of Zelda: Link’s Awakening", "RPG", "Nintendo", "2019–9-20", "Nintendo Switch", 59.99))
+
+   legend_of_zelda_link_awakening_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO RPG (RPG_GameID, RPG_Total_Attributes, RPG_Classes) VALUES (?, ?, ?)",
+       (legend_of_zelda_link_awakening_id, "7", "8"))
+
+   cursor_obj.execute(
+       "INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?, ?)",
+       ("Kirby’s Dream Buffet", "Racing", "HAL Laboratory", "2022–8-17", "Switch", 14.99))
+
+   kirbys_dream_buffet_id = cursor_obj.lastrowid
+   cursor_obj.execute(
+       "INSERT INTO Racing (Racing_GameID, Racing_Realistic, Racing_Num_Vehicles, Racing_Num_Tracks) VALUES (?, ?, ?, ?)",
+       (kirbys_dream_buffet_id, 0, 40, 21))
+
 
    connection_obj.commit()
 
