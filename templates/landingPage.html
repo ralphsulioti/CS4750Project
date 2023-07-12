@@ -247,6 +247,7 @@
             <th>Achievements (%)</th>
             <th>Review</th>
             <th>Rating</th>
+             <th>Date Added</th>
             <th>Actions</th>
         </tr>
         {% for game in games %}
@@ -258,6 +259,7 @@
             <td>{{ game[5] }}%</td>
             <td>{{ game[7] }}</td>
             <td>{{ game[6] }}/10</td>
+            <td>{{ game[8] }}</td>
             <td>
                 <a href="{{ url_for('edit_game', game_id=game[0]) }}">
                     <button class="edit-button">Edit</button>
