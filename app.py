@@ -297,7 +297,19 @@ def view_details(game_id):
     c = conn.cursor()
 
     # retrieve the game from the Game table and UserGame table
-    c.execute("SELECT Game.GameID, Game.Game_Name, Game.Game_Developer, Game.Game_Platform, Game.Game_Genre, UserGame.Review FROM Game JOIN UserGame ON Game.GameID = UserGame.GameID WHERE Game.GameID = ?", (game_id,))
+    c.execute("""
+        SELECT 
+            Game.GameID, 
+            Game.Game_Name, 
+            Game.Game_Developer, 
+            Game.Game_Platform, 
+            Game.Game_Genre, 
+            UserGame.Review,
+            UserGame.Date_Added
+        FROM Game 
+        JOIN UserGame ON Game.GameID = UserGame.GameID 
+        WHERE Game.GameID = ?
+    """, (game_id,))
     game = c.fetchone()
 
     genre_table = game[4]
