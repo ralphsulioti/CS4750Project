@@ -695,7 +695,57 @@ def create_db():
    cursor_obj.execute("INSERT INTO Sports (Sports_GameID, Sports_Sport, Sports_Realistic) VALUES (?, ?, ?)",
                       (madden22_game_id, "American Football", 1))
 
+   cursor_obj.executescript("""
+       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
+       VALUES ("Super Mario Odyssey", "Platformer", "Nintendo", "2017-10-27", "Switch", 59.99);
+       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
+       VALUES (last_insert_rowid(), "Yes", 12, 6);
 
+       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
+       VALUES ("Celeste", "Platformer", "Matt Makes Games", "2018-01-25", "Switch", 19.99);
+       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
+       VALUES (last_insert_rowid(), "Yes", 9, 5);
+
+       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
+       VALUES ("Crash Bandicoot N. Sane Trilogy", "Platformer", "Vicarious Visions", "2017-06-30", "PS4", 39.99);
+       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
+       VALUES (last_insert_rowid(), "No", 45, 6);
+
+       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
+       VALUES ("Donkey Kong Country: Tropical Freeze", "Platformer", "Retro Studios", "2018-05-04", "Switch", 59.99);
+       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
+       VALUES (last_insert_rowid(), "Yes", 21, 6);
+
+       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
+       VALUES ("Rayman Legends", "Platformer", "Ubisoft Montpellier", "2013-08-29", "PS4", 29.99);
+       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
+       VALUES (last_insert_rowid(), "Yes", 120, 5);
+
+       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
+       VALUES ("Ori and the Will of the Wisps", "Platformer", "Moon Studios", "2020-03-11", "Xbox One", 29.99);
+       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
+       VALUES (last_insert_rowid(), "Yes", 40, 8);
+
+       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
+       VALUES ("Hollow Knight", "Platformer", "Team Cherry", "2017-02-24", "PC", 14.99);
+       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
+       VALUES (last_insert_rowid(), "Yes", 30, 5);
+
+       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
+       VALUES ("Little Nightmares", "Platformer", "Tarsier Studios", "2017-04-28", "PS4", 19.99);
+       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
+       VALUES (last_insert_rowid(), "No", 5, 4);
+
+       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
+       VALUES ("Yoshi's Crafted World", "Platformer", "Good-Feel", "2019-03-29", "Switch", 59.99);
+       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
+       VALUES (last_insert_rowid(), "Yes", 48, 6);
+
+       INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Release_Date, Game_Platform, Game_Price)
+       VALUES ("A Hat in Time", "Platformer", "Gears for Breakfast", "2017-10-05", "PC", 29.99);
+       INSERT INTO Platformer (Platformer_GameID, Platformer_Momentum_Based, Platformer_Total_Levels, Platformer_Total_Environments)
+       VALUES (last_insert_rowid(), "Yes", 5, 4);
+   """)
 
    connection_obj.commit()
 
