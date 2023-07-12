@@ -5,7 +5,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import sqlite3
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FloatField, SelectField, IntegerField, FloatField, SubmitField
+from wtforms import StringField, SubmitField, FloatField, SelectField, IntegerField, FloatField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, NumberRange
 
 
@@ -24,8 +24,6 @@ def create_db():
    cursor_obj.execute("DROP TABLE IF EXISTS Game")
    connection_obj.commit()
    cursor_obj.execute("DROP TABLE IF EXISTS UserGame")
-   connection_obj.commit()
-   cursor_obj.execute("DROP TABLE IF EXISTS Reviews")
    connection_obj.commit()
    cursor_obj.execute("DROP TABLE IF EXISTS WishListGame")
    connection_obj.commit()
@@ -65,31 +63,17 @@ def create_db():
    ); """
    cursor_obj.execute(table)
 
-
-   # Creating UserGame table
+    # User_Game_Library Table
    table = """ CREATE TABLE UserGame (
-       UGID INTEGER PRIMARY KEY AUTOINCREMENT,
+       UGID INTEGER PRIMARY,
        UG_GameID INTEGER,
        Difficulty STRING,
        Playtime INTEGER,
        Achievements TEXT,
        Rating INTEGER,
+       Review TEXT,
        Date_Added DATE,
        FOREIGN KEY (UG_GameID) REFERENCES Game (GameID)
-   ); """
-   # FOREIGN KEY (UG_UserID) REFERENCES User (UserID),
-   # UG_UserID INTEGER,
-
-
-   cursor_obj.execute(table)
-
-
-   # Creating Review table
-   table = """ CREATE TABLE Reviews (
-       ReviewID INTEGER PRIMARY KEY AUTOINCREMENT,
-       Review_UGID INTEGER,
-       Review_Thoughts TEXT,
-       FOREIGN KEY (Review_UGID) REFERENCES UserGame (UGID)
    ); """
    cursor_obj.execute(table)
 
@@ -1352,11 +1336,11 @@ class GameAddForm(FlaskForm):
    game = SelectField('Game', coerce=int, validators=[DataRequired()])
    difficulty = SelectField('Difficulty', choices=[('Very Easy', 'Very Easy'), ('Easy', 'Easy'), ('Normal', 'Normal'),
                                                    ('Hard', 'Hard'), ('Very Hard', 'Very Hard')])
-   playtime = IntegerField('Playtime (in hours)')
+   playtime = IntegerField('Playtime (in hours)', validators=[DataRequired()])
    achievements = IntegerField('Achievements (in %)', validators=[
-       NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
+       DataRequired(), NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
    rating = IntegerField('Rating (0-10)',
-                         validators=[NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
+                         validators=[DataRequired(), NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
    submit = SubmitField('Add Game')
 
 
@@ -1365,11 +1349,11 @@ class GameAddForm(FlaskForm):
 class GameEditForm(FlaskForm):
    difficulty = SelectField('Difficulty', choices=[('Very Easy', 'Very Easy'), ('Easy', 'Easy'), ('Normal', 'Normal'),
                                                    ('Hard', 'Hard'), ('Very Hard', 'Very Hard')])
-   playtime = IntegerField('Playtime (in hours)')
+   playtime = IntegerField('Playtime (in hours)', validators=[DataRequired()])
    achievements = IntegerField('Achievements (in %)', validators=[
-       NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
+       DataRequired(), NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
    rating = IntegerField('Rating (0-10)',
-                         validators=[NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
+                         validators=[DataRequired(), NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
    submit = SubmitField('Update Game')
 
 
@@ -1377,6 +1361,7 @@ class WishListForm(FlaskForm):
    game = SelectField('Game Name:', coerce=int)
    priority = IntegerField('Priority:', validators=[DataRequired()])
    submit = SubmitField('Add to Wishlist')
+
 
 
 
@@ -1542,37 +1527,39 @@ def top_rated_games():
 
 @app.route('/add-game', methods=['GET', 'POST'])
 def add_game():
-   # connect to the database
-   conn = sqlite3.connect('CS4750Project.db')
-   c = conn.cursor()
+    # connect to the database
+    conn = sqlite3.connect('CS4750Project.db')
+    c = conn.cursor()
 
+    # retrieve all games from Game table ordered by Game_Name
+    c.execute("SELECT * FROM Game ORDER BY Game_Name ASC")
+    game_list = c.fetchall()
 
-   # retrieve all games from Game table ordered by Game_Name
-   c.execute("SELECT * FROM Game ORDER BY Game_Name ASC")
-   game_list = c.fetchall()
+    # create the form and populate the select field with the games
+    form = GameAddForm()
+    form.game.choices = [(g[0], g[1]) for g in game_list]
+    error = None  # No error message to start with
 
+    # handle form submission
+    if form.validate_on_submit():
+        # check if the game is already in the UserGame table
+        c.execute("SELECT * FROM UserGame WHERE UG_GameID = ?", (form.game.data,))
+        game = c.fetchone()
 
-   # create the form and populate the select field with the games
-   form = GameAddForm()
-   form.game.choices = [(g[0], g[1]) for g in game_list]
+        if game:
+            error = 'This game is already in your library!'
+        else:
+            # insert the new game into the UserGame table
+            c.execute("INSERT INTO UserGame (UG_GameID, Difficulty, Playtime, Achievements, Rating, Date_Added) VALUES (?, ?, ?, ?, ?, date('now'))",
+                      (form.game.data, form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data))
+            conn.commit()
+            flash('Game added successfully!')
+            return redirect(url_for('home'))
 
+    conn.close()
 
-   # handle form submission
-   if form.validate_on_submit():
-       # insert the new game into the UserGame table
-       c.execute(
-           "INSERT INTO UserGame (UG_GameID, Difficulty, Playtime, Achievements, Rating, Date_Added) VALUES (?, ?, ?, ?, ?, date('now'))",
-           (form.game.data, form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data))
-       conn.commit()
-       conn.close()
-
-
-       flash('Game added successfully!')
-       return redirect(url_for('home'))
-
-
-   # render the form
-   return render_template('add_game.html', form=form)
+    # render the form
+    return render_template('add_game.html', form=form, error=error)
 
 
 
@@ -1656,49 +1643,52 @@ def confirm_delete(game_id):
 
 
 
+
 @app.route("/wishlist", methods=['GET', 'POST'])
 def wishlist():
-   # Connect to the database
-   conn = sqlite3.connect('CS4750Project.db')
-   c = conn.cursor()
+    # Connect to the database
+    conn = sqlite3.connect('CS4750Project.db')
+    c = conn.cursor()
 
+    # Retrieve all games from the Game table
+    c.execute("SELECT * FROM Game ORDER BY Game_Name ASC")
+    game_list = c.fetchall()
 
-   # Retrieve all games from the Game table
-   c.execute("SELECT * FROM Game ORDER BY Game_Name ASC")
-   game_list = c.fetchall()
+    # Create a wishlist form
+    form = WishListForm()
+    form.game.choices = [(g[0], g[1]) for g in game_list]
 
+    error = None
 
-   # Create a wishlist form
-   form = WishListForm()
-   form.game.choices = [(g[0], g[1]) for g in game_list]
+    if form.validate_on_submit():
+        # Check if the game is already in the wishlist
+        c.execute("SELECT * FROM WishListGame WHERE WLG_GameID = ?", (form.game.data,))
+        existing_game = c.fetchone()
 
+        if existing_game is None:
+            # Insert the game into the Wishlist table
+            c.execute("INSERT INTO WishListGame (WLG_GameID, WLG_Priority) VALUES (?, ?)",
+                      (form.game.data, form.priority.data))
+            conn.commit()
 
-   if form.validate_on_submit():
-       # Insert the game into the Wishlist table
-       c.execute("INSERT INTO WishListGame (WLG_GameID, WLG_Priority) VALUES (?, ?)",
-                 (form.game.data, form.priority.data))
-       conn.commit()
+            flash('Game added to wishlist successfully!')
+            return redirect(url_for("wishlist"))
+        else:
+            error = 'This game is already in your wishlist'
 
+    # Retrieve wishlist data
+    c.execute("""
+        SELECT WLG_Priority, Game_Name, Game_Genre, Game_Platform, Game_Price 
+        FROM WishListGame 
+        JOIN Game ON WishListGame.WLG_GameID = Game.GameID
+        ORDER BY WLG_Priority ASC
+    """)
+    wishlist = c.fetchall()
 
-       flash('Game added to wishlist successfully!')
-       return redirect(url_for("wishlist"))
+    conn.close()
 
-
-   # Retrieve wishlist data
-   c.execute("""
-       SELECT WLG_Priority, Game_Name, Game_Genre, Game_Platform, Game_Price
-       FROM WishListGame
-       JOIN Game ON WishListGame.WLG_GameID = Game.GameID
-       ORDER BY WLG_Priority ASC
-   """)
-   wishlist = c.fetchall()
-
-
-   conn.close()
-
-
-   # Render the form and the wishlist
-   return render_template("wishlist.html", form=form, wishlist=wishlist)
+    # Render the form and the wishlist
+    return render_template("wishlist.html", form=form, wishlist=wishlist, error=error)
 
 
 

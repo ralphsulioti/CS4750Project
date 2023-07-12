@@ -26,6 +26,7 @@
         {% block content %}
         {% include 'navbar.html' %}
             <h1>Add a Game</h1>
+
             <form method="POST">
                 {{ form.hidden_tag() }}
                 <p>{{ form.game.label }}: {{ form.game(id="select2") }}</p>
@@ -33,6 +34,9 @@
                 <p>{{ form.playtime.label }}: {{ form.playtime() }}</p>
                 <p>{{ form.achievements.label }}: {{ form.achievements() }}</p>
                 <p>{{ form.rating.label }}: {{ form.rating() }}</p>
+                {% if error %}
+                    <p>{{ error }}</p>
+                {% endif %}
                 <p>{{ form.submit() }}</p>
             </form>
             <script>

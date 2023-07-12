@@ -188,6 +188,9 @@
         {{ form.hidden_tag() }}
         <p>{{ form.game.label }}: {{ form.game(id="select2") }}</p>
         <p>{{ form.priority.label }}: {{ form.priority() }}</p>
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
         <p>{{ form.submit() }}</p>
     </form>
 
@@ -235,6 +238,7 @@
     }
 
     $(document).ready(function() {
+        $('#select2').select2();
         $('#genre-filter').select2();
         $('#platform-filter').select2();
         $('#price-filter').select2();
