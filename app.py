@@ -1,23 +1,16 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import sqlite3
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField, IntegerField, FloatField, TextAreaField
+from wtforms import StringField, SubmitField, FloatField, SelectField, IntegerField, FloatField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, NumberRange
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
 
-# mydb = mysql.connector.connect(
-#   host="localhost",
-#   user="yourusername",
-#   password="yourpassword"
-# )
-
 
 @app.route("/create-db")
 def create_db():
-
     connection_obj = sqlite3.connect('CS4750Project.db')
     cursor_obj = connection_obj.cursor()
 
@@ -253,27 +246,41 @@ def create_db():
 
     connection_obj.close()
 
-    return "DB is fresh and ready"
+    return render_template("create_db.html")
+
+
+
+
 
 class GameAddForm(FlaskForm):
-    game = SelectField('Game', coerce=int, validators=[DataRequired()])
-    difficulty = SelectField('Difficulty', choices=[('Very Easy', 'Very Easy'), ('Easy', 'Easy'), ('Normal', 'Normal'), ('Hard', 'Hard'), ('Very Hard', 'Very Hard')])
-    playtime = IntegerField('Playtime (in hours)', validators=[DataRequired()])
-    achievements = IntegerField('Achievements (in %)', validators=[DataRequired(), NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
-    rating = IntegerField('Rating (0-10)', validators=[DataRequired(), NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
-    submit = SubmitField('Add Game')
+   game = SelectField('Game', coerce=int, validators=[DataRequired()])
+   difficulty = SelectField('Difficulty', choices=[('Very Easy', 'Very Easy'), ('Easy', 'Easy'), ('Normal', 'Normal'),
+                                                   ('Hard', 'Hard'), ('Very Hard', 'Very Hard')])
+   playtime = IntegerField('Playtime (in hours)', validators=[DataRequired()])
+   achievements = IntegerField('Achievements (in %)', validators=[
+       DataRequired(), NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
+   rating = IntegerField('Rating (0-10)',
+                         validators=[DataRequired(), NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
+   submit = SubmitField('Add Game')
+
+
+
 
 class GameEditForm(FlaskForm):
-    difficulty = SelectField('Difficulty', choices=[('Very Easy', 'Very Easy'), ('Easy', 'Easy'), ('Normal', 'Normal'), ('Hard', 'Hard'), ('Very Hard', 'Very Hard')])
-    playtime = IntegerField('Playtime (in hours)')
-    achievements = IntegerField('Achievements (in %)', validators=[NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
-    rating = IntegerField('Rating (0-10)', validators=[NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
-    submit = SubmitField('Update Game')
+   difficulty = SelectField('Difficulty', choices=[('Very Easy', 'Very Easy'), ('Easy', 'Easy'), ('Normal', 'Normal'),
+                                                   ('Hard', 'Hard'), ('Very Hard', 'Very Hard')])
+   playtime = IntegerField('Playtime (in hours)', validators=[DataRequired()])
+   achievements = IntegerField('Achievements (in %)', validators=[
+       DataRequired(), NumberRange(min=0, max=100, message="Achievements should be between 0 and 100%")])
+   rating = IntegerField('Rating (0-10)',
+                         validators=[DataRequired(), NumberRange(min=0, max=10, message="Rating should be between 0 and 10")])
+   submit = SubmitField('Update Game')
+
 
 class WishListForm(FlaskForm):
-    game = SelectField('Game Name:', coerce=int)
-    priority = IntegerField('Priority:', validators=[DataRequired()])
-    submit = SubmitField('Add to Wishlist')
+   game = SelectField('Game Name:', coerce=int)
+   priority = IntegerField('Priority:', validators=[DataRequired()])
+   submit = SubmitField('Add to Wishlist')
 
 
 class ReviewForm(FlaskForm):
@@ -312,6 +319,8 @@ def view_details(game_id):
     """, (game_id,))
     game = c.fetchone()
 
+    print(game)
+
     genre_table = game[4]
     c.execute(f"PRAGMA table_info({genre_table})")
     columns = [column[1] for column in c.fetchall()]
@@ -346,88 +355,120 @@ def view_details(game_id):
 
     return render_template('view_details.html', game=game, form_review=form_review, form_genre=form_genre)
 
+
+
 @app.route("/get-games")
 def get_games():
-    connection_obj = sqlite3.connect('CS4750Project.db')
-    cursor_obj = connection_obj.cursor()
-    cursor_obj.execute("SELECT * FROM Game ORDER BY GameID DESC")
-    games = cursor_obj.fetchall()
-    connection_obj.close()
+   connection_obj = sqlite3.connect('CS4750Project.db')
+   cursor_obj = connection_obj.cursor()
+   cursor_obj.execute("SELECT * FROM Game ORDER BY GameID DESC")
+   games = cursor_obj.fetchall()
+   connection_obj.close()
 
-    return render_template("get-games.html", games=games)
+
+   return render_template("get-games.html", games=games)
+
+
+
 
 @app.route("/search-games")
 def search_games():
-    search = request.args.get('q')
+   search = request.args.get('q')
 
-    connection_obj = sqlite3.connect('CS4750Project.db')
-    cursor_obj = connection_obj.cursor()
 
-    cursor_obj.execute("SELECT GameID, Game_Name FROM Game WHERE Game_Name LIKE ?", ('%' + search + '%',))
-    games = cursor_obj.fetchall()
-    connection_obj.close()
+   connection_obj = sqlite3.connect('CS4750Project.db')
+   cursor_obj = connection_obj.cursor()
 
-    # Convert to the format that Select2 expects
-    games = [{"id": game[0], "text": game[1]} for game in games]
 
-    return jsonify(games)
+   cursor_obj.execute("SELECT GameID, Game_Name FROM Game WHERE Game_Name LIKE ?", ('%' + search + '%',))
+   games = cursor_obj.fetchall()
+   connection_obj.close()
+
+
+   # Convert to the format that Select2 expects
+   games = [{"id": game[0], "text": game[1]} for game in games]
+
+
+   return jsonify(games)
+
+
+
+
 
 @app.route("/get-users")
 def get_users():
-    connection_obj = sqlite3.connect('CS4750Project.db')
-    cursor_obj = connection_obj.cursor()
+   connection_obj = sqlite3.connect('CS4750Project.db')
+   cursor_obj = connection_obj.cursor()
 
-    cursor_obj.execute("SELECT * FROM User ORDER BY UserID DESC")
-    users = cursor_obj.fetchall()
 
-    connection_obj.close()
+   cursor_obj.execute("SELECT * FROM User ORDER BY UserID DESC")
+   users = cursor_obj.fetchall()
 
-    # Check if the request is AJAX
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return render_template("user-table.html", users=users)
 
-    return render_template("get-users.html", users=users)
+   connection_obj.close()
+
+
+   # Check if the request is AJAX
+   if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+       return render_template("user-table.html", users=users)
+
+
+   return render_template("get-users.html", users=users)
+
+
+
 
 @app.route("/create-user", methods=["POST"])
 def create_user():
-    data = request.get_json()
-    name = data.get("name").strip()
+   data = request.get_json()
+   name = data.get("name").strip()
 
-    if name == '':
-        return "Name cannot be empty"
 
-    connection_obj = sqlite3.connect('CS4750Project.db')
-    cursor_obj = connection_obj.cursor()
+   if name == '':
+       return "Name cannot be empty"
 
-    cursor_obj.execute("INSERT INTO User (User_Name) VALUES (?)", (name,))
-    connection_obj.commit()
 
-    connection_obj.close()
+   connection_obj = sqlite3.connect('CS4750Project.db')
+   cursor_obj = connection_obj.cursor()
 
-    return "User created successfully"
+
+   cursor_obj.execute("INSERT INTO User (User_Name) VALUES (?)", (name,))
+   connection_obj.commit()
+
+
+   connection_obj.close()
+
+
+   return "User created successfully"
+
+
+
 
 @app.route("/delete-user", methods=["POST"])
 def delete_user():
-    user_id = request.form.get("user_id")
+   user_id = request.form.get("user_id")
 
-    connection_obj = sqlite3.connect('CS4750Project.db')
-    cursor_obj = connection_obj.cursor()
 
-    # Get the user name before deleting
-    cursor_obj.execute("SELECT User_Name FROM User WHERE UserID = ?", (user_id,))
-    result = cursor_obj.fetchone()
-    
-    if result is None:
-        return "User not found. <a href='/get-users'>Return to User List</a>"
+   connection_obj = sqlite3.connect('CS4750Project.db')
+   cursor_obj = connection_obj.cursor()
 
-    user_name = result[0]
 
-    cursor_obj.execute("DELETE FROM User WHERE UserID = ?", (user_id,))
-    connection_obj.commit()
+   # Get the user name before deleting
+   cursor_obj.execute("SELECT User_Name FROM User WHERE UserID = ?", (user_id,))
+   user_name = cursor_obj.fetchone()[0]
 
-    connection_obj.close()
 
-    return f"User {user_name} deleted successfully. <a href='/get-users'>Return to User List</a>"
+   cursor_obj.execute("DELETE FROM User WHERE UserID = ?", (user_id,))
+   connection_obj.commit()
+
+
+   connection_obj.close()
+
+
+   return f"User {user_name} deleted successfully. <a href='/get-users'>Return to User List</a>"
+
+
+
 
 @app.route('/')
 def home():
@@ -449,6 +490,29 @@ def home():
     games = c.fetchall()
     conn.close()
     return render_template('landingPage.html', games=games)
+
+@app.route("/top-rated-games")
+def top_rated_games():
+    conn = sqlite3.connect('CS4750Project.db')
+    c = conn.cursor()
+    c.execute("""
+        SELECT
+            UserGame.UserGameID,
+            Game.Game_Name,
+            Game.Game_Genre,
+            UserGame.Playtime,
+            UserGame.Achievements,
+            UserGame.Rating
+        FROM UserGame
+        JOIN Game ON UserGame.GameID = Game.GameID
+        WHERE UserGame.Rating >= 7
+        ORDER BY UserGame.Rating DESC
+    """)
+    top_rated_games = c.fetchall()
+    conn.close()
+    return render_template('top_rated_games.html', games=top_rated_games)
+
+
 
 @app.route('/add-game', methods=['GET', 'POST'])
 def add_game():
@@ -488,67 +552,85 @@ def add_game():
 
 
 
+
 @app.route('/edit-game/<int:game_id>', methods=['GET', 'POST'])
 def edit_game(game_id):
-    # connect to the database
-    conn = sqlite3.connect('CS4750Project.db')
-    c = conn.cursor()
+   # connect to the database
+   conn = sqlite3.connect('CS4750Project.db')
+   c = conn.cursor()
 
-    # retrieve the game from the UserGame table
-    c.execute("SELECT * FROM UserGame WHERE GameID = ?", (game_id,))
-    game = c.fetchone()
 
-    form = GameEditForm()
+   # retrieve the game from the UserGame table
+   c.execute("SELECT * FROM UserGame WHERE UserGameID = ?", (game_id,))
+   game = c.fetchone()
 
-    if request.method == 'GET':
-        # populate the form with the game's data
-        # convert to int to make sure correct type is received, default to 0 if nothing is entered
-        form.difficulty.data = game[3]
-        form.playtime.data = int(game[4]) if game[4] is not None else 0
-        form.achievements.data = int(game[5]) if game[5] is not None else 0
-        form.rating.data = int(game[6]) if game[6] is not None else 0
 
-    if form.validate_on_submit():
-        # update the game in the UserGame table
-        # if form is valid, update fields
-        c.execute("UPDATE UserGame SET Difficulty = ?, Playtime = ?, Achievements = ?, Rating = ? WHERE GameID = ?",
-                  (form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data, game_id))
-        conn.commit()
-        conn.close()
-        flash('Game updated successfully!')
-        return redirect(url_for('home'))
+   form = GameEditForm()
 
-    return render_template('edit_game.html', form=form)
+
+   if request.method == 'GET':
+       # populate the form with the game's data
+       # convert to int to make sure correct type is received, default to 0 if nothing is entered
+       form.difficulty.data = game[2]
+       form.playtime.data = int(game[3]) if game[3] is not None else 0
+       form.achievements.data = int(game[4]) if game[4] is not None else 0
+       form.rating.data = int(game[5]) if game[5] is not None else 0
+
+
+   if form.validate_on_submit():
+       # update the game in the UserGame table
+       # if form is valid, update fields
+       c.execute("UPDATE UserGame SET Difficulty = ?, Playtime = ?, Achievements = ?, Rating = ? WHERE UserGameID = ?",
+                 (form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data, game_id))
+       conn.commit()
+       conn.close()
+       flash('Game updated successfully!')
+       return redirect(url_for('home'))
+
+
+   return render_template('edit_game.html', form=form)
+
+
 
 
 @app.route('/delete-game/<int:game_id>', methods=['POST'])
 def delete_game(game_id):
-    # connect to the database
-    conn = sqlite3.connect('CS4750Project.db')
-    c = conn.cursor()
+   # connect to the database
+   conn = sqlite3.connect('CS4750Project.db')
+   c = conn.cursor()
 
-    # delete the game from the UserGame table
-    c.execute("DELETE FROM UserGame WHERE GameID = ?", (game_id,))
-    conn.commit()
-    conn.close()
 
-    flash('Game deleted successfully!')
-    return redirect(url_for('home'))
+   # delete the game from the UserGame table
+   c.execute("DELETE FROM UserGame WHERE UserGameID = ?", (game_id,))
+   conn.commit()
+   conn.close()
+
+
+   flash('Game deleted successfully!')
+   return redirect(url_for('home'))
+
+
 
 
 @app.route('/confirm-delete/<int:game_id>')
 def confirm_delete(game_id):
-    # connect to the database
-    conn = sqlite3.connect('CS4750Project.db')
-    c = conn.cursor()
+   # connect to the database
+   conn = sqlite3.connect('CS4750Project.db')
+   c = conn.cursor()
 
-    # retrieve the game from the UserGame table
-    c.execute("SELECT UserGame.GameID, Game.Game_Name FROM UserGame JOIN Game ON UserGame.GameID = Game.GameID WHERE Game.GameID = ?", (game_id,))
-    game = c.fetchone()
-    conn.close()
 
-    # render the confirmation page
-    return render_template('confirm_delete.html', game=game)
+   # retrieve the game from the UserGame table
+   c.execute("SELECT UserGameID, Game.Game_Name FROM UserGame JOIN Game ON UserGame.GameID = Game.GameID WHERE UserGameID = ?",
+             (game_id,))
+   game = c.fetchone()
+   conn.close()
+
+
+   # render the confirmation page
+   return render_template('confirm_delete.html', game=game)
+
+
+
 
 
 @app.route("/wishlist", methods=['GET', 'POST'])
@@ -598,30 +680,41 @@ def wishlist():
     return render_template("wishlist.html", form=form, wishlist=wishlist, error=error)
 
 
+
+
 @app.route("/connect")
 def connect():
+   class_id = int(request.args.get("class_id"))
+   user_id = int(request.args.get("user_id"))
 
-    class_id = int(request.args.get("class_id"))
-    user_id = int(request.args.get("user_id"))
 
-    connection_obj = sqlite3.connect('project.db')
-    cursor_obj = connection_obj.cursor()
+   connection_obj = sqlite3.connect('project.db')
+   cursor_obj = connection_obj.cursor()
 
-    cursor_obj.execute(f"SELECT * FROM user_class_reln WHERE class_id = {class_id} AND user_id = {user_id} LIMIT 1")
-    exist = cursor_obj.fetchone()
 
-    if exist is not None:
-        return "Connection already exists"
+   cursor_obj.execute(f"SELECT * FROM user_class_reln WHERE class_id = {class_id} AND user_id = {user_id} LIMIT 1")
+   exist = cursor_obj.fetchone()
 
-    try:
-        cursor_obj.execute(f"INSERT INTO user_class_reln (class_id, user_id) VALUES ( {class_id}, {user_id} )")
-        connection_obj.commit()
-    except:
-        return "Either user_id or class_id doens't exist"
-    
-    return "Done!"
+
+   if exist is not None:
+       return "Connection already exists"
+
+   try:
+       cursor_obj.execute(f"INSERT INTO user_class_reln (class_id, user_id) VALUES ( {class_id}, {user_id} )")
+       connection_obj.commit()
+   except:
+       return "Either user_id or class_id doens't exist"
+
+
+   return "Done!"
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+   app.run(debug=True)
+
+
+
+
+
+
 

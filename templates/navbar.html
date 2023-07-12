@@ -1,34 +1,80 @@
-<style>
-    /* Styling for the navbar */
-    nav {
-        background-color: #f2f2f2;
-        padding: 10px;
-    }
 
-    nav ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: flex-start;
-    }
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        nav {
+            background-color: rgb(169, 142, 201);
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    nav ul li {
-        margin-right: 10px;
-    }
+        nav ul {
+            list-style-type: none;
+            margin: 5px;
+            display: flex;
+            align-items: center;
+        }
 
-    nav ul li a {
-        text-decoration: none;
-        color: #333;
-        padding: 5px;
-    }
-</style>
+        nav ul li {
+            margin-right: 10px;
+            margin-left: 10px;
+        }
 
-<nav>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/get-users">View Users</a></li>
-        <li><a href="{{ url_for('add_game') }}">Add Game</a></li>
-        <li><a href="/wishlist">Wish List</a></li>
-    </ul>
-</nav>
+        nav ul li a {
+            text-decoration: none;
+            color: #FFFFFF;
+            font-size: 20px;
+            padding-left: 10px;
+            border-radius: 7px;
+            padding:10px;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 23px;
+        }
+
+
+        .refresh-db-link {
+            color: rgba(255, 106, 0, 0.98);
+            text-align: right;
+        }
+
+        .refresh-db-link:hover {
+            color: #FF0000;
+        }
+
+        .warning-message {
+            color: rgb(255, 38, 0);
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 19px;
+            text-align: center;
+        }
+
+        nav ul li:hover a,
+        .logo:hover {
+            color: black;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/"><span class="logo">Game Library</span></a></li>
+            <li><a href="/get-users">View Users</a></li>
+            <li><a href="/wishlist">Wish List</a></li>
+            <li><a href="/top-rated-games">Top Rated</a></li>
+            <li><a href="/create-db" class="refresh-db-link">Refresh DB</a></li>
+        </ul>
+    </nav>
+
+    <div class="warning-message">
+        Warning: Refreshing the database will remove all existing data from your user library and wishlist. Proceed with caution.
+    </div>
+</body>
+</html>
