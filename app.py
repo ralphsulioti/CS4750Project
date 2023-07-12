@@ -232,6 +232,160 @@ def create_db():
                         ("Apex Legends", "Shooter", "Respawn Entertainment", "PC", 0.00))
     cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
                         ("Fall Guys: Ultimate Knockout", "Platform", "Mediatonic", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("BioShock Infinite", "Shooter", "Irrational Games", "PC", 29.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Stardew Valley", "RPG", "ConcernedApe", "PC", 14.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("The Elder Scrolls V: Skyrim", "RPG", "Bethesda Game Studios", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("League of Legends", "MMORPG", "Riot Games", "PC", 0.00))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Mass Effect 2", "RPG", "BioWare", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Genshin Impact", "RPG", "miHoYo", "PC", 0.00))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Undertale", "RPG", "Toby Fox", "PC", 9.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Terraria", "RPG", "Re-Logic", "PC", 9.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Rocket League", "Sports", "Psyonix", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Borderlands 3", "Shooter", "Gearbox Software", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Far Cry 5", "Shooter", "Ubisoft Montreal", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Uncharted 4: A Thief's End", "RPG", "Naughty Dog", "PS4", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("The Sims 4", "RPG", "Maxis, The Sims Studio", "PC", 39.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Persona 5", "RPG", "P-Studio", "PS4", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("FIFA 22", "Sports", "EA Sports", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Civilization VI", "RPG", "Firaxis Games", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Resident Evil 3", "Horror", "Capcom", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Diablo III", "RPG", "Blizzard Entertainment", "PC", 39.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Halo: The Master Chief Collection", "Shooter", "343 Industries", "PC", 39.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Valorant", "Shooter", "Riot Games", "PC", 0.00))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Destiny 2", "Shooter", "Bungie", "PC", 0.00))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Splatoon 2", "Shooter", "Nintendo", "Switch", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Dragon Quest XI", "RPG", "Square Enix", "Switch", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Donkey Kong Country: Tropical Freeze", "Platformer", "Retro Studios", "Switch", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Luigi's Mansion 3", "RPG", "Next Level Games", "Switch", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Resident Evil 2 Remake", "Horror", "Capcom", "PC", 39.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Dead by Daylight", "Horror", "Behaviour Interactive", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Hollow Knight", "Platformer", "Team Cherry", "PC", 14.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Sekiro: Shadows Die Twice", "RPG", "FromSoftware", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Final Fantasy XIV: A Realm Reborn", "MMORPG", "Square Enix", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Rainbow Six Siege", "Shooter", "Ubisoft Montreal", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Need for Speed Heat", "Racing", "Ghost Games", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("FIFA 20", "Sports", "EA Vancouver", "PC", 39.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("FIFA 21", "Sports", "EA Vancouver", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Street Fighter V", "Fighting", "Capcom", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Amnesia: The Dark Descent", "Horror", "Frictional Games", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Outlast 2", "Horror", "Red Barrels", "PC", 29.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Little Nightmares", "Platformer", "Tarsier Studios", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Celeste", "Platformer", "Matt Makes Games", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Dragon Age: Inquisition", "RPG", "BioWare", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Guild Wars 2", "MMORPG", "ArenaNet", "PC", 29.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Battlefield V", "Shooter", "DICE", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Forza Horizon 4", "Racing", "Playground Games", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("NBA 2K21", "Sports", "Visual Concepts", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Mortal Kombat 11", "Fighting", "NetherRealm Studios", "PC", 49.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Silent Hill 2", "Horror", "Konami", "PC", 9.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                    ("Project Cars 3", "Racing", "Slightly Mad Studios", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("NHL 21", "Sports", "EA Vancouver", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Tekken 7", "Fighting", "Bandai Namco Entertainment", "PC", 39.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Until Dawn", "Horror", "Supermassive Games", "PS4", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Alien: Isolation", "Horror", "Creative Assembly", "PC", 39.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Rayman Legends", "Platformer", "Ubisoft", "PC", 29.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Dark Souls III", "RPG", "FromSoftware", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("World of Warcraft", "MMORPG", "Blizzard Entertainment", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Call of Duty: Warzone", "Shooter", "Infinity Ward", "PC", 0.00))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Grid Autosport", "Racing", "Codemasters", "PC", 34.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Madden NFL 21", "Sports", "EA Tiburon", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Injustice 2", "Fighting", "NetherRealm Studios", "PC", 49.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Outlast", "Horror", "Red Barrels", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Layers of Fear", "Horror", "Bloober Team", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Ori and the Will of the Wisps", "Platformer", "Moon Studios", "PC", 29.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Star Wars: The Old Republic", "MMORPG", "BioWare", "PC", 14.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Counter-Strike: Global Offensive", "Shooter", "Valve", "PC", 0.00))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Burnout Paradise Remastered", "Racing", "Criterion Games", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("MLB The Show 21", "Sports", "San Diego Studio", "PS4", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Soulcalibur VI", "Fighting", "Project Soul", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("The Forest", "Horror", "Endnight Games", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Observer", "Horror", "Bloober Team", "PC", 29.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Spelunky 2", "Platformer", "Mossmouth, LLC", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Fallout 3", "RPG", "Bethesda Game Studios", "PC", 9.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Fallout New Vegas", "RPG", "Bethesda Game Studios", "PC", 9.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Fallout 4", "RPG", "Bethesda Game Studios", "PC", 29.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Elder Scrolls Online", "MMORPG", "Zenimax Online Studios", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Assetto Corsa", "Racing", "Kunos Simulazioni", "PC", 19.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("UFC 4", "Sports", "EA Vancouver", "PS4", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                        ("Dragon Ball FighterZ", "Fighting", "Arc System Works", "PC", 59.99))
+    cursor_obj.execute("INSERT INTO Game (Game_Name, Game_Genre, Game_Developer, Game_Platform, Game_Price) VALUES (?, ?, ?, ?, ?)",
+                    ("Guild Wars 2", "MMORPG", "ArenaNet", "PC", 29.99))
     
     cursor_obj.execute("INSERT INTO Fighting (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Fighting'")
     cursor_obj.execute("INSERT INTO Horror (GameID) SELECT GameID FROM Game WHERE Game_Genre = 'Horror'")
