@@ -54,7 +54,9 @@ def create_db():
         GameID INTEGER PRIMARY KEY,
         Game_Name TEXT,
         Game_Developer TEXT,
+        Game_Release_Date TEXT,
         Game_Platform TEXT,
+        Game_Player_Capacity INTEGER,
         Game_Price REAL,
         Game_Genre TEXT
     )
@@ -707,40 +709,35 @@ def add_game():
 
 @app.route('/edit-game/<int:game_id>', methods=['GET', 'POST'])
 def edit_game(game_id):
-   # connect to the database
-   conn = sqlite3.connect('CS4750Project.db')
-   c = conn.cursor()
+    # connect to the database
+    conn = sqlite3.connect('CS4750Project.db')
+    c = conn.cursor()
 
+    # retrieve the game from the UserGame table
+    c.execute("SELECT * FROM UserGame WHERE GameID = ?", (game_id,))
+    game = c.fetchone()
 
-   # retrieve the game from the UserGame table
-   c.execute("SELECT * FROM UserGame WHERE UserGameID = ?", (game_id,))
-   game = c.fetchone()
+    form = GameEditForm()
 
+    if request.method == 'GET':
+        # populate the form with the game's data
+        # convert to int to make sure correct type is received, default to 0 if nothing is entered
+        form.difficulty.data = game[3]
+        form.playtime.data = int(game[4]) if game[4] is not None else 0
+        form.achievements.data = int(game[5]) if game[5] is not None else 0
+        form.rating.data = int(game[6]) if game[6] is not None else 0
 
-   form = GameEditForm()
+    if form.validate_on_submit():
+        # update the game in the UserGame table
+        # if form is valid, update fields
+        c.execute("UPDATE UserGame SET Difficulty = ?, Playtime = ?, Achievements = ?, Rating = ? WHERE GameID = ?",
+                  (form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data, game_id))
+        conn.commit()
+        conn.close()
+        flash('Game updated successfully!')
+        return redirect(url_for('home'))
 
-
-   if request.method == 'GET':
-       # populate the form with the game's data
-       # convert to int to make sure correct type is received, default to 0 if nothing is entered
-       form.difficulty.data = game[2]
-       form.playtime.data = int(game[3]) if game[3] is not None else 0
-       form.achievements.data = int(game[4]) if game[4] is not None else 0
-       form.rating.data = int(game[5]) if game[5] is not None else 0
-
-
-   if form.validate_on_submit():
-       # update the game in the UserGame table
-       # if form is valid, update fields
-       c.execute("UPDATE UserGame SET Difficulty = ?, Playtime = ?, Achievements = ?, Rating = ? WHERE UserGameID = ?",
-                 (form.difficulty.data, form.playtime.data, form.achievements.data, form.rating.data, game_id))
-       conn.commit()
-       conn.close()
-       flash('Game updated successfully!')
-       return redirect(url_for('home'))
-
-
-   return render_template('edit_game.html', form=form)
+    return render_template('edit_game.html', form=form)
 
 
 @app.route('/delete-game/<int:game_id>', methods=['POST'])
