@@ -54,9 +54,7 @@ def create_db():
         GameID INTEGER PRIMARY KEY,
         Game_Name TEXT,
         Game_Developer TEXT,
-        Game_Release_Date TEXT,
         Game_Platform TEXT,
-        Game_Player_Capacity INTEGER,
         Game_Price REAL,
         Game_Genre TEXT
     )
