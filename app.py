@@ -743,43 +743,34 @@ def edit_game(game_id):
    return render_template('edit_game.html', form=form)
 
 
-
-
 @app.route('/delete-game/<int:game_id>', methods=['POST'])
 def delete_game(game_id):
-   # connect to the database
-   conn = sqlite3.connect('CS4750Project.db')
-   c = conn.cursor()
+    # connect to the database
+    conn = sqlite3.connect('CS4750Project.db')
+    c = conn.cursor()
 
+    # delete the game from the UserGame table
+    c.execute("DELETE FROM UserGame WHERE GameID = ?", (game_id,))
+    conn.commit()
+    conn.close()
 
-   # delete the game from the UserGame table
-   c.execute("DELETE FROM UserGame WHERE UserGameID = ?", (game_id,))
-   conn.commit()
-   conn.close()
-
-
-   flash('Game deleted successfully!')
-   return redirect(url_for('home'))
-
-
+    flash('Game deleted successfully!')
+    return redirect(url_for('home'))
 
 
 @app.route('/confirm-delete/<int:game_id>')
 def confirm_delete(game_id):
-   # connect to the database
-   conn = sqlite3.connect('CS4750Project.db')
-   c = conn.cursor()
+    # connect to the database
+    conn = sqlite3.connect('CS4750Project.db')
+    c = conn.cursor()
 
+    # retrieve the game from the UserGame table
+    c.execute("SELECT UserGame.GameID, Game.Game_Name FROM UserGame JOIN Game ON UserGame.GameID = Game.GameID WHERE Game.GameID = ?", (game_id,))
+    game = c.fetchone()
+    conn.close()
 
-   # retrieve the game from the UserGame table
-   c.execute("SELECT UserGameID, Game.Game_Name FROM UserGame JOIN Game ON UserGame.GameID = Game.GameID WHERE UserGameID = ?",
-             (game_id,))
-   game = c.fetchone()
-   conn.close()
-
-
-   # render the confirmation page
-   return render_template('confirm_delete.html', game=game)
+    # render the confirmation page
+    return render_template('confirm_delete.html', game=game)
 
 
 
