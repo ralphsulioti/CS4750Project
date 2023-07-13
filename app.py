@@ -165,7 +165,6 @@ def create_db():
     # Creating RPG Table
     table = """ CREATE TABLE RPG (
         GameID INTEGER PRIMARY KEY,
-        RPG_GameID INTEGER,
         RPG_Total_Attributes INTEGER,
         RPG_Classes INTEGER,
         FOREIGN KEY (GameID) REFERENCES Game (GameID)
